@@ -1,0 +1,26 @@
+{
+  "name": "live-chat-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc -b",
+    "dev": "nodemon dist/index.js",
+    "watch": "tsc -w"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.13",
+    "nodemon": "^2.0.15",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "express-openid-connect": "^2.5.2",
+    "mongoose": "^6.1.4"
+  }
+}

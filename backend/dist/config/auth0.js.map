@@ -1,0 +1,1 @@
+{"version":3,"file":"auth0.js","sourceRoot":"","sources":["../../src/config/auth0.ts"],"names":[],"mappings":";;;AAAa,QAAA,MAAM,GAAG;IAClB,YAAY,EAAE,KAAK;IACnB,WAAW,EAAE,IAAI;IACjB,MAAM,EAAE,iDAAiD;IACzD,OAAO,EAAE,uBAAuB;IAChC,QAAQ,EAAE,kCAAkC;IAC5C,aAAa,EAAE,mCAAmC;CACrD,CAAA"}
