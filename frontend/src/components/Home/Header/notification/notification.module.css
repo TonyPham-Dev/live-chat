@@ -1,0 +1,55 @@
+.notificationContainer {
+    position: absolute;
+    width: 100%;
+    transform: translateX(-70%);
+    height: 500px;
+    background-color: rgb(253, 166, 116);
+    border-radius: 20px;
+    padding: 10px 0px;
+    box-shadow: rgb(128, 91, 71) 0px 3px 10px;
+    z-index: 9999;
+}
+.title {
+    margin: 0;
+    padding:0px 15px
+}
+.listItem {
+    padding:10px 10px;
+    width: 100%;
+    height: 430px;
+    border-radius: 20px;
+    overflow: scroll;
+}
+.listItem::-webkit-scrollbar {
+    display: none;
+}
+.item {
+    height: 50px;
+    background-color: rgb(135, 136, 136);
+    border-radius: 20px;
+    list-style: none;
+    margin-bottom: 10px;
+    padding:5px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+.imageUser {
+    width: 50px;
+    height: 30px;
+    border-radius:50%;
+    object-fit: cover;
+}
+.itemNotification {
+    margin-left: 5px;
+    color:rgb(235, 219, 219);
+    line-height: 15px;
+  
+}
+
+@media (max-width: 767px) { 
+    .notificationContainer {
+        transform: translateX(-14%);
+    }
+}

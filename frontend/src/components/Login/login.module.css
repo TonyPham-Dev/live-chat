@@ -1,0 +1,69 @@
+.loginContainer {
+    width: 100%;
+    background-color: rgb(133, 130, 130);
+    height: 100vh;
+    position: relative;
+}
+.loginBorder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    height: 50%;
+    border-radius: 5%;
+    background-color:#fff;
+}
+.login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.buttonLogin {
+    padding: 13px 15px;
+    color:#fff;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #FF5733;
+    border:none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.iconFacebook {
+    margin-right: 8px;
+    margin-top: 5px;
+}
+
+/* responsive ipad pro */
+@media (min-width: 1024px) and (max-width:1365px){
+    .loginBorder {
+        width: 70%;
+    }
+    .buttonLogin {
+        padding: 25px 39px;
+        font-size: 20px;
+    }
+}
+
+/* responsive ipad mini */
+@media (min-width:768px) and (max-width:1023px) {
+    .loginBorder {
+        width: 70%;
+    }
+    .buttonLogin {
+        padding: 22px 39px;
+        font-size: 18px;
+    }
+}
+
+/* responsive mobile */
+@media (max-width: 1023px) {
+    .loginBorder {
+        width: 70%;
+    }
+    .buttonLogin {
+        padding: 18px 6px;
+        font-size: 12px;
+    }
+}
