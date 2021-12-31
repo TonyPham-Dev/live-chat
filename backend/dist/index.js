@@ -39,15 +39,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var createApp_1 = __importDefault(require("./config/createApp"));
-var index_1 = __importDefault(require("./middlewares/index"));
+var createApp_config_1 = __importDefault(require("./config/createApp.config"));
+var index_middlewares_1 = __importDefault(require("./middlewares/index.middlewares"));
+var db_config_1 = __importDefault(require("./config/db.config"));
+var index_routes_1 = __importDefault(require("./routes/index.routes"));
+var socketIo_config_1 = require("./config/socketIo.config");
+var socket_1 = __importDefault(require("./socket"));
 var main = function () {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, app, server;
+        var _a, app, server, chatIo;
         return __generator(this, function (_b) {
-            _a = (0, createApp_1.default)(), app = _a.app, server = _a.server;
-            (0, index_1.default)(app);
-            return [2 /*return*/];
+            switch (_b.label) {
+                case 0:
+                    _a = (0, createApp_config_1.default)(), app = _a.app, server = _a.server;
+                    chatIo = (0, socketIo_config_1.init)(server).chatIo;
+                    (0, socket_1.default)(chatIo);
+                    (0, index_middlewares_1.default)(app);
+                    return [4 /*yield*/, (0, db_config_1.default)()];
+                case 1:
+                    _b.sent();
+                    (0, index_routes_1.default)(app);
+                    return [2 /*return*/];
+            }
         });
     });
 };

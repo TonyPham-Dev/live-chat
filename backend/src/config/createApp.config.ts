@@ -1,5 +1,6 @@
 import express, { Application } from "express"
 import { createServer, Server } from "http"
+import variables from "../config/variables.config"
 
 interface ResponseType {
     app: Application
@@ -7,15 +8,14 @@ interface ResponseType {
 }
 
 const createApp: () => ResponseType = () => {
-    const PORT = process.env.PORT || 3000
-
     const app = express()
 
     const server = createServer(app)
 
-    server.listen(PORT, () => {
-        console.log(`Server listening on port ${PORT}`)
+    server.listen(variables.port, () => {
+        console.log(`Server listening on port ${variables.port}`)
     })
+
     return { app, server }
 }
 
