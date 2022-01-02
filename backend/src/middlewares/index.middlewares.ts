@@ -32,7 +32,7 @@ const middlewares = (app: Application) => {
         issuer: `https://${variables.auth0DomainUrl}/`,
         algorithms: ["RS256"],
     })
-    app.use(jwtCheck)
+    // app.use(jwtCheck)
 }
 
 export default middlewares

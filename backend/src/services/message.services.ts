@@ -1,3 +1,5 @@
+import { getChatGfs } from "../config/db.config"
+// import { chatUpload } from "../config/gridFsStorage.config"
 import ChatModel from "../models/Chat.models"
 interface Base {
     success: boolean
@@ -22,10 +24,10 @@ interface NewMessage extends Base {
 }
 
 export const newTextMessage: (
-    message: string,
     nickname: string,
-    roomId: string
-) => Promise<NewMessage> = async (message, nickname, roomId) => {
+    roomId: string,
+    message: string
+) => Promise<NewMessage> = async (nickname, roomId, message) => {
     try {
         const chat = await ChatModel.findByIdAndUpdate(
             roomId,
@@ -33,9 +35,8 @@ export const newTextMessage: (
                 $push: {
                     messages: {
                         user: nickname,
-                        message,
+                        message: [message],
                         type: "text",
-                        createdAt: new Date(),
                     },
                 },
             },
@@ -43,8 +44,10 @@ export const newTextMessage: (
                 new: true,
             }
         )
+        console.log(chat)
         return { success: true, chat }
     } catch (err) {
+        console.log(err)
         return { success: false }
     }
 }

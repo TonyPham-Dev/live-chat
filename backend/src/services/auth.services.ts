@@ -10,7 +10,7 @@ export const getUserData: (
         auth0
             .clientCredentialsGrant({
                 audience: variables.auth0Audience,
-                scope: "read:users",
+                scope: "read:user_idp_tokens",
             })
             .then((data: any) => data.access_token),
         axios
@@ -33,4 +33,20 @@ export const getUserData: (
         )
         .then((data) => data.data)
     return userData
+}
+
+export const getContacts: (accessToken: string) => Promise<any> = async (
+    accessToken
+) => {
+    const contacts = await axios
+        .get(
+            "https://people.googleapis.com/v1/people/me/connections?personFields=names,emailAddresses",
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        )
+        .then((data) => data.data)
+    return contacts
 }

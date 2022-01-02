@@ -6,8 +6,8 @@ const ChatSChema = new Schema(
         messages: [
             {
                 user: String,
-                message: String || [String],
-                type: "text" || "img",
+                message: [String],
+                type: { type: String, enum: ["text", "img"], default: "text" },
                 createdAt: { type: Date, default: Date.now },
             },
         ],

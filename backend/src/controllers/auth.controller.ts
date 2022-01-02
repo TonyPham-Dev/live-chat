@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { returnServerError } from "../app/constants"
 import UserModel from "../models/Users.models"
-import { getUserData } from "../services/auth.services"
+import { getContacts, getUserData } from "../services/auth.services"
 
 class AuthController {
     // [POST] /auth/login
@@ -16,6 +16,9 @@ class AuthController {
             const user = await UserModel.findOne({
                 username: userData.nickname,
             })
+            const contacts = await getContacts(
+                userData.identities[0].access_token
+            )
             if (!user) {
                 const newUser = new UserModel({
                     nickname: userData.nickname,
@@ -28,7 +31,7 @@ class AuthController {
                 })
             }
 
-            return res.json({ userData })
+            return res.json({ success: true, contacts })
         } catch (err) {
             return returnServerError(res, err.message)
         }

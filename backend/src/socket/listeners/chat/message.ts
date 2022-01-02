@@ -6,14 +6,18 @@ const messageHandler: (io: Server) => void = (io) => {
     const messageIo = io.of("/message")
     messageIo.use(socketAuth)
     messageIo.on("connection", (socket: Socket) => {
-        const { roomId, user } = socket.handshake.auth
+        const { roomId, nickname } = socket.handshake.auth
         socket.join(roomId)
+        console.log("connected to socket.io")
 
-        socket.on("message", async (message: string) => {
-            const newMess = await newTextMessage(message, user, roomId)
+        socket.on("text-message", async (message: string) => {
+            const newMess = await newTextMessage(nickname, roomId, message)
             if (newMess.success) {
-                socket.broadcast.to(roomId).emit("new-message", user, message)
+                socket.broadcast.to(roomId).emit("new-text", nickname, message)
             }
+        })
+        socket.on("img-message", (imgs: string[]) => {
+            socket.broadcast.to(roomId).emit("new-img", nickname, imgs)
         })
     })
 }

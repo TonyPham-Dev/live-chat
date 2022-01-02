@@ -44,43 +44,22 @@ class ChatController {
             return returnServerError(res, err.message)
         }
     }
-    // [DELETE] /chat/:chatId
-    // @desc Delete chat conversation
-    public async deleteChat(req: Request, res: Response) {
-        try {
-            await ChatModel.findByIdAndDelete(req.params.chatId)
-            return res.json({
-                success: true,
-            })
-        } catch (err) {
-            return returnServerError(res, err.message)
-        }
-    }
     // [POST] /chat/img/:chatId
     public async newImg(req: Request, res: Response) {
         try {
             chatUpload(req, res, async (err) => {
                 if (err) {
-                    return res.status(500).json({
-                        success: false,
-                        message: err.message,
-                    })
+                    return returnServerError(res, err.message)
                 } else {
-                    const filenameList: string[] = []
-
-                    if (req.files && req.files.length !== 0) {
+                    let fileList: string[] = []
+                    if (req.files && req.files.length > 0) {
                         const files: Express.Multer.File[] = Array.isArray(
                             req.files
                         ) && [...req.files]
                         files.forEach((file) => {
-                            filenameList.push(`/images/chat/${file.filename}`)
+                            fileList.push(`/images/chat/${file.filename}`)
                         })
-                    } else {
-                        return res
-                            .status(400)
-                            .json({ success: false, message: "No files found" })
                     }
-
                     const userInfoFromAuth0 = await axios
                         .get(`https://${variables.auth0DomainUrl}/userinfo`, {
                             headers: {
@@ -96,19 +75,22 @@ class ChatController {
                         })
                     }
 
-                    await ChatModel.findByIdAndUpdate(req.params.chatId, {
-                        $push: {
-                            messages: {
-                                user: userInfoFromAuth0.nickname,
-                                message: filenameList,
-                                type: "img",
+                    const newChat = await ChatModel.findByIdAndUpdate(
+                        req.params.chatId,
+                        {
+                            $push: {
+                                messages: {
+                                    user: userInfoFromAuth0.nickname,
+                                    message: fileList,
+                                    type: "img",
+                                },
                             },
                         },
-                    })
-
+                        { new: true }
+                    )
                     return res.json({
                         success: true,
-                        message: "Img added",
+                        fileList,
                     })
                 }
             })
