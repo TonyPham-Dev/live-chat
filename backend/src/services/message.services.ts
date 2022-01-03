@@ -44,7 +44,6 @@ export const newTextMessage: (
                 new: true,
             }
         )
-        console.log(chat)
         return { success: true, chat }
     } catch (err) {
         console.log(err)

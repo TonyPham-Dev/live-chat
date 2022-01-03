@@ -14,7 +14,7 @@ class AuthController {
 
             // add to mongodb
             const user = await UserModel.findOne({
-                username: userData.nickname,
+                nickname: userData.nickname,
             })
             const contacts = await getContacts(
                 userData.identities[0].access_token
@@ -22,7 +22,8 @@ class AuthController {
             if (!user) {
                 const newUser = new UserModel({
                     nickname: userData.nickname,
-                    avatar: userData.picture,
+                    avatarUrl: userData.picture,
+                    fullName: userData.name,
                 })
                 await newUser.save()
                 return res.json({

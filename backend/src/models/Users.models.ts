@@ -2,7 +2,8 @@ import { Schema, model } from "mongoose"
 
 const UserSchema = new Schema({
     nickname: { type: String, required: true },
-    avatar: { type: String, required: true },
+    avatarUrl: { type: String, required: true },
+    fullName: { type: String, required: true },
 })
 
 UserSchema.virtual("posts", {
