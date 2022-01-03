@@ -22,7 +22,8 @@ class AuthController {
             if (!user) {
                 const newUser = new UserModel({
                     nickname: userData.nickname,
-                    avatar: userData.picture,
+                    avatarUrl: userData.picture,
+                    fullName: userData.name,
                 })
                 await newUser.save()
                 return res.json({
