@@ -16,6 +16,7 @@ class AuthController {
             const user = await UserModel.findOne({
                 username: userData.nickname,
             })
+            console.log(user)
             const contacts = await getContacts(
                 userData.identities[0].access_token
             )
