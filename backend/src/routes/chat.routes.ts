@@ -6,5 +6,6 @@ const router = Router()
 router.get("/", ChatController.getAll)
 router.post("/new", ChatController.newChat)
 router.post("/img/:chatId", ChatController.newImg)
+router.post("/addMessage/:chatId", ChatController.addMessage)
 
 export default router

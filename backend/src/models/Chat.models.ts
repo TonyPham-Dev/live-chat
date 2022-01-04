@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose"
 
-const ChatSChema = new Schema(
+const ChatSchema = new Schema(
     {
         users: [String],
         messages: [
@@ -12,9 +12,11 @@ const ChatSChema = new Schema(
             },
         ],
     },
-    { timestamps: true }
+    {
+        timestamps: true,
+    }
 )
 
-const ChatModel = model("Chat", ChatSChema, "chats")
+const ChatModel = model("Chat", ChatSchema, "chats")
 
 export default ChatModel

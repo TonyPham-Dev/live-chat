@@ -1,3 +1,4 @@
+import { newTextMessage } from "./../services/message.services"
 import { Request, Response } from "express"
 import { chatUpload } from "../config/gridFsStorage.config"
 import { returnServerError } from "../app/constants"
@@ -18,6 +19,7 @@ class ChatController {
             const chats = await ChatModel.find({
                 users: userData.nickname,
             }).sort({ updatedAt: -1 })
+            console.log(chats)
             return res.json(chats)
         } catch (err) {
             return returnServerError(res, err.message)
@@ -94,6 +96,19 @@ class ChatController {
                     })
                 }
             })
+        } catch (err) {
+            return returnServerError(res, err.message)
+        }
+    }
+    // [POST] /api/chat/addMessage/:chatId
+    public async addMessage(req: Request, res: Response) {
+        try {
+            await newTextMessage(
+                req.body.nickname,
+                req.params.chatId,
+                req.body.message
+            )
+            res.json({ success: true })
         } catch (err) {
             return returnServerError(res, err.message)
         }

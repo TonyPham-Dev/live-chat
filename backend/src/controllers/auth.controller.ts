@@ -14,7 +14,7 @@ class AuthController {
 
             // add to mongodb
             const user = await UserModel.findOne({
-                username: userData.nickname,
+                nickname: userData.nickname,
             })
             console.log(user)
             const contacts = await getContacts(
