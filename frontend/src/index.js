@@ -8,13 +8,13 @@ import App from './App';
 const domain = process.env.REACT_APP_AUTH0_DOMAIN
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID
 ReactDOM.render(
-  <BrowserRouter>
     <Auth0Provider 
+      audience="https://live-chat-app.us.auth0.com/api/v2/"
+      scope="read:user_idp_tokens read:current_user"
       domain={domain}
       clientId={clientId}
       redirectUri={window.location.origin} >
       <App />
-    </Auth0Provider>
-  </BrowserRouter>,
+    </Auth0Provider>,
   document.getElementById('root')
 );

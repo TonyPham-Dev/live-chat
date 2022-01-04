@@ -6,13 +6,14 @@
     background-color: rgb(255, 255, 255);
     color:#333;
     position: relative;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .container {
     width: 96%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    margin-top: 10px;
+    padding-top: 10px;
     
 }
 .logoContainer {
@@ -116,7 +117,11 @@
     background-color: rgb(253, 166, 116);
     border-radius: 15%;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    display:none;
+   z-index: 9999999;
+}
+
+.disable{
+    display: none;
 }
 .dashboardItem {
     list-style: none;
@@ -124,6 +129,7 @@
     margin-bottom: 10px;
     cursor: pointer;
     font-weight: 600;
+    
 }
 .iconMobile {
     display: none;

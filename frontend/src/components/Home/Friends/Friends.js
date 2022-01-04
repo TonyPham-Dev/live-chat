@@ -1,9 +1,11 @@
 import React from 'react';
+// import Header from '../Header/Header';
 
 function Friends(props) {
     return (
         <div>
-            this is friends 2
+            {/* <Header/>      */}
+            this is friends
         </div>
     );
 }
