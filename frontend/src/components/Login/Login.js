@@ -33,7 +33,7 @@ function Login(props) {
                     method: "POST",
                 }
             ).then((data) => data.json())
-            console.log(loginData);
+            // console.log(loginData);
             await navigate("/home");
             // console.log(user)
         } else {

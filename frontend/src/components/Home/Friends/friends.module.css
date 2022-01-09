@@ -1,0 +1,51 @@
+
+.app {
+    padding:10px 15px 0px 10px;
+    /* margin-top: 100px; */
+}
+.header {
+    display: flex;
+    justify-content:space-between;
+}
+
+.title {
+    color:rgb(90, 90, 90);
+}
+.listItem {
+    overflow:scroll;
+    width:100%;
+    height: 90vh;
+}
+.listItem::-webkit-scrollbar {
+    display: none;
+}
+.iconMore {
+    cursor: pointer;
+    font-size: 20px;
+}
+.listFriends {
+    list-style: none;
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+    margin: 20px 0px;
+}
+.userContainer {
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+    
+}
+.friendsName {
+    color:rgb(82, 80, 80);
+}
+.friendsImage {
+    width:40px;
+    height: 40px;
+    border-radius: 30%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+.iconOnline {
+    color:rgb(49, 233, 12);
+}

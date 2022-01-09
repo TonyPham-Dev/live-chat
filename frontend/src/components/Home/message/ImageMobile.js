@@ -1,12 +1,13 @@
 import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import Slider from "react-slick";
 import styles from "./message.module.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import imageUser from "./image/imageUser.jpg";
 function ImageMobile(props) {
+  const {user} = useAuth0()
   const settings = {
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
@@ -15,23 +16,9 @@ function ImageMobile(props) {
     <div className={styles.mobileImageContainer}>
         <Slider {...settings}>
           <div className={styles.slider}>
-            <img className={styles.mobileImage} src={imageUser} />
+            {user && <img className={styles.mobileImage} src={props.userData[ props.messages.users.filter((users) => users != user.nickname) ]} /> }
           </div>
-          <div className={styles.slider}>
-            <img className={styles.mobileImage} src={imageUser} />
-          </div>
-          <div className={styles.slider}>
-            <img className={styles.mobileImage} src={imageUser} />
-          </div>
-          <div className={styles.slider}>
-            <img className={styles.mobileImage} src={imageUser} />
-          </div>
-          <div className={styles.slider}>
-            <img className={styles.mobileImage} src={imageUser} />
-          </div>
-          <div className={styles.slider}>
-            <img className={styles.mobileImage} src={imageUser} />
-          </div>
+         
       </Slider>
       </div>
   );

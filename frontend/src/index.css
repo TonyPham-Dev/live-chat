@@ -1,26 +1,30 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  scroll-behavior: smooth;
 }
 .logout {
-    width: 100%;
-    padding:5px 0px 5px 0px;
-    font-size: 14px;
-    font-weight: 600;
-    color:#fff;
-    border:none;
-    border-radius:20px;
-    background-color: #f40;
-    text-align: center;
-    cursor: pointer;
+  width: 100%;
+  padding: 5px 0px 5px 0px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  background-color: #f40;
+  text-align: center;
+  cursor: pointer;
 }
 
 #inputImage {
-	width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 }

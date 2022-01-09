@@ -1,0 +1,20 @@
+.home {
+    display: flex;
+    width: 98%;
+    margin: 0 auto;
+    padding:0px 15px;
+    background-color: rgb(214, 214, 214);
+    margin-top: 93px;
+}
+.friends {
+    width: 20%;
+    height: 100vh;
+}
+.postContents {
+    width: 55%;
+    height: 100vh;
+}
+.posts {
+    width: 25%;
+    height: 100vh;
+}

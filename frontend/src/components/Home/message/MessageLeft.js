@@ -1,13 +1,14 @@
 import React, {useEffect} from "react";
 import { FaSearch } from "react-icons/fa";
+import {AiOutlineCloudDownload} from "react-icons/ai"
 import { IoIosAddCircle } from "react-icons/io";
 import {useAuth0} from '@auth0/auth0-react';
+import {Link} from 'react-router-dom'
 
 import styles from "./message.module.css";
 import imageUser from "./image/imageUser.jpg";
 
 function MessageLeft(props) {
-  console.log(props.messages);
   useEffect (() => {
     const apiUse = `http://localhost:3000/api/user/`
   },[])
@@ -36,7 +37,7 @@ function MessageLeft(props) {
        
           {/* render list friends */}
           { user &&  (props.messages && props.userData) && props.messages.map ((message,index) => {
-            
+            console.log(props.messages[0].messages.pop().message)
             const useFilter =  message.users.filter(users => users != user.nickname)
             // console.log(props.messages);
               return (
@@ -45,8 +46,9 @@ function MessageLeft(props) {
                   <div className={styles.messageUseContent}>
                     <h4 className={styles.name}>{useFilter}</h4>
                     <h5 className={styles.content}>
-                      <span style={{ color: "#666" }}>You: </span> 
-                      <li></li>
+                      <span style={{ color: "#666" }}>You: 
+                        <span style={{ color:'#fff', marginLeft: '10px'}}>{props.messages[0].messages.pop().message}</span>
+                      </span> 
                     </h5>
                   </div>
                 </li> 
@@ -69,7 +71,11 @@ function MessageLeft(props) {
       </div>
 
       <div className={styles.messageFooter}>
-        <button className={styles.messageButton}>Submit Google</button>
+        <Link to={''} style={{textDecoration: "none"}}>
+          <div className={styles.downLoadContainer}>
+            <h4 className={styles.downLoad}><span style={{ marginRight: '10px', fontSize:'20px'}}><AiOutlineCloudDownload/></span>Cài đặt ứng dụng Live Chat</h4>
+          </div>
+        </Link>
       </div>
     </div>
   );

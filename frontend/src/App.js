@@ -35,7 +35,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/message" element={<Message />} />
-          <Route path="/message/:id" element={<Message/>} />
+          <Route path="/message/:chatId" element={<Message/>} />
+          {/* <Route path="/message/img/:chatId" element={<Message/>} /> */}
           <Route path="/friends" element={<Friends />} />
           <Route path='/home' element={<Home/>}/>
           <Route path='/user' element={<Profile/>}/>

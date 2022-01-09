@@ -17,8 +17,11 @@ import { HiEmojiHappy } from "react-icons/hi";
 import { AiFillLike } from "react-icons/ai";
 import { TiDelete } from "react-icons/ti";
 
+import { useParams } from "react-router-dom";
+// axios
+import axios from "axios";
 // auth0
-import {useAuth0} from '@auth0/auth0-react';
+import { useAuth0 } from "@auth0/auth0-react";
 
 // emoji
 import InputEmoji from "react-input-emoji";
@@ -27,144 +30,248 @@ import styles from "./message.module.css";
 import clsx from "clsx";
 import ImageMobile from "./ImageMobile";
 
-const serverUrl = "http://localhost:3000"
-const listMessApi = 'http://localhost:3000/api/chat'
-
+const serverUrl = "http://localhost:3000";
+const listMessApi = "http://localhost:3000/api/chat";
 
 function MessageRight(props) {
-  // props.messages._id
-  // auth0
-  const socketRef = useRef()
+  console.log(props.messages)
+  // scroll to bottom
+  const messagesEnd = useRef();
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
+  useEffect(() => {
+    scrollToBottom();
+  });
+  const scrollToBottom = () => {
+    messagesEnd.current.scrollIntoView({ block: "start", behavior: "smooth" });
+  };
 
-  const {user} = useAuth0()
+  const socketRef = useRef();
+  const { chatId } = useParams();
+  const { user } = useAuth0();
   // value input
-  const [valueMess, setValueMess] = useState('');
+  const [valueMess, setValueMess] = useState("");
   // save value input
   const [saveValueMess, setSaveValueMess] = useState([]);
 
   // const [openImage, setOpenImage] = useState(false);
   // file image
   const [valueInputFile, setValueInputFile] = useState([]);
+  const [imgs, setImgs] = useState([]);
+  const [srcImage, setSrcImage] = useState([]);
+  const [openButtonImage, setOpenButtonImage] = useState(false);
   const inputRef = useRef();
   const itemMessRef = useRef();
 
-  // handle button submit
+  // handle button submit gửi
   const handleSubmitValue = () => {
-    setSaveValueMess((prev) => [...prev, {message:valueMess}]);
+    // play load text
+    setSaveValueMess((prev) => [
+      ...prev,
+      { user: user.nickname, message: valueMess, image: null },
+    ]);
     setValueMess("");
     inputRef.current.focus();
-    itemMessRef.current.scrollIntoView({ behavior: "smooth" });
-    socketRef.current.emit("text-message", valueMess)
-  };
+    itemMessRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    });
+    socketRef.current.emit("text-message", valueMess);
 
+    // play load image
+    if (valueInputFile.length > 0) {
+      setSrcImage((prev) => [...prev, valueInputFile]);
+      playLoadImage();
+     
+    }
+  };
+  // message chat
   useEffect(() => {
     const socket = io(`${serverUrl}/message`, {
       path: "/chat",
       auth: {
         roomId: props.messages._id,
-        token: localStorage.getItem("accessToken")
-      }
-    })
+        token: localStorage.getItem("accessToken"),
+      },
+    });
 
+    socket.on("new-text", (nickName, message) => {
+      setSaveValueMess((prev) => [
+        ...prev,
+        { user: nickName, message: message, type: "text"},
+      ]);
+    });
 
-    socket.on('new-text', (nickName, message) => {
-      setSaveValueMess((prev) => [...prev, {user:nickName, message:message}]);
-    })
-    
-    socketRef.current = socket
+    socketRef.current = socket;
     props.messages.messages.forEach((message) => {
-      setSaveValueMess((prev) => [...prev, {user: message.user, message:message.message[0]}]);
-    })
-  },[])
+      setSaveValueMess((prev) => [...prev, { user: message.user, message: message.message,type: message.type},
+      ]);
+    });
+  }, []);
+
+  // message image ảnh gửi lên server
+  const playLoadImage = async () => {
+    const formData = new FormData();
+    imgs.forEach((file) => {
+      formData.append("images", file);
+    });
+    const imgList = await axios
+      .post(`${serverUrl}/api/chat/img/${chatId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((data) => data.data);
+    console.log(imgList);
+    if (imgList.success) {
+      setSaveValueMess((prev) => [...prev, { user: user.nickname, message: imgList.fileList,type: 'img'}])
+      socketRef.current.emit("img-message", imgList.fileList);
+    }
+  };
+
   // handle key enter
   const handleEnterValueInput = (valueMess) => {
-    setSaveValueMess((prev) => [...prev, {message:valueMess}]);
-    itemMessRef.current && itemMessRef.current.scrollIntoView({ behavior: "smooth" });
+    setSaveValueMess((prev) => [
+      ...prev,
+      { user: user.nickname, message: valueMess },
+    ]);
+    itemMessRef.current &&
+      itemMessRef.current.scrollIntoViewIfNeeded({
+        block: "nearest",
+        behavior: "smooth",
+        inline: "start",
+      });
     inputRef.current.focus();
-    socketRef.current.emit("text-message", valueMess)
+    socketRef.current.emit("text-message", valueMess);
   };
   // handle click icon like
   const handleIconLike = () => {
-    setSaveValueMess((prev) => [...prev, {message:'👍'}]);
-    itemMessRef.current.scrollIntoView({ behavior: "smooth" });
-    socketRef.current.emit("text-message", '👍')
+    setSaveValueMess((prev) => [
+      ...prev,
+      { user: user.nickname, message: "👍" },
+    ]);
+    itemMessRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    });
+    socketRef.current.emit("text-message", "👍");
   };
 
-  useEffect(() => {
-    // clean up
-    return () => {
-      valueInputFile && URL.revokeObjectURL(valueInputFile);
-    };
-  }, [valueInputFile]);
-
-  // handle input image click
+  // handle input image click lấy link ảnh
   const handleInputImage = (e) => {
-    setValueInputFile([
-      ...valueInputFile,
-      URL.createObjectURL(e.target.files[0]),
-    ]);
+    setImgs((prev) => [...prev, e.target.files[0]]); 
+    setValueInputFile((prev) => [...prev, URL.createObjectURL(e.target.files[0])]);
   };
 
   // remove file image
   const deleteImage = (e) => {
     const imageIndex = valueInputFile.filter((item, index) => index !== e);
+    setImgs((prev) => prev.splice(e, 1));
     setValueInputFile(imageIndex);
+    valueInputFile && URL.revokeObjectURL(valueInputFile[e]);
+    setSrcImage([]);
+  };
+  // open button image
+  const handleOpenButtonImage = () => {
+    setOpenButtonImage(true);
   };
   return (
     <div className={styles.messageRight}>
       <div className={styles.imageMobile}>
-        <ImageMobile />
+        <ImageMobile userData = {props.userData} messages = {props.messages} />
       </div>
-        {/* message header */}
-      {user && <div className={styles.messageRightContainer}>
-        <div className={styles.messageUser}>
-          <img className={styles.messImage} src={props.userData[props.messages.users.filter(users => users != user.nickname)]} />
-          <div>
-            <h3 className={styles.messageRightTitle}>{props.messages.users.filter(users => users != user.nickname)}</h3>
-           
-            <span style={{ color: "#9BF66C" }}>online</span>
+      {/* message header */}
+      {user && (
+        <div className={styles.messageRightContainer}>
+          <div className={styles.messageUser}>
+            <img
+              className={styles.messImage}
+              src={
+                props.userData[
+                  props.messages.users.filter((users) => users != user.nickname)
+                ]
+              }
+            />
+            <div>
+              <h3 className={styles.messageRightTitle}>
+                {props.messages.users.filter((users) => users != user.nickname)}
+              </h3>
+
+              <span style={{ color: "#9BF66C" }}>online</span>
+            </div>
+          </div>
+
+          <div className={styles.messageRightIcon}>
+            <span className={styles.icon}>
+              <BsFillTelephoneFill />
+            </span>
+            <span className={styles.icon}>
+              <HiVideoCamera />
+            </span>
+            <span className={styles.icon}>
+              <IoMdInformationCircle />
+            </span>
           </div>
         </div>
-        
-        <div className={styles.messageRightIcon}>
-          <span className={styles.icon}>
-            <BsFillTelephoneFill />
-          </span>
-          <span className={styles.icon}>
-            <HiVideoCamera />
-          </span>
-          <span className={styles.icon}>
-            <IoMdInformationCircle />
-          </span>
-        </div>
-      </div>
-      }
+      )}
 
-      {/* id: props.messages._id */}
       {/* content message */}
       <div className={styles.listItem}>
         <ul className={styles.messContainer}>
           {saveValueMess.map((value, index) => {
+            // console.log(value);
             return (
-              <span ref={itemMessRef} className={styles.messItem} key={index}>
-                <div className={styles.iconItemContainer}>
-                  <span className={styles.iconItem}>
-                    <MdMoreVert />
-                  </span>
-                  <span className={styles.iconItem}>
-                    <RiShareForwardFill />
-                  </span>
-                  <span className={styles.iconItem}>
-                    <HiEmojiHappy />
-                  </span>
-                </div>
-                <li className={styles.item}>{value.message}</li>
-                <img />
-              </span>
+              <div key={index}>
+                {user && value.user === user.nickname ? (
+                  <li ref={itemMessRef} className={styles.messItemRight}>
+                    <div className={styles.iconItemContainer}>
+                      <span className={styles.iconItem}>
+                        <MdMoreVert />
+                      </span>
+                      <span className={styles.iconItem}>
+                        <RiShareForwardFill />
+                      </span>
+                      <span className={styles.iconItem}>
+                        <HiEmojiHappy />
+                      </span>
+                    </div>
+                    <div className={styles.itemContainer}>
+                    {console.log(saveValueMess.message)}
+                        {user && value.type === 'text' ? <h5 className={styles.itemLeft}> {value.message }</h5>: null }
+
+                        {/* {value.message} */}
+                        {user && value.type === 'img' ? <img className={styles.messageImages} src={`http://localhost:3000/api${value.message}`}/> : null}
+                      
+                    </div>
+                  </li>
+                ) : (
+                  <li ref={itemMessRef} className={styles.messItemLeft}>
+                    <div className={styles.iconItemContainer}>
+                      <span className={styles.iconItem}>
+                        <MdMoreVert />
+                      </span>
+                      <span className={styles.iconItem}>
+                        <RiShareForwardFill />
+                      </span>
+                      <span className={styles.iconItem}>
+                        <HiEmojiHappy />
+                      </span>
+                    </div>
+                    <div className={styles.itemContainer}>
+                      
+                      {user && value.type === 'text' ?<h5 className={styles.itemRight}> value.message </h5>: null }
+                    
+                      {user && value.type === 'img' ? <img className={styles.messageImages} src={`http://localhost:3000/api${value.message}`}/> : null}
+                      
+                    </div>
+                  </li>
+                )}
+              </div>
             );
           })}
         </ul>
-
         {/* list image */}
         <div className={styles.listImageContainer}>
           {valueInputFile.length > 0 &&
@@ -201,6 +308,7 @@ function MessageRight(props) {
                 disabled={valueInputFile.length === 10}
                 multiple
                 onChange={handleInputImage}
+                onClick={handleOpenButtonImage}
               />
             </form>
             <span className={styles.messEmoji}>
@@ -220,7 +328,7 @@ function MessageRight(props) {
               <div className={styles.buttonContainer}>
                 <span
                   className={
-                    valueMess !== ""
+                    openButtonImage || valueMess !== ""
                       ? clsx(styles.active, styles.messageRightButton)
                       : styles.messageRightButton
                   }
@@ -231,7 +339,7 @@ function MessageRight(props) {
                 <span
                   onClick={handleIconLike}
                   className={
-                    valueMess !== ""
+                    openButtonImage || valueMess !== ""
                       ? styles.iconLike
                       : clsx(styles.active, styles.iconLike)
                   }
@@ -242,6 +350,7 @@ function MessageRight(props) {
             </span>
           </form>
         </div>
+        <div className="bottom" ref={messagesEnd}></div>
       </div>
     </div>
   );

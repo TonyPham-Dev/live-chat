@@ -16,12 +16,14 @@ function Message(props) {
     fetch(apiChat, { headers: { authorization: `Bearer ${accessToken}` } })
       .then((response) => response.json())
       .then((message) => {
+        console.log(message)
         setMessage(message);
         if (message.length > 0) {
           navigate(`/message/${message[0]._id}`);
         }
         let userList = [];
-        message.forEach((mess) => {
+        console.log(message)
+        message && message.forEach((mess) => {
           userList = userList.concat(mess.users);
         });
         userList = Array.from(new Set(userList));
