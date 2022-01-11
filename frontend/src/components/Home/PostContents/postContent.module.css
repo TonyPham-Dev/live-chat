@@ -3,8 +3,9 @@
     padding:10px 40px;
 }
 .posts {
+    padding:20px;
     width: 100%;
-    height: 500px;
+    /* height: 500px; */
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius:10px;
     margin-bottom: 20px;
@@ -14,4 +15,254 @@
     height: 40px;
     object-fit: cover;
     border-radius:50px;
+}
+.userContainer {
+    display: flex;
+    align-items: center;
+}
+.imageUser {
+    margin-right: 10px;
+}
+.user {
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.userMore {
+    cursor: pointer;
+    font-size: 20px;
+}
+.content {
+    margin-top: 20px;
+}
+.imageContent {
+    width: 100%;
+    /* height: 600px; */
+    position: relative;
+    margin-top: 30px;
+}
+.container {
+    display:flex;
+    justify-content:space-between;
+    flex-wrap: wrap;
+    
+    /* position:absolute; */
+    width: 100%;
+    height: 50%;
+}
+
+.postImage {
+    padding:5px;
+    border-radius:10px;
+    object-fit: cover;
+}
+.likeAndComments {
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+    /* height: 200px; */
+    padding:0px 10px;
+    margin-top: 30px;
+}
+.like {
+    display: flex;
+    align-items:center;
+
+}
+.iconLike {
+    color:#046fe3;
+    cursor: pointer;
+}
+.countLike {
+    font-weight: 600;
+    color: rgb(112, 112, 112);
+    margin-left: 5px;
+}
+.comment {
+    display: flex;
+    align-items:center;
+    cursor: pointer;
+}
+.countComment {
+    margin-right: 5px;
+    font-weight: 600;
+    color:rgb(112, 112, 112);
+}
+.likeAndCommentContainer {
+    display: flex;
+    align-items:center;
+    width:100%;
+    border-top: 1px solid rgb(185, 184, 184);
+    border-bottom: 1px solid rgb(185, 184, 184);
+    padding:5px;
+    margin-top: 30px;
+}
+.likeContainer {
+    width: calc(100% / 3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    /* text-align: center; */
+    cursor: pointer;
+    border-radius:10px;
+    padding:10px;
+    transition: 0.4s;
+}
+.likeContainer:hover {
+    background-color:rgb(151, 151, 151);
+    border-radius:10px;
+    transition: 0.4s;
+    color:#fff;
+}
+.iconLikes {
+    margin-right: 5px;
+    font-size: 20px;
+}
+.titleLike {
+    font-weight: 600;
+    font-size: 17px;
+}
+.commentContainer {
+    width: calc(100% / 3);
+    display: flex;
+    /* align-items:center; */
+    justify-content: center;
+    cursor: pointer;
+    border-radius:10px;
+    padding:10px;
+    transition: 0.4s;
+}
+.commentContainer:hover {
+    background-color:rgb(151, 151, 151);
+    border-radius:10px;
+    transition: 0.4s;
+    color:#fff;
+}
+.iconComments {
+    margin-right: 5px;
+    font-size: 20px;
+}
+.titleComment {
+    font-weight: 600;
+    font-size: 17px;
+}
+.listComments {
+    width: 100%;
+    /* height: 100px; */
+    margin-top: 30px;
+}
+.listComment {
+    /* display: flex;
+    align-items: center; */
+    margin-bottom: 10px;
+}
+.item {
+    display: flex;
+    align-items: center;
+}
+.userComment {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius:50px; 
+    cursor: pointer;
+}
+.nameUser {
+    cursor: pointer;
+}
+.contentComment {
+    margin-left: 9px;
+    background-color:rgb(145, 145, 145);
+    padding:10px;
+    border-radius:20px;
+    color:rgb(233, 233, 233);
+}
+.shareContainer {
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    width: calc(100% / 3);
+    cursor: pointer;
+    border-radius:10px;
+    padding:10px;
+    transition: 0.4s;
+}
+.shareContainer:hover {
+    background-color:rgb(151, 151, 151);
+    border-radius:10px;
+    transition: 0.4s;
+    color:#fff;
+
+}
+.iconShare {
+    font-size: 20px;
+    margin-right: 5px;
+}
+.titleShare {
+    font-weight: 600;
+    font-size: 17px;
+}
+.inputCommentContainer {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+}
+.userInput {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius:50px;
+    margin-right: 5px;
+}
+.commentEmoji {
+    margin-left: 60px;
+    margin-top: 5px;
+    display: flex;
+
+}
+.input {
+    width:90%;
+}
+.itemIcon {
+    margin-right: 20px;
+    cursor: pointer;
+    font-size: 18px;
+}
+.commentImage {
+    font-size: 22px;
+    margin-top: 3px;
+    margin-left: 10px;
+    color:#858585;
+    cursor: pointer;
+}
+.imageCommentContainer {
+    position: relative;
+    
+    /* display: flex; */
+}
+.renderImages {
+    display: flex;
+}
+.fileComment{
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+.imageComments {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius:10px;
+    margin-top:10px;
+    margin-right: 10px;
+}
+.deleteImage {
+    position:absolute;
+    right:13px;
+    top: 10px;
+    color:rgb(5, 5, 5);
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 999;
 }

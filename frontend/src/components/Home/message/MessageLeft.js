@@ -37,7 +37,8 @@ function MessageLeft(props) {
        
           {/* render list friends */}
           { user &&  (props.messages && props.userData) && props.messages.map ((message,index) => {
-            console.log(props.messages[0].messages.pop().message)
+            console.log(props.messages[0].messages[props.messages[0].messages.length - 1].message)
+            // console.log(message[message.length - 1]);
             const useFilter =  message.users.filter(users => users != user.nickname)
             // console.log(props.messages);
               return (
@@ -47,7 +48,8 @@ function MessageLeft(props) {
                     <h4 className={styles.name}>{useFilter}</h4>
                     <h5 className={styles.content}>
                       <span style={{ color: "#666" }}>You: 
-                        <span style={{ color:'#fff', marginLeft: '10px'}}>{props.messages[0].messages.pop().message}</span>
+                      
+                        <span style={{ color:'#fff', marginLeft: '10px'}}>{props.messages[index].messages[props.messages[index].messages.length - 1].message[0]}</span>
                       </span> 
                     </h5>
                   </div>

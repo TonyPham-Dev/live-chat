@@ -10,6 +10,18 @@ import { useEffect, memo, useState } from "react";
 import styles from './home.module.css'
 
 function Home() {
+    const accessToken = localStorage.getItem("accessToken");
+    //   console.log(accessToken);
+    // api localHost
+    const apiServer = 'http://localhost:3000'
+
+     // call api posts new
+     useEffect(() => {
+      const apiPost = `${apiServer}/api/posts/new`
+      fetch(apiPost) //axios
+          .then(response => response.json())
+          .then(data => console.log(data))
+    },[])
   return (
     <>
       <div className={styles.home}>

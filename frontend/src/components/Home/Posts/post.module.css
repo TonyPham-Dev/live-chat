@@ -1,0 +1,139 @@
+.postContainer {
+    margin-top: 10px;
+
+}
+.coverImage {
+    width:100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+.userPost {
+    position: relative;
+}
+.user {
+    position: absolute;
+    bottom: -25%;
+    left: 5%;
+    display:flex;
+    align-items: center;
+    cursor: pointer;
+}
+.avatar {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+.nameUser {
+    margin-left: 10px;
+}
+.name {
+    font-size: 20px;
+    color:rgb(87, 86, 86);
+    margin-bottom: 1px;
+}
+.title {
+    font-size: 13px;
+    color:rgb(153, 152, 152);
+}
+.follows {
+    display:flex;
+    justify-content:space-evenly;
+    margin-top: 90px;
+}
+.followers {
+    text-align: center;
+    color:rgb(87, 86, 86);
+}
+.following {
+    text-align: center;
+    color:rgb(87, 86, 86);
+    
+}
+.textareaContainer {
+    margin-top: 20px;
+}
+.input {
+    width: 100%;
+    border:none;
+    outline: none;
+    border-radius: 20px;
+    padding:15px 10px;
+    cursor: pointer;
+}
+.input::-webkit-input-placeholder {
+    color: rgb(129, 130, 131);
+  }
+.imageAndVideoAndStreaming {
+    margin-top: 20px;
+    display: flex;
+    justify-content:space-evenly;
+}
+.iconInput {
+    display: flex;
+    align-items:center;
+    font-size: 18px;
+    cursor: pointer;
+}
+.image {
+    color:rgb(7, 157, 245);
+    font-size: 20px;
+}
+.video {
+    color:rgb(255, 98, 221);
+    font-size: 20px;
+}
+.streaming {
+    
+    color:rgb(248, 180, 33);
+    font-size: 20px;
+}
+.titleIcon {
+    margin-left: 9px;
+    color:rgb(97, 97, 97);
+}
+.activityContainer {
+    margin-top: 40px;
+}
+.activityHeader {
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+}
+.activityContent {
+    margin-top: 10px;
+    width:100%;
+    height: 43vh;
+    overflow:scroll;
+}
+.activityContent::-webkit-scrollbar {
+    display: none;
+}
+.activityTitle {
+    color:rgb(63, 63, 63);
+    font-size: 17px;
+}
+.activityIcon {
+    cursor: pointer;
+    color:rgb(63, 63, 63);
+}
+.activity{
+    display: flex;
+    align-items:center;
+    padding:10px;
+    background-color:rgb(189, 187, 187);
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+.activityAvatar {
+    width:50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 20px;
+
+}
+.activityName {
+    color:rgb(80, 78, 78);
+    margin-left: 10px;
+}

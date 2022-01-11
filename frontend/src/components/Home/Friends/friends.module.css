@@ -28,7 +28,18 @@
     display: flex;
     justify-content:space-between;
     align-items:center;
-    margin: 20px 0px;
+    padding:10px 10px;
+    /* margin: 20px 0px; */
+    cursor: pointer;
+    transition:0.2s;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+.listFriends:hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 20px;
+    background-color: #fff;
+    transition:0.2s;
 }
 .userContainer {
     display: flex;
@@ -48,4 +59,39 @@
 }
 .iconOnline {
     color:rgb(49, 233, 12);
+}
+.inputSearch {
+    width:100%;
+    padding:5px 10px;
+    border:1px solid rgb(182, 182, 182);
+    border-radius: 20px;
+    outline: none;
+}
+.formSearchFriends {
+    position: relative;
+}
+.listFriendsSearch {
+    margin-top: 10px;
+    position: absolute;
+    width: 100%;
+    background-color:rgb(167, 167, 167);
+    padding: 10px 15px;
+    border-radius: 20px;
+}
+.itemSearch{
+    list-style: none;
+    margin-bottom: 10px;
+    padding:10px 10px;
+
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    font-weight: 600;
+    color:#fff;
+    border-radius: 20px;
+    transition: 0.4s;
+    cursor: pointer;
+}
+.itemSearch:hover {
+    background-color:rgb(223, 220, 220);
+    transition: 0.4s;
+    color:#333;
 }

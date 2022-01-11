@@ -124,7 +124,6 @@ function MessageRight(props) {
         },
       })
       .then((data) => data.data);
-    console.log(imgList);
     if (imgList.success) {
       setSaveValueMess((prev) => [...prev, { user: user.nickname, message: imgList.fileList,type: 'img'}])
       socketRef.current.emit("img-message", imgList.fileList);

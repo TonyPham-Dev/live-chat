@@ -13,6 +13,10 @@
 .postContents {
     width: 55%;
     height: 100vh;
+    overflow:scroll;
+}
+.postContents::-webkit-scrollbar {
+    display: none;
 }
 .posts {
     width: 25%;
