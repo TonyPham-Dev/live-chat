@@ -119,7 +119,7 @@ function MessageRight(props) {
     const imgList = await axios
       .post(`${serverUrl}/api/chat/img/${chatId}`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "multipart/form-data", 
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       })

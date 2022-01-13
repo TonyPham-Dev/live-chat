@@ -1,6 +1,6 @@
 .postContainer {
     margin-top: 10px;
-
+    height: 100vh;
 }
 .coverImage {
     width:100%;
@@ -136,4 +136,99 @@
 .activityName {
     color:rgb(80, 78, 78);
     margin-left: 10px;
+}
+.titlePostContainer {
+
+    margin: 10px 0px;
+    border-bottom: 1px solid rgb(141, 139, 139);
+    padding-bottom: 20px;
+}
+.titlePost {
+    font-size: 20px;
+    color:#fff;
+    text-align: center;
+}
+.writerContainer {
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width:40%;
+    /* sua lai cho nay */
+    background-color:#666;
+    border-radius: 20px;
+    z-index: 9999999;
+    animation:grow 0.5s linear;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+@keyframes grow {
+    0% {
+        opacity:0.6;
+    }
+    100% {
+        opacity:1;
+    }
+}
+.imageAdmin {
+    width:40px;
+    height: 40px;
+    border-radius:50px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+.iconClosePost {
+    position:absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    transition: 0.4s;
+    font-size: 20px;
+}
+.contentPost {
+    padding:10px 20px; 
+}
+.userPost {
+    margin-bottom: 10px;
+    color:#fff;
+}
+.iconClosePost:hover {
+    color:#fff;
+    transition: 0.4s;
+}
+.OverLay {
+    position:fixed;
+    inset: 0;
+    background-color:rgba(202, 200, 200,0.5);
+    z-index: 99999;
+}
+.userPost {
+    display: flex;
+    align-items: center;
+}
+.inputPost {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.iconPost {
+    color:#fff;
+}
+.buttonPost {
+    width:100%;
+    margin-top: 50px;
+}
+.button {
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius: 20px;
+    outline: none;
+    color:#fff;
+    font-weight: 600;
+    font-size: 17px;
+    background-color:#2374e1;
+    transition: 0.4s;
+    cursor: pointer;
+}
+.button:hover {
+    opacity:0.7;
+    transition: 0.4s;
 }

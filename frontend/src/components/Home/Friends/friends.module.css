@@ -95,3 +95,9 @@
     transition: 0.4s;
     color:#333;
 }
+.totalFriends {
+    padding:0px 10px;
+}
+.total {
+    color:rgb(119, 119, 119);
+}
