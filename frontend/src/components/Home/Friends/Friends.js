@@ -1,18 +1,32 @@
-import React, { useState } from "react";
-import { GoPrimitiveDot } from "react-icons/go";
 // import icon react
+import React, { useState, useEffect, memo } from "react";
+import { GoPrimitiveDot } from "react-icons/go";
 import { FiMoreHorizontal } from "react-icons/fi";
+
 import styles from "./friends.module.css";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import imageUser from "./image/imageUser.jpg";
-function Friends(props) {
+import User from "./User";
+function Friends({ friends }) {
+  // console.log(friends.contacts.connections[0]);
+  // console.log(friends);
   const [openFromSearch, setOpenFromSearch] = useState(false);
   const [saveValueSearch, setSaveValueSearch] = useState([]);
+  const [getNameFriend, setGetNameFriend] = useState('')
 
+  // handle change value search
   const handleChangeSearch = (e) => {
     setSaveValueSearch((prev) => [...prev, e.target.value]);
     console.log(saveValueSearch);
   };
+  const checkObjectIsUndefined = (obj) => {
+    return obj && Object.keys(obj).length > 0
+  }
+  const checkArrayIsNull = (array) => {
+    return Object.keys(array).indexOf('names') !== -1
+  }
+
   return (
     <div className={styles.app}>
       {/* header friends */}
@@ -46,264 +60,31 @@ function Friends(props) {
 
       {/* list friends */}
       <div className={styles.friendsContainer}>
+        {/* user admin */}
+        <User />
+        <div className={styles.totalFriends}>
+            <h3 className={styles.total}>{`${friends !== null && checkObjectIsUndefined(friends.contacts) ? friends.contacts.totalItems : ''} friends`}</h3>
+        </div>
         <ul className={styles.listItem}>
           {/* render li */}
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
-          <li className={styles.listFriends}>
-            <div className={styles.userContainer}>
-              <img className={styles.friendsImage} src={imageUser} />
-              <h4 className={styles.friendsName}>Phạm Văn Công</h4>
-            </div>
-            <span className={styles.iconOnline}>
-              <GoPrimitiveDot />
-            </span>
-          </li>
+          {friends !== null && checkObjectIsUndefined(friends.contacts) ? friends.contacts.connections.map((contact,index) => {
+              return (
+                <li key={index} className={styles.listFriends}>
+                  <div className={styles.userContainer}>
+                    <img className={styles.friendsImage} src='https://12guns.vn/code-tim-kiem-theo-ten-trong-java/imager_3161.jpg' />
+                    <h4 className={styles.friendsName}>{checkArrayIsNull(contact) ? contact.names[0].displayName : 'Không xác định'}</h4>
+                  </div>
+                  <span className={styles.iconOnline}>
+                    <GoPrimitiveDot />
+                  </span>
+                </li>
+              )
+          } ): null}
+
         </ul>
       </div>
     </div>
   );
 }
 
-export default Friends;
+export default memo(Friends);

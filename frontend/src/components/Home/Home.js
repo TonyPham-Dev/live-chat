@@ -6,27 +6,36 @@ import Message from "./message/Message";
 // import {useAuth0} from '@auth0/auth0-react';
 import { useNavigate } from "react-router-dom";
 import { useEffect, memo, useState } from "react";
-
+import { useAuth0 } from "@auth0/auth0-react";
 import styles from './home.module.css'
 
 function Home() {
+    const {user} = useAuth0()
     const accessToken = localStorage.getItem("accessToken");
-    //   console.log(accessToken);
-    // api localHost
     const apiServer = 'http://localhost:3000'
+    const [friends, setFriends] = useState(null)
 
-     // call api posts new
+     // call api friends contact
+     const checkObjectIsUndefined = (obj) => {
+      return Object.keys(obj).length > 0
+    }
      useEffect(() => {
-      const apiPost = `${apiServer}/api/posts/new`
-      fetch(apiPost) //axios
+        user && fetch(`${apiServer}/api/user/friends/${user.nickname}`, {headers: {'Authorization':`Bearer ${accessToken}` }})
           .then(response => response.json())
-          .then(data => console.log(data))
-    },[])
+          .then (listFriends => {
+            console.log(listFriends);
+            if(checkObjectIsUndefined(listFriends)) {
+              // console.log(123);
+              setFriends(listFriends)
+            }
+          })
+     },[user])
+   
   return (
     <>
       <div className={styles.home}>
         <div className={styles.friends}>
-          <Friends/>
+          <Friends friends = {friends}/>
         </div>
 
         <div className={styles.postContents}>
