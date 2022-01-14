@@ -5,6 +5,7 @@ import CommentModel from "../models/Comments.models";
 import { postUpload } from "../config/gridFsStorage.config";
 import { returnServerError } from "../app/constants";
 import variables from "../config/variables.config";
+import { getGfs } from "../config/db.config";
 
 class PostController {
     // [GET] /posts/:postId
@@ -32,26 +33,27 @@ class PostController {
     // @desc Create new post
     public async newPost(req: Request, res: Response) {
         try {
-            postUpload(req, res, async (err) => {
+            postUpload.fields([
+                { name: "images", maxCount: 10 },
+                { name: "videos", maxCount: 5 },
+            ])(req, res, async (err) => {
                 if (err) {
+                    console.log("here");
                     return res.status(500).json({
                         success: false,
                         message: err.message,
                     });
                 } else {
-                    const { title, body } = req.body;
-
-                    const filenameList: string[] = [];
-
-                    if (req.files && req.files.length !== 0) {
-                        const files: Express.Multer.File[] = Array.isArray(
-                            req.files
-                        ) && [...req.files];
-                        files.forEach((file) => {
-                            filenameList.push(`/images/${file.filename}`);
-                        });
-                    }
-
+                    const { body } = req.body;
+                    const files: any = { ...req.files };
+                    const images: string[] = [];
+                    const videos: string[] = [];
+                    files.images.forEach((file: Express.Multer.File) => {
+                        images.push(file.filename);
+                    });
+                    files.videos.forEach((file: Express.Multer.File) => {
+                        videos.push(file.filename);
+                    });
                     const userInfoFromAuth0 = await axios
                         .get(`https://${variables.auth0DomainUrl}/userinfo`, {
                             headers: {
@@ -68,9 +70,9 @@ class PostController {
                     }
 
                     const newPost = new PostModel({
-                        title,
                         body,
-                        imgList: filenameList,
+                        imgList: images,
+                        vidList: videos,
                         author: userInfoFromAuth0.nickname,
                     });
                     await newPost.save();
@@ -79,7 +81,6 @@ class PostController {
                         commentList: [],
                     });
                     await newPostComment.save();
-                    console.log(newPostComment);
                     return res.status(200).json({
                         success: true,
                         message: "Post created",
@@ -89,7 +90,45 @@ class PostController {
         } catch (err) {
             return returnServerError(res, err.message);
         }
-  }
+    }
+    // [PUT] /posts/edit/:postId
+    // @desc Edit post
+    public async editPost(req: Request, res: Response) {
+        try {
+            const { postId } = req.params;
+            const post = await PostModel.findById(postId);
+            if (!post) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Post not found",
+                });
+            }
+            return res.json({ success: true, message: "Post edited" });
+        } catch (err) {
+            return returnServerError(res, err.message);
+        }
+    }
+    // [DELETE] /posts/del:postId
+    // @desc Delete post
+    public async deletePost(req: Request, res: Response) {
+        try {
+            const { postId } = req.params;
+            const post = await PostModel.findById(postId);
+            if (!post) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Post not found",
+                });
+            }
+            await PostModel.findByIdAndDelete(postId);
+            return res.json({
+                success: true,
+                message: "Post deleted successfully",
+            });
+        } catch (err) {
+            return returnServerError(res, err.message);
+        }
+    }
 }
 
 export default new PostController();

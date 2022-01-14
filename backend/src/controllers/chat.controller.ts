@@ -51,7 +51,7 @@ class ChatController {
     // [POST] /chat/img/:chatId
     public async newImg(req: Request, res: Response) {
         try {
-            chatUpload(req, res, async (err) => {
+            chatUpload.array("images", 10)(req, res, async (err) => {
                 if (err) {
                     return returnServerError(res, err.message);
                 } else {
@@ -61,7 +61,7 @@ class ChatController {
                             req.files
                         ) && [...req.files];
                         files.forEach((file) => {
-                            fileList.push(`/images/chat/${file.filename}`);
+                            fileList.push(file.filename);
                         });
                     }
                     const userInfoFromAuth0 = await axios

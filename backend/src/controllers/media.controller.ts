@@ -3,7 +3,7 @@ import { returnServerError } from "../app/constants";
 import { getGfs, getChatGfs } from "../config/db.config";
 
 class ImageController {
-    // [GET] /api/images/:filename
+    // [GET] /api/media/:filename
     // @desc Get images from filename
     public filename(req: Request, res: Response) {
         getGfs()
@@ -22,7 +22,7 @@ class ImageController {
                     .pipe(res);
             });
     }
-    // [GET] /api/images/chat/:filename
+    // [GET] /api/media/chat/:filename
     // @desc Get chat images from filename
     public chatImg(req: Request, res: Response) {
         getChatGfs()

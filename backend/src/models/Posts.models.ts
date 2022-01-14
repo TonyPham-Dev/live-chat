@@ -1,24 +1,21 @@
-import { Schema, model } from "mongoose"
+import { Schema, model } from "mongoose";
 
 const PostSchema = new Schema(
     {
-        title: {
-            type: String,
-            required: true,
-        },
         body: {
             type: String,
             required: true,
         },
         imgList: [String],
+        vidList: [String],
         author: {
             type: String,
             required: true,
         },
     },
     { timestamps: true }
-)
+);
 
-const PostModel = model("Post", PostSchema, "posts")
+const PostModel = model("Post", PostSchema, "posts");
 
-export default PostModel
+export default PostModel;
