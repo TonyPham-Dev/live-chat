@@ -13,6 +13,12 @@ class ChatController {
     // @desc Get all chat
     public async getAll(req: Request, res: Response) {
         try {
+            if (!req.headers.authorization) {
+                return res.status(403).json({
+                    success: false,
+                    message: "User is not logged in",
+                });
+            }
             const userData = await getUserData(
                 req.headers.authorization.split(" ")[1]
             );
@@ -28,10 +34,22 @@ class ChatController {
     // @desc Create new chat conversation
     public async newChat(req: Request, res: Response) {
         try {
+            if (!req.headers.authorization) {
+                return res.status(403).json({
+                    success: false,
+                    message: "User is not logged in",
+                });
+            }
             const userData = await getUserData(
                 req.headers.authorization.split(" ")[1]
             );
             const { users } = req.body;
+            if (!users) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Users are required",
+                });
+            }
             const newConversation = await newChat([
                 userData.nickname,
                 ...users,

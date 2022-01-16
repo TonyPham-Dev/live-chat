@@ -33,6 +33,19 @@ class PostController {
     // @desc Create new post
     public async newPost(req: Request, res: Response) {
         try {
+            if (!req.headers.authorization) {
+                return res.status(403).json({
+                    success: false,
+                    message: "User is not logged in",
+                });
+            }
+            const { body } = req.body;
+            if (!body) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Post body is required",
+                });
+            }
             postUpload.fields([
                 { name: "images", maxCount: 10 },
                 { name: "videos", maxCount: 5 },

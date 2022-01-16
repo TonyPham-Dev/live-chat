@@ -28,8 +28,20 @@ class CommentController {
     // @desc Add a comment to a post
     public async addCommentToPost(req: Request, res: Response) {
         try {
+            if (!req.headers.authorization) {
+                return res.status(403).json({
+                    success: false,
+                    message: "User is not logged in",
+                });
+            }
             const { postId } = req.params;
             const { content } = req.body;
+            if (!content) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Content is required",
+                });
+            }
 
             const userInfo = await axios
                 .get(`${process.env.AUTH0_DOMAIN_URL}/userinfo`, {
