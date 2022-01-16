@@ -5,6 +5,7 @@ import { getContacts } from "../services/auth.services";
 import { getUserData } from "../services/auth.services";
 class UserController {
     // [GET] /api/user/:username
+    // @desc Get user basic information
     public async getUser(req: Request, res: Response) {
         try {
             const user = await UserModel.findOne({
@@ -22,6 +23,7 @@ class UserController {
         }
     }
     // [GET] /api/user/friends/:username
+    // @desc Get friends
     public async getFriends(req: Request, res: Response) {
         try {
             const userData = await getUserData(
@@ -42,6 +44,24 @@ class UserController {
                 });
             }
             return res.json({ success: true, contacts });
+        } catch (err) {
+            return returnServerError(res, err.message);
+        }
+    }
+    // [GET] /api/user/search/:username
+    // @desc Search
+    public async getSearch(req: Request, res: Response) {
+        try {
+            const { username } = req.params;
+            if (!username) {
+                return res
+                    .status(400)
+                    .json({ success: false, message: "No search value" });
+            }
+            const users = await UserModel.find({
+                nickname: { $regex: username, $options: "i" },
+            });
+            return res.json({ success: true, users });
         } catch (err) {
             return returnServerError(res, err.message);
         }
