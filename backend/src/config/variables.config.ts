@@ -14,6 +14,7 @@ const variables: EnvVariables = {
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     googleRedirectUrl: process.env.GOOGLE_REDIRECT_URL || "",
     corsOrigin: process.env.CORS_ORIGIN || "",
+    tokenExpiredHour: Number(process.env.TOKEN_EXPIRED_HOUR) || 1,
 };
 
 export default variables;

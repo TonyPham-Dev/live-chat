@@ -1,39 +1,62 @@
-import variables from "../config/variables.config"
-import axios from "axios"
-import { auth0 } from "../config/auth0.config"
-import { UserDataWithAccessToken } from "../app/types"
+import variables from "../config/variables.config";
+import axios from "axios";
+import { auth0 } from "../config/auth0.config";
+import { UserDataRes, UserDataWithAccessToken } from "../app/types";
+import AuthCacheModel from "../models/AuthCache.models";
 
-export const getUserData: (
-    authToken: string
-) => Promise<UserDataWithAccessToken> = async (authToken) => {
-    const accessTokenAndUserId = [
-        auth0
-            .clientCredentialsGrant({
-                audience: variables.auth0Audience,
-                scope: "read:user_idp_tokens",
-            })
-            .then((data: any) => data.access_token),
-        axios
-            .get(`https://${variables.auth0DomainUrl}/userinfo`, {
-                headers: {
-                    Authorization: `Bearer ${authToken}`,
-                },
-            })
-            .then((data) => data.data.sub),
-    ]
-    const [accessToken, userId] = await Promise.all(accessTokenAndUserId)
-    const userData = await axios
-        .get<UserDataWithAccessToken>(
-            `${variables.auth0Audience}users/${userId}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
+export const getUserData: (authToken: string) => Promise<UserDataRes> = async (
+    authToken
+) => {
+    try {
+        const authCache = await AuthCacheModel.findOne({ token: authToken });
+        if (authCache) {
+            const timeDiff =
+                Date.now() - new Date(authCache.createdAt).getTime();
+            if (
+                timeDiff < variables.tokenExpiredHour * 60 * 60 * 1000 &&
+                timeDiff > 0
+            ) {
+                return { success: true, userData: authCache.userData };
+            } else {
+                await AuthCacheModel.deleteOne({ token: authToken });
             }
-        )
-        .then((data) => data.data)
-    return userData
-}
+        }
+        const accessTokenAndUserId = [
+            auth0
+                .clientCredentialsGrant({
+                    audience: variables.auth0Audience,
+                    scope: "read:user_idp_tokens",
+                })
+                .then((data: any) => data.access_token),
+            axios
+                .get(`https://${variables.auth0DomainUrl}/userinfo`, {
+                    headers: {
+                        Authorization: `Bearer ${authToken}`,
+                    },
+                })
+                .then((data) => data.data.sub),
+        ];
+        const [accessToken, userId] = await Promise.all(accessTokenAndUserId);
+        const userData = await axios
+            .get<UserDataWithAccessToken>(
+                `${variables.auth0Audience}users/${userId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            )
+            .then((data) => data.data);
+        const newAuthCache = new AuthCacheModel({
+            token: authToken,
+            userData,
+        });
+        await newAuthCache.save();
+        return { success: true, userData };
+    } catch (err) {
+        return { success: false, message: err.message };
+    }
+};
 
 export const getContacts: (accessToken: string) => Promise<any> = async (
     accessToken
@@ -47,6 +70,6 @@ export const getContacts: (accessToken: string) => Promise<any> = async (
                 },
             }
         )
-        .then((data) => data.data)
-    return contacts
-}
+        .then((data) => data.data);
+    return contacts;
+};
