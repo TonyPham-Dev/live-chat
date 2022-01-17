@@ -23,9 +23,7 @@ function Home() {
         user && fetch(`${apiServer}/api/user/friends/${user.nickname}`, {headers: {'Authorization':`Bearer ${accessToken}` }})
           .then(response => response.json())
           .then (listFriends => {
-            console.log(listFriends);
             if(checkObjectIsUndefined(listFriends)) {
-              // console.log(123);
               setFriends(listFriends)
             }
           })

@@ -31,3 +31,18 @@
     margin-right: 20px;
     /* height: 100vh; */
 }
+
+/* responsive */
+/* @media (min-width: 1024px) and (max-width: 1365px) {
+    .home {
+        width: 100%;
+    }
+    .posts {
+        display:none;
+        
+    }
+    .postContents {
+        width: 100%;
+    }
+} */
+

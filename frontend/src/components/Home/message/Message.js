@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./message.module.css";
 import MessageLeft from "./MessageLeft";
 import MessageRight from "./MessageRight";
@@ -10,19 +10,18 @@ function Message(props) {
   const [users, setUsers] = useState([]);
   const [userData, setUserData] = useState({});
   const navigate = useNavigate();
+
   useEffect(() => {
     const userApi = `http://localhost:3000/api/user/`;
     const apiChat = "http://localhost:3000/api/chat";
     fetch(apiChat, { headers: { authorization: `Bearer ${accessToken}` } })
       .then((response) => response.json())
       .then((message) => {
-        console.log(message);
         setMessage(message);
         if (message.length > 0) {
           navigate(`/message/${message[0]._id}`);
         }
         let userList = [];
-        console.log(message);
         message &&
           message.forEach((mess) => {
             userList = userList.concat(mess.users);
