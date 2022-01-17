@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { AiOutlineCloudDownload } from "react-icons/ai";
 import { IoIosAddCircle } from "react-icons/io";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -9,7 +10,7 @@ import imageUser from "./image/imageUser.jpg";
 import styles from "./message.module.css";
 function MessageLeft(props) {
   const { user } = useAuth0();
-  const apiServer = 'http://localhost:3000'
+  const apiServer = "http://localhost:3000";
   const apiCreateMessage = "http://localhost:3000/api/chat/new";
   const apiFriends = `http://localhost:3000/api/user/friends/`;
   const accessToken = localStorage.getItem("accessToken");
@@ -20,19 +21,21 @@ function MessageLeft(props) {
 
   const [valueSearch, setValueSearch] = useState("");
   const [userFromApi, setUserFromApi] = useState([]);
+  const [getUserFromApi, setGetUserFromApi] = useState([]);
+  const navigate = useNavigate();
   // function create new chat
-  const createMessageChat = (e) => {
-    e.preventDefault();
-    fetch(apiCreateMessage, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "content-type": "application/json",
-      },
-      method: "POST",
-    })
-      .then((response) => response.json())
-      .then((data) => setAddUser([data]));
-  };
+  // const createMessageChat = (e) => {
+  //   e.preventDefault();
+  //   fetch(apiCreateMessage, {
+  //     headers: {
+  //       Authorization: `Bearer ${accessToken}`,
+  //       "content-type": "application/json",
+  //     },
+  //     method: "POST",
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => setAddUser([data]));
+  // };
   const checkObjectIsUndefined = (obj) => {
     return Object.keys(obj).length > 0;
   };
@@ -52,11 +55,30 @@ function MessageLeft(props) {
 
   // search user
   useEffect(() => {
-    valueSearch && fetch(`${apiServer}/api/user/search/${valueSearch}`)
-      .then(response => response.json())
-      .then(user => setUserFromApi([user.users[0]]))
+    valueSearch &&
+      fetch(`${apiServer}/api/user/search/${valueSearch}`)
+        .then((response) => response.json())
+        .then((user) => setUserFromApi(user.users));
+  }, [valueSearch]);
 
-  },[valueSearch])
+  // create new chat
+  const handleCreateNewChat = (index) => {
+    fetch(apiCreateMessage, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "content-type": "application/json",
+        Accept: "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({ users: [userFromApi[index].nickname] }),
+    })
+      .then((response) => response.json())
+      .then((data) => navigate(`/message/${data.chat._id}`))
+      .catch((error) => console.log(error));
+
+    setValueSearch("");
+    setOpenContainerSearch(false);
+  };
   return (
     <div className={styles.messageLeft}>
       <h3>Chat</h3>
@@ -71,10 +93,11 @@ function MessageLeft(props) {
               value={valueSearch}
               onChange={(e) => setValueSearch(e.target.value)}
               placeholder="Search friends..."
-              onClick = {() => setOpenContainerSearch(!openContainerSearch)}
+              onClick={() => setOpenContainerSearch(!openContainerSearch)}
             />
-            <span className={styles.iconContainer}
-              onClick = {() => setOpenContainerSearch(!openContainerSearch)}
+            <span
+              className={styles.iconContainer}
+              onClick={() => setOpenContainerSearch(!openContainerSearch)}
             >
               <FaSearch />
             </span>
@@ -82,15 +105,27 @@ function MessageLeft(props) {
 
           {openContainerSearch && (
             <ul className={styles.listFriendsSearch}>
-              {userFromApi ? userFromApi.map((user,index) => {
-                console.log(user);
-                  return (
-                      <li className={styles.itemSearch} key={index}>
-                      <img className={styles.imageSearch} src={user ? user.avatarUrl : 'data:image/jpeg;base64,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'} />
-                      <span>{user && user.fullName}</span>
-                    </li>
-                  )
-              }) : null}
+              {userFromApi
+                ? userFromApi.map((user, index) => {
+                    return (
+                      <li
+                        className={styles.itemSearch}
+                        key={index}
+                        onClick={() => handleCreateNewChat(index)}
+                      >
+                        <img
+                          className={styles.imageSearch}
+                          src={
+                            user
+                              ? user.avatarUrl
+                              : "data:image/jpeg;base64,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"
+                          }
+                        />
+                        <span>{user && user.fullName}</span>
+                      </li>
+                    );
+                  })
+                : null}
             </ul>
           )}
         </div>
@@ -98,17 +133,19 @@ function MessageLeft(props) {
       <div className={styles.messageBody}>
         <ul className={styles.messageBodyContainer}>
           {/* render list friends */}
-          {user &&
-            props.messages &&
-            props.userData &&
+          {(user &&
+            (props.messages &&
+            props.userData)) &&
             props.messages.map((message, index) => {
-              // console.log(message[message.length - 1]);
               const useFilter = message.users.filter(
                 (users) => users != user.nickname
               );
-              // console.log(props.messages);
               return (
-                <li key={index} className={styles.messageUserContainer}>
+                <li
+                  key={index}
+                  className={styles.messageUserContainer}
+                  onClick={() => navigate(`/message/${message._id}`)}
+                >
                   <img
                     className={styles.imageUser}
                     src={props.userData[useFilter]}

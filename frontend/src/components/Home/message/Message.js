@@ -1,24 +1,38 @@
 import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import styles from "./message.module.css";
 import MessageLeft from "./MessageLeft";
 import MessageRight from "./MessageRight";
 function Message(props) {
+  const userApi = `http://localhost:3000/api/user/`;
+  const apiChat = "http://localhost:3000/api/chat/";
   const accessToken = localStorage.getItem("accessToken");
   const [message, setMessage] = useState([]);
   const [users, setUsers] = useState([]);
   const [userData, setUserData] = useState({});
   const navigate = useNavigate();
 
+  const {chatId} = useParams()
   useEffect(() => {
-    const userApi = `http://localhost:3000/api/user/`;
-    const apiChat = "http://localhost:3000/api/chat";
+    fetch(apiChat + chatId, { headers: { authorization: `Bearer ${accessToken}` } })
+      .then((response) => response.json())
+      .then((chat) => {
+        if(chat.success) {
+          setMessage(prev => {
+            const prevData = [...prev]
+            prevData[prevData.findIndex(element => element._id == chatId)] = chat.chat
+            return prevData
+          })
+        }
+      })
+  },[chatId])
+  useEffect(() => {
     fetch(apiChat, { headers: { authorization: `Bearer ${accessToken}` } })
       .then((response) => response.json())
       .then((message) => {
         setMessage(message);
-        if (message.length > 0) {
+        if (message.length > 0 && !chatId) {
           navigate(`/message/${message[0]._id}`);
         }
         let userList = [];
@@ -56,7 +70,7 @@ function Message(props) {
           </div>
           <div>
             {Object.entries(userData).length > 0 && (
-              <MessageRight messages={message[0]} userData={userData} />
+              <MessageRight messages={message[message.findIndex(element => element._id == chatId)]} userData={userData} />
             )}
           </div>
         </div>

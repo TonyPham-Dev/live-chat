@@ -5,6 +5,8 @@ import variables from "../config/variables.config"
 const socketAuth = async (socket: Socket, next: any) => {
     const token = socket.handshake.auth.token
     if (!token) {
+        console.log(123);
+        
         next(new Error("User is not logged in"))
     }
     try {
@@ -22,6 +24,8 @@ const socketAuth = async (socket: Socket, next: any) => {
         socket.handshake.auth.nickname = response.nickname
         next()
     } catch (error) {
+        console.log(error.message);
+        
         next(new Error("User is not logged in"))
     }
 }

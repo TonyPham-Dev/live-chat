@@ -36,6 +36,7 @@ function App() {
           <Route path="/message" element={<Message />} />
           <Route path="/message/:chatId" element={<Message/>} />
           {/* <Route path="/message/img/:chatId" element={<Message/>} /> */}
+          <Route path="/friends" element={<Friends />} />
           <Route path="/friends/:username" element={<Friends />} />
           <Route path='/home' element={<Home/>}/>
           <Route path='/user' element={<Profile/>}/>

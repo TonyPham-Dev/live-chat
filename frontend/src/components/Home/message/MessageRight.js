@@ -56,17 +56,18 @@ function MessageRight(props) {
   const itemMessRef = useRef();
   // handle button submit gửi
   const handleSubmitValue = () => {
+    console.log(valueMess);
     // play load text
     if (valueMess.trim() !== "") {
       setSaveValueMess((prev) => [
         ...prev,
         { user: user.nickname, message: valueMess, type: "text" },
       ]);
-      inputRef.current.focus();
-      itemMessRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-      });
+      // inputRef.current.focus();
+      // itemMessRef.current.scrollIntoView({
+      //   behavior: "smooth",
+      //   block: "nearest",
+      // });
       socketRef.current.emit("text-message", valueMess);
       setValueMess("");
     }
@@ -104,14 +105,20 @@ function MessageRight(props) {
     });
 
     socketRef.current = socket;
+  },[])
+  useEffect(() => {
+    socketRef.current.emit("change-room",chatId)
+    setSaveValueMess([]);
     props.messages.messages.forEach((message) => {
       setSaveValueMess((prev) => [
         ...prev,
         { user: message.user, message: message.message, type: message.type },
       ]);
     });
-  }, []);
+  },[props.messages]);
 
+  useEffect(() => {
+  },[chatId])
   // message image ảnh gửi lên server
   const playLoadImage = async () => {
     const formData = new FormData();
