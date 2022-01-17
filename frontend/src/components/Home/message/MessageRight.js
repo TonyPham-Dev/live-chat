@@ -16,7 +16,7 @@ import { RiShareForwardFill } from "react-icons/ri";
 import { HiEmojiHappy } from "react-icons/hi";
 import { AiFillLike } from "react-icons/ai";
 import { TiDelete } from "react-icons/ti";
-
+import { FaTimesCircle } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 // axios
 import axios from "axios";
@@ -34,18 +34,8 @@ const serverUrl = "http://localhost:3000";
 const listMessApi = "http://localhost:3000/api/chat";
 
 function MessageRight(props) {
-  console.log(props.messages)
   // scroll to bottom
   const messagesEnd = useRef();
-  useEffect(() => {
-    scrollToBottom();
-  }, []);
-  useEffect(() => {
-    scrollToBottom();
-  });
-  const scrollToBottom = () => {
-    messagesEnd.current.scrollIntoView({ block: "start", behavior: "smooth" });
-  };
 
   const socketRef = useRef();
   const { chatId } = useParams();
@@ -61,31 +51,41 @@ function MessageRight(props) {
   const [imgs, setImgs] = useState([]);
   const [srcImage, setSrcImage] = useState([]);
   const [openButtonImage, setOpenButtonImage] = useState(false);
+  const [openImageFullScreen, setImageFullScreen] = useState();
   const inputRef = useRef();
   const itemMessRef = useRef();
-
   // handle button submit gửi
   const handleSubmitValue = () => {
     // play load text
-    setSaveValueMess((prev) => [
-      ...prev,
-      { user: user.nickname, message: valueMess, image: null },
-    ]);
-    setValueMess("");
-    inputRef.current.focus();
-    itemMessRef.current.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-    });
-    socketRef.current.emit("text-message", valueMess);
+    if (valueMess.trim() !== "") {
+      setSaveValueMess((prev) => [
+        ...prev,
+        { user: user.nickname, message: valueMess, type: "text" },
+      ]);
+      inputRef.current.focus();
+      itemMessRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+      socketRef.current.emit("text-message", valueMess);
+      setValueMess("");
+    }
 
     // play load image
     if (valueInputFile.length > 0) {
       setSrcImage((prev) => [...prev, valueInputFile]);
       playLoadImage();
-     
     }
+    setValueInputFile([]);
+    setImgs([]);
   };
+  // scroll to bottom
+  useEffect(() => {
+    const scrollToBottom = () => {
+      messagesEnd.current.scrollIntoView({ behavior: "smooth" });
+    };
+    scrollToBottom();
+  }, [saveValueMess]);
   // message chat
   useEffect(() => {
     const socket = io(`${serverUrl}/message`, {
@@ -99,13 +99,15 @@ function MessageRight(props) {
     socket.on("new-text", (nickName, message) => {
       setSaveValueMess((prev) => [
         ...prev,
-        { user: nickName, message: message, type: "text"},
+        { user: nickName, message: message, type: "text" },
       ]);
     });
 
     socketRef.current = socket;
     props.messages.messages.forEach((message) => {
-      setSaveValueMess((prev) => [...prev, { user: message.user, message: message.message,type: message.type},
+      setSaveValueMess((prev) => [
+        ...prev,
+        { user: message.user, message: message.message, type: message.type },
       ]);
     });
   }, []);
@@ -119,37 +121,29 @@ function MessageRight(props) {
     const imgList = await axios
       .post(`${serverUrl}/api/chat/img/${chatId}`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data", 
+          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       })
       .then((data) => data.data);
     if (imgList.success) {
-      setSaveValueMess((prev) => [...prev, { user: user.nickname, message: imgList.fileList,type: 'img'}])
+      setSaveValueMess((prev) => [
+        ...prev,
+        { user: user.nickname, message: imgList.fileList, type: "img" },
+      ]);
       socketRef.current.emit("img-message", imgList.fileList);
     }
   };
 
   // handle key enter
-  const handleEnterValueInput = (valueMess) => {
-    setSaveValueMess((prev) => [
-      ...prev,
-      { user: user.nickname, message: valueMess },
-    ]);
-    itemMessRef.current &&
-      itemMessRef.current.scrollIntoViewIfNeeded({
-        block: "nearest",
-        behavior: "smooth",
-        inline: "start",
-      });
-    inputRef.current.focus();
-    socketRef.current.emit("text-message", valueMess);
+  const handleEnterValueInput = () => {
+    handleSubmitValue();
   };
   // handle click icon like
   const handleIconLike = () => {
     setSaveValueMess((prev) => [
       ...prev,
-      { user: user.nickname, message: "👍" },
+      { user: user.nickname, message: "👍", type:'text' },
     ]);
     itemMessRef.current.scrollIntoView({
       behavior: "smooth",
@@ -160,8 +154,10 @@ function MessageRight(props) {
 
   // handle input image click lấy link ảnh
   const handleInputImage = (e) => {
-    setImgs((prev) => [...prev, e.target.files[0]]); 
-    setValueInputFile((prev) => [...prev, URL.createObjectURL(e.target.files[0])]);
+    Array.from(e.target.files).forEach((urlImage) => {
+      setImgs((prev) => [...prev, urlImage]);
+      setValueInputFile((prev) => [...prev, URL.createObjectURL(urlImage)]);
+    });
   };
 
   // remove file image
@@ -176,10 +172,20 @@ function MessageRight(props) {
   const handleOpenButtonImage = () => {
     setOpenButtonImage(true);
   };
+
+  // open image
+  const handleOpenImageMess = (image) => {
+    setImageFullScreen(image.target.src);
+  };
+
+  // delete Image full screen
+  const handleRemoveImageFullScreen =() => {
+    setImageFullScreen(null)
+  }
   return (
     <div className={styles.messageRight}>
       <div className={styles.imageMobile}>
-        <ImageMobile userData = {props.userData} messages = {props.messages} />
+        <ImageMobile userData={props.userData} messages={props.messages} />
       </div>
       {/* message header */}
       {user && (
@@ -220,7 +226,6 @@ function MessageRight(props) {
       <div className={styles.listItem}>
         <ul className={styles.messContainer}>
           {saveValueMess.map((value, index) => {
-            // console.log(value);
             return (
               <div key={index}>
                 {user && value.user === user.nickname ? (
@@ -237,16 +242,45 @@ function MessageRight(props) {
                       </span>
                     </div>
                     <div className={styles.itemContainer}>
-                    {console.log(saveValueMess.message)}
-                        {user && value.type === 'text' ? <h5 className={styles.itemLeft}> {value.message }</h5>: null }
+                      {user && value.type === "text" ? (
+                        <h5 className={styles.itemLeft}> {value.message}</h5>
+                      ) : null}
 
-                        {/* {value.message} */}
-                        {user && value.type === 'img' ? <img className={styles.messageImages} src={`http://localhost:3000/api${value.message}`}/> : null}
-                      
+                      {/* {value.message} */}
+                      <div className={styles.messageImagesContainer}>
+                        {user && value.type === "img"
+                          ? value.message.map((img, index) => (
+                              <img
+                                onClick={(img) => handleOpenImageMess(img)}
+                                key={index}
+                                className={styles.messageImages}
+                                src={`http://localhost:3000/api/media/chat/${img}`}
+                              />
+                            ))
+                          : null}
+                      </div>
                     </div>
                   </li>
                 ) : (
                   <li ref={itemMessRef} className={styles.messItemLeft}>
+                   
+                    <div className={styles.itemContainer}>
+                      {user && value.type === "text" ? (
+                        <h5 className={styles.itemRight}> value.message </h5>
+                      ) : null}
+                      <div className={styles.messageImagesContainer}>
+                        {user && value.type === "img"
+                          ? value.message.map((img, index) => (
+                              <img
+                                onClick={(img) => handleOpenImageMess(img)}
+                                key={index}
+                                className={styles.messageImages}
+                                src={`http://localhost:3000/api/media/chat/${img}`}
+                              />
+                            ))
+                          : null}
+                      </div>
+                    </div>
                     <div className={styles.iconItemContainer}>
                       <span className={styles.iconItem}>
                         <MdMoreVert />
@@ -258,19 +292,25 @@ function MessageRight(props) {
                         <HiEmojiHappy />
                       </span>
                     </div>
-                    <div className={styles.itemContainer}>
-                      
-                      {user && value.type === 'text' ?<h5 className={styles.itemRight}> value.message </h5>: null }
-                    
-                      {user && value.type === 'img' ? <img className={styles.messageImages} src={`http://localhost:3000/api${value.message}`}/> : null}
-                      
-                    </div>
                   </li>
                 )}
               </div>
             );
           })}
+          <div className="bottom" ref={messagesEnd}></div>
         </ul>
+        {openImageFullScreen && (
+          <div className={styles.imageFullScreen}>
+            <span className={styles.iconRemoveImage}
+              onClick={() => handleRemoveImageFullScreen()}
+            >
+              <FaTimesCircle />
+            </span>
+            <img className={styles.imageFull} src={openImageFullScreen} />
+          </div>
+        )}
+
+        {/* scroll bottom */}
         {/* list image */}
         <div className={styles.listImageContainer}>
           {valueInputFile.length > 0 &&
@@ -349,7 +389,6 @@ function MessageRight(props) {
             </span>
           </form>
         </div>
-        <div className="bottom" ref={messagesEnd}></div>
       </div>
     </div>
   );

@@ -50,6 +50,16 @@ class ChatController {
                     message: "Users are required",
                 });
             }
+            const ifChatExisted = await ChatModel.findOne({
+                users: [userData.nickname, ...users],
+            });
+            if (ifChatExisted) {
+                return res.status(400).json({
+                    success: true,
+                    message: "Chat existed",
+                    chat: ifChatExisted,
+                });
+            }
             const newConversation = await newChat([
                 userData.nickname,
                 ...users,
