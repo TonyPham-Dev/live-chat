@@ -38,8 +38,14 @@ class ChatController {
             const userData = await getUserData(
                 req.headers.authorization.split(" ")[1]
             );
+            if (!userData.success) {
+                return res.status(500).json({
+                    success: false,
+                    message: userData.message,
+                });
+            }
             const chats = await ChatModel.find({
-                users: userData.nickname,
+                users: userData.userData.nickname,
             }).sort({ updatedAt: -1 });
             return res.json(chats);
         } catch (err) {
@@ -59,6 +65,12 @@ class ChatController {
             const userData = await getUserData(
                 req.headers.authorization.split(" ")[1]
             );
+            if (!userData.success) {
+                return res.status(500).json({
+                    success: false,
+                    message: userData.message,
+                });
+            }
             const { users } = req.body;
             if (!users) {
                 return res.status(400).json({
@@ -67,7 +79,7 @@ class ChatController {
                 });
             }
             const ifChatExisted = await ChatModel.findOne({
-                users: [userData.nickname, ...users],
+                users: [userData.userData.nickname, ...users],
             });
             if (ifChatExisted) {
                 return res.status(400).json({
@@ -77,7 +89,7 @@ class ChatController {
                 });
             }
             const newConversation = await newChat([
-                userData.nickname,
+                userData.userData.nickname,
                 ...users,
             ]);
             if (newConversation.success) {
