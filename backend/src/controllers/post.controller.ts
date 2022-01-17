@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
-import axios from "axios";
 import PostModel from "../models/Posts.models";
 import CommentModel from "../models/Comments.models";
 import { postUpload } from "../config/gridFsStorage.config";
 import { returnServerError } from "../app/constants";
-import variables from "../config/variables.config";
 import { getUserData } from "../services/auth.services";
+import { deleteImgs } from "../services/image.services";
 
 class PostController {
     // [GET] /posts/:postId
@@ -39,13 +38,6 @@ class PostController {
                     message: "User is not logged in",
                 });
             }
-            const { body } = req.body;
-            if (!body) {
-                return res.status(400).json({
-                    success: false,
-                    message: "Post body is required",
-                });
-            }
             postUpload.fields([
                 { name: "images", maxCount: 10 },
                 { name: "videos", maxCount: 5 },
@@ -61,12 +53,27 @@ class PostController {
                     const files: any = { ...req.files };
                     const images: string[] = [];
                     const videos: string[] = [];
-                    files.images.forEach((file: Express.Multer.File) => {
-                        images.push(file.filename);
-                    });
-                    files.videos.forEach((file: Express.Multer.File) => {
-                        videos.push(file.filename);
-                    });
+                    files.images.length > 0 &&
+                        files.images.forEach((file: Express.Multer.File) => {
+                            images.push(file.filename);
+                        });
+                    files.videos.length > 0 &&
+                        files.videos.forEach((file: Express.Multer.File) => {
+                            videos.push(file.filename);
+                        });
+                    if (!body) {
+                        const response = await deleteImgs([
+                            ...images,
+                            ...videos,
+                        ]);
+                        if (!response.success) {
+                            return returnServerError(res, response.message);
+                        }
+                        return res.status(400).json({
+                            success: false,
+                            message: "Post body is required",
+                        });
+                    }
                     const userData = await getUserData(
                         req.headers.authorization.split(" ")[1]
                     );
@@ -116,7 +123,7 @@ class PostController {
             return returnServerError(res, err.message);
         }
     }
-    // [DELETE] /posts/del:postId
+    // [DELETE] /posts/del/:postId
     // @desc Delete post
     public async deletePost(req: Request, res: Response) {
         try {
@@ -128,7 +135,13 @@ class PostController {
                     message: "Post not found",
                 });
             }
-            await PostModel.findByIdAndDelete(postId);
+            const response = await Promise.all([
+                deleteImgs([...post.imgList, ...post.vidList]),
+                PostModel.findByIdAndDelete(postId),
+            ]);
+            if (!response[0].success) {
+                return returnServerError(res, response[0].message);
+            }
             return res.json({
                 success: true,
                 message: "Post deleted successfully",

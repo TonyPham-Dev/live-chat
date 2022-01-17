@@ -5,6 +5,7 @@ import jwks from "jwks-rsa";
 import variables from "../config/variables.config";
 import helmet from "helmet";
 import methodOverride from "method-override";
+import multer from "multer";
 
 export const jwtCheck = jwt({
     secret: jwks.expressJwtSecret({
