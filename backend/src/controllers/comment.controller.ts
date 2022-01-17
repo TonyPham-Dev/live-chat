@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import axios from "axios";
 import CommentModel from "../models/Comments.models";
 import PostModel from "../models/Posts.models";
 import { returnServerError } from "../app/constants";
+import { getUserData } from "../services/auth.services";
 
 class CommentController {
     // [GET] /comments/:postId
@@ -43,14 +43,15 @@ class CommentController {
                 });
             }
 
-            const userInfo = await axios
-                .get(`${process.env.AUTH0_DOMAIN_URL}/userinfo`, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: req.headers.authorization,
-                    },
-                })
-                .then((data) => data.data);
+            const userData = await getUserData(
+                req.headers.authorization.split(" ")[1]
+            );
+            if (!userData.success) {
+                return res.status(500).json({
+                    success: false,
+                    message: userData.message,
+                });
+            }
             // check if post exist
             const post = await PostModel.findById(postId);
             if (!post) {
@@ -64,7 +65,7 @@ class CommentController {
                 {
                     $push: {
                         commentList: {
-                            author: userInfo.nickname,
+                            author: userData.userData.nickname,
                             content,
                         },
                     },
