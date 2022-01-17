@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState,useEffect } from "react";
+import { Link,useLocation } from "react-router-dom";
 import {
   AiFillHome,
   AiFillCompass,
@@ -25,7 +25,20 @@ function Header(props) {
   const [openNotification, setOpenNotification] = useState(false);
 
   const [openDashboard, setDashboard] = useState(false);
-  console.log("re-render");
+  const location = useLocation();
+  useEffect(() => {
+    switch(true) {
+      case location.pathname.startsWith('/home'):
+        setActive(1)
+        break;
+      case location.pathname.startsWith('/friends'):
+        setActive(3)
+        break;
+      case location.pathname.startsWith('/message'):
+        setActive(4)
+        break;
+    }
+  },[]);
   return (
     <div className={styles.headerContainer}>
       <div className={styles.container}>
@@ -49,12 +62,11 @@ function Header(props) {
             </span>
           </Link>
 
-          <Link to="">
+          <Link to="#">
             <span
               className={
                 active === 2 ? styleTheme + " " + styleActive : styleTheme
               }
-              onClick={() => setActive(2)}
             >
               <AiFillCompass />
             </span>
@@ -71,7 +83,7 @@ function Header(props) {
             </span>
           </Link>
 
-          <Link to="/message">
+          <Link to={active === 4 ? '#' : '/message'} >
             <span
               className={
                 active === 4 ? styleTheme + " " + styleActive : styleTheme
@@ -82,12 +94,11 @@ function Header(props) {
             </span>
           </Link>
 
-          <Link to="">
+          <Link to="#">
             <span
               className={
                 active === 5 ? styleTheme + " " + styleActive : styleTheme
               }
-              onClick={() => setActive(5)}
             >
               <AiFillHeart />
             </span>
@@ -165,12 +176,11 @@ function Header(props) {
           </span>
         </Link>
 
-        <Link to="">
+        <Link to="#">
           <span
             className={
               active === 2 ? styleTheme + " " + styleActive : styleTheme
             }
-            onClick={() => setActive(2)}
           >
             <AiFillCompass />
           </span>
@@ -198,26 +208,16 @@ function Header(props) {
           </span>
         </Link>
 
-        <Link to="">
+        <Link to="#">
           <span
             className={
               active === 5 ? styleTheme + " " + styleActive : styleTheme
             }
-            onClick={() => setActive(5)}
           >
             <AiFillHeart />
           </span>
         </Link>
-        <Link to="">
-          <span
-            className={
-              active === 6 ? styleTheme + " " + styleActive : styleTheme
-            }
-            onClick={() => setActive(6)}
-          >
-            <FaSearch />
-          </span>
-        </Link>
+       
       </div>
     </div>
   );
