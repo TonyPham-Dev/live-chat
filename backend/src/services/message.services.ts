@@ -4,7 +4,11 @@ import ChatModel from "../models/Chat.models";
 interface Base {
     success: boolean;
 }
-export const newChat: (users: string[]) => Promise<Base> = async ([
+interface NewChat extends Base {
+    err?: string;
+    chat?: any;
+}
+export const newChat: (users: string[]) => Promise<NewChat> = async ([
     ...users
 ]) => {
     try {
@@ -13,9 +17,9 @@ export const newChat: (users: string[]) => Promise<Base> = async ([
             messages: [],
         });
         await newChat.save();
-        return { success: true };
+        return { success: true, chat: newChat };
     } catch (err) {
-        return { success: false };
+        return { success: false, err: err.message };
     }
 };
 
@@ -49,4 +53,3 @@ export const newTextMessage: (
         return { success: false };
     }
 };
-

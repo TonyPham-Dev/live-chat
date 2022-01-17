@@ -57,10 +57,12 @@ class ChatController {
             if (newConversation.success) {
                 return res.json({
                     success: true,
+                    chat: newConversation.chat,
                 });
             }
             return res.json({
                 success: false,
+                message: newConversation.err,
             });
         } catch (err) {
             return returnServerError(res, err.message);

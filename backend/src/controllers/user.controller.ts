@@ -59,7 +59,7 @@ class UserController {
                     .json({ success: false, message: "No search value" });
             }
             const users = await UserModel.find({
-                nickname: { $regex: username, $options: "i" },
+                fullName: { $regex: username, $options: "i" },
             });
             return res.json({ success: true, users });
         } catch (err) {
