@@ -5,7 +5,7 @@ import CommentModel from "../models/Comments.models";
 import { postUpload } from "../config/gridFsStorage.config";
 import { returnServerError } from "../app/constants";
 import variables from "../config/variables.config";
-import { getGfs } from "../config/db.config";
+import { getUserData } from "../services/auth.services";
 
 class PostController {
     // [GET] /posts/:postId
@@ -67,18 +67,13 @@ class PostController {
                     files.videos.forEach((file: Express.Multer.File) => {
                         videos.push(file.filename);
                     });
-                    const userInfoFromAuth0 = await axios
-                        .get(`https://${variables.auth0DomainUrl}/userinfo`, {
-                            headers: {
-                                "Content-Type": "application/json",
-                                Authorization: req.headers.authorization,
-                            },
-                        })
-                        .then((data) => data.data);
-                    if (!userInfoFromAuth0) {
-                        return res.status(401).json({
+                    const userData = await getUserData(
+                        req.headers.authorization.split(" ")[1]
+                    );
+                    if (!userData.success) {
+                        return res.status(500).json({
                             success: false,
-                            message: "User is not logged in",
+                            message: userData.message,
                         });
                     }
 
@@ -86,7 +81,7 @@ class PostController {
                         body,
                         imgList: images,
                         vidList: videos,
-                        author: userInfoFromAuth0.nickname,
+                        author: userData.userData.nickname,
                     });
                     await newPost.save();
                     const newPostComment = new CommentModel({

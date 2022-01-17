@@ -2,11 +2,25 @@ import variables from "../config/variables.config";
 import axios from "axios";
 import { auth0 } from "../config/auth0.config";
 import { UserDataRes, UserDataWithAccessToken } from "../app/types";
+import AuthCacheModel from "../models/AuthCache.models";
 
 export const getUserData: (authToken: string) => Promise<UserDataRes> = async (
     authToken
 ) => {
     try {
+        const authCache = await AuthCacheModel.findOne({ token: authToken });
+        if (authCache) {
+            const timeDiff =
+                Date.now() - new Date(authCache.createdAt).getTime();
+            if (
+                timeDiff < variables.tokenExpiredHour * 60 * 60 * 1000 &&
+                timeDiff > 0
+            ) {
+                return { success: true, userData: authCache.userData };
+            } else {
+                await AuthCacheModel.deleteOne({ token: authToken });
+            }
+        }
         const accessTokenAndUserId = [
             auth0
                 .clientCredentialsGrant({
@@ -33,6 +47,11 @@ export const getUserData: (authToken: string) => Promise<UserDataRes> = async (
                 }
             )
             .then((data) => data.data);
+        const newAuthCache = new AuthCacheModel({
+            token: authToken,
+            userData,
+        });
+        await newAuthCache.save();
         return { success: true, userData };
     } catch (err) {
         return { success: false, message: err.message };

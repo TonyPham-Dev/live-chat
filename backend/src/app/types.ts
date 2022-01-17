@@ -10,6 +10,7 @@ export interface EnvVariables {
     googleClientSecret: string;
     googleRedirectUrl: string;
     corsOrigin: string;
+    tokenExpiredHour: number;
 }
 
 export interface UserDataWithAccessToken {

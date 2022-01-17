@@ -5,8 +5,6 @@ import { returnServerError } from "../app/constants";
 import ChatModel from "../models/Chat.models";
 import { getUserData } from "../services/auth.services";
 import { newChat } from "../services/message.services";
-import axios from "axios";
-import variables from "../config/variables.config";
 
 class ChatController {
     // [GET] /api/chat/:chatId
@@ -122,18 +120,13 @@ class ChatController {
                             fileList.push(file.filename);
                         });
                     }
-                    const userInfoFromAuth0 = await axios
-                        .get(`https://${variables.auth0DomainUrl}/userinfo`, {
-                            headers: {
-                                "Content-Type": "application/json",
-                                Authorization: req.headers.authorization,
-                            },
-                        })
-                        .then((data) => data.data);
-                    if (!userInfoFromAuth0) {
-                        return res.status(401).json({
+                    const userData = await getUserData(
+                        req.headers.authorization.split(" ")[1]
+                    );
+                    if (!userData.success) {
+                        return res.status(500).json({
                             success: false,
-                            message: "User is not logged in",
+                            message: userData.message,
                         });
                     }
 
@@ -142,7 +135,7 @@ class ChatController {
                         {
                             $push: {
                                 messages: {
-                                    user: userInfoFromAuth0.nickname,
+                                    user: userData.userData.nickname,
                                     message: fileList,
                                     type: "img",
                                 },
