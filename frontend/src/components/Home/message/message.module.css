@@ -26,8 +26,59 @@
     color:#fff;
 }
 .messageChatHeader {
-    display:flex;
+    position: relative;
+    margin-top: 15px;
+    /* display:flex; */
+}
+.messageSearch {
+    display: flex;
+    align-items: center;
     justify-content: space-between;    
+}
+.iconSearch {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width:100%;
+}
+.iconContainer {
+    color:#0084ff;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+}
+.listFriendsSearch {
+    position:absolute;
+    width: 100%;
+    background-color:#242526;
+    border-radius: 20px;
+    top: 110%;
+    padding:10px;
+}
+.itemSearch {
+    padding:10px 20px;
+    list-style: none;
+    background-color:#333;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.4s;
+}
+.itemSearch:hover {
+    background-color: #0084ff;
+    color:#fff;
+    transition: 0.4s;
+}
+.imageSearch{
+    width:50px;
+    height: 50px;
+    border-radius: 50px;
+    object-fit: cover;
+    margin-right: 10px;
+    border:2px solid rgb(102, 101, 101);
 }
 .messageIconSearch {
     margin-left: 10px;
@@ -98,6 +149,7 @@
     transition: 0.4s;
     border-radius:10px;
     padding:35px 10px;
+    margin-bottom: 15px;
 }
 .messageUserContainer:hover {
     background-color: rgba(243, 137, 99, 0.651);
@@ -128,7 +180,13 @@
     justify-content:center;
     color:#fff;
 }
-
+.inputSearch {
+    padding:8px 10px;
+    border:none;
+    border-radius: 20px;
+    outline:none;
+    width: 100%;
+}
 
 
 
@@ -240,6 +298,11 @@
     height: 120px;
     border-radius: 5px;
     object-fit: cover;
+    margin-bottom: 10px;
+}
+.messageImagesContainer {
+    display: flex;
+    flex-direction: column;
 }
 .messItemLeft {
     display: flex;
@@ -275,7 +338,8 @@
     margin-right: 10px;
     transition: 0.4s;
     font-size: 20px;
-    display:none;
+    /* display: flex; */
+    opacity: 0;
 }
 .iconItem:hover {
     color:rgb(238, 157, 104);
@@ -283,9 +347,13 @@
     cursor: pointer;
 
 }
-.messItem:hover .iconItem {
-    display:inline-block;
-    transition: 0.4s;
+.messItemRight:hover .iconItem {
+    /* display: flex; */
+   opacity: 1;
+}
+.messItemLeft:hover .iconItem {
+    /* display: flex; */
+   opacity: 1;
 }
 .iconLike {
     font-size: 25px;
@@ -301,6 +369,10 @@
 }   
 .avatarContainer {
     position: relative;
+}
+.imageFile {
+    
+    border-radius: 20px;
 }
 
 .listImageContainer {
@@ -349,7 +421,40 @@
     margin-right: 10px;
 }
 
-
+.imageFullScreen {
+    position:fixed;
+    inset:0;
+    background-color:rgba(99, 98, 98, 0.3);
+    z-index: 9999999;
+}
+.imageFull {    
+    position:absolute;
+    width: 50%;
+    height: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    object-fit: cover;
+    border-radius: 20px;
+}
+.iconRemoveImage {
+    position:absolute;
+    right:10%;
+    top: 20%;
+    color:#fff;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 99999;
+    transition: 0.4s;
+}
+.iconRemoveImage:hover {
+    color:#0084ff;
+    transition: 0.4s;
+}
+.addMessage {
+    
+    cursor: pointer; 
+}
 /* responsive */
 
 /* ipad pro */
@@ -455,5 +560,11 @@
     }
     .imageMobile {
         display:block;
+    }
+    .imageFull {
+        top: 60%;
+    }
+    .iconRemoveImage {
+        top: 30%;
     }
 }

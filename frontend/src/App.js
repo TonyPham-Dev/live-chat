@@ -17,7 +17,6 @@ function App() {
     const [useName, setUseName] = useState('');
     const [urlPhoto, setUrlPhoto] = useState('')
     const [authState, setAuthState] = useState(false)
-    console.log(authState);
     useEffect( () => {
         if(!isLogin){
              window.open("/");
