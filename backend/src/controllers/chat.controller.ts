@@ -9,6 +9,22 @@ import axios from "axios";
 import variables from "../config/variables.config";
 
 class ChatController {
+    // [GET] /api/chat/:chatId
+    // @desc Get chat conversation
+    public async getChat(req: Request, res: Response) {
+        try {
+            const chat = await ChatModel.findById(req.params.chatId);
+            if (!chat) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Chat not found",
+                });
+            }
+            return res.json({ success: true, chat });
+        } catch (err) {
+            return returnServerError(res, err.message);
+        }
+    }
     // [GET] /chat
     // @desc Get all chat
     public async getAll(req: Request, res: Response) {
