@@ -29,13 +29,19 @@ class UserController {
             const userData = await getUserData(
                 req.headers.authorization.split(" ")[1]
             );
+            if (!userData.success) {
+                return res.status(500).json({
+                    success: false,
+                    message: userData.message,
+                });
+            }
 
             // add to mongodb
             const user = await UserModel.findOne({
-                nickname: userData.nickname,
+                nickname: userData.userData.nickname,
             });
             const contacts = await getContacts(
-                userData.identities[0].access_token
+                userData.userData.identities[0].access_token
             );
             if (!user) {
                 return res.json({

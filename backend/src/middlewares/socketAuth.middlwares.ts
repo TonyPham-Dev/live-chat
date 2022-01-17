@@ -11,9 +11,8 @@ const socketAuth = async (socket: Socket, next: any) => {
     try {
         const data = await getUserData(token);
         if (!data.success) {
-            next(new Error("User is not logged in"));
             console.log(data);
-
+            next(new Error("User is not logged in"));
         }
         // set nickname
         socket.handshake.auth.nickname = data.userData?.nickname;
