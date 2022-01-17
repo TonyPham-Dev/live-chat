@@ -1,18 +1,10 @@
 import socketAuth from "../../../middlewares/socketAuth.middlwares";
-import variables from "../../../config/variables.config";
 import { Server, Socket } from "socket.io";
 import { newTextMessage } from "../../../services/message.services";
-import socketioJwt from "socketio-jwt";
 
 const messageHandler: (io: Server) => void = (io) => {
     const messageIo = io.of("/message");
-    // messageIo.use(socketAuth);
-    messageIo.use(
-        socketioJwt.authorize({
-            secret: variables.auth0ClientSecret,
-            handshake: true,
-        })
-    );
+    messageIo.use(socketAuth);
     messageIo.on("connection", (socket: Socket) => {
         const { roomId, nickname } = socket.handshake.auth;
         let roomIdTemp: string = roomId;
