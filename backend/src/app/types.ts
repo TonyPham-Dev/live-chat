@@ -38,3 +38,9 @@ export interface UserDataWithAccessToken {
     updated_at: string;
     user_id: string;
 }
+
+export interface UserDataRes {
+    success: boolean;
+    message?: string;
+    userData?: UserDataWithAccessToken;
+}
