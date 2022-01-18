@@ -1,9 +1,17 @@
 import React from 'react';
 import styles from './profile.module.css'
+import ProFileContentLeft from './ProFileContentLeft';
+import ProFileContentRight from './ProFileContentRight';
 function ProfileContent(props) {
     return (
-        <div >
-            
+        <div className={styles.ProfileContentContainer}>
+            <div className={styles.ProfileContentLeft}>
+                <ProFileContentLeft/>
+            </div>
+
+            <div className={styles.ProfileContentRight}>
+                <ProFileContentRight/>
+            </div>
         </div>
     );
 }

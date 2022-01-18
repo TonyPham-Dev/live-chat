@@ -5,6 +5,7 @@ import { AiFillEye, AiFillWarning, AiTwotoneSetting } from "react-icons/ai";
 import { FaSearch } from "react-icons/fa";
 import { BsFillArchiveFill } from "react-icons/bs";
 import { IoMdTimer } from "react-icons/io";
+import { MdOutlineExpandMore } from "react-icons/md";
 import coverImage from "../PostContents/image/coverImage.jpg";
 import imageUser from "../PostContents/image/imageUser.jpg";
 import styles from "./profile.module.css";
@@ -13,6 +14,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 function HeaderProfile({ userAdmin }) {
   const { user } = useAuth0();
   const [openSeeMore, setOpenSeeMore] = useState(false);
+  const [openMore, setOpenMore] = useState(false);
   return (
     <div>
       <div className={styles.pageProfile}>
@@ -33,20 +35,121 @@ function HeaderProfile({ userAdmin }) {
       <div className={styles.seeMore}>
         <ul className={styles.listItem}>
           <Link style={{ textDecoration: "none" }} to="/user">
-            <span className={styles.item}>Post</span>
+            <span className={styles.item}>Bài viết</span>
           </Link>
           <Link style={{ textDecoration: "none" }} to="#">
-            <span className={styles.item}>About</span>
+            <span className={styles.item}>Giới thiệu</span>
           </Link>
           <Link style={{ textDecoration: "none" }} to="/friends">
-            <span className={styles.item}>Friends</span>
+            <span className={styles.item}>Bạn bè</span>
           </Link>
           <Link style={{ textDecoration: "none" }} to="#">
-            <span className={styles.item}>Photos</span>
+            <span className={styles.item}>Ảnh</span>
           </Link>
           <Link style={{ textDecoration: "none" }} to="#">
             <span className={styles.item}>Video</span>
           </Link>
+
+          {/* see more */}
+          <div className={styles.MoreContainer}>
+            <span
+              className={clsx(styles.item, styles.more)}
+              onClick={() => setOpenMore(!openMore)}
+              
+            >
+              Xem Thêm
+             
+            </span>
+
+            {openMore && (
+              <div className={styles.listItemMore}>
+                <Link
+                  to="#"
+                  className={styles.moreItemContainer}
+                  style={{ textDecoration: "none" }}
+                >
+                  <span className={styles.moreItem}>Thể thao</span>
+                </Link>
+                <Link
+                  to="#"
+                  className={styles.moreItemContainer}
+                  style={{ textDecoration: "none" }}
+                >
+                  <span className={styles.moreItem}>Âm nhạc</span>
+                </Link>
+                <Link
+                  to="#"
+                  className={styles.moreItemContainer}
+                  style={{ textDecoration: "none" }}
+                >
+                  <span className={styles.moreItem}>Phim</span>
+                </Link>
+                <Link
+                  to="#"
+                  className={styles.moreItemContainer}
+                  style={{ textDecoration: "none" }}
+                >
+                  <span className={styles.moreItem}>Chương trình TV</span>
+                </Link>
+                <Link
+                  to="#"
+                  className={styles.moreItemContainer}
+                  style={{ textDecoration: "none" }}
+                >
+                  <span className={styles.moreItem}>Sách</span>
+                </Link>
+                <Link
+                  to="#"
+                  className={styles.moreItemContainer}
+                  style={{ textDecoration: "none" }}
+                >
+                  <span className={styles.moreItem}>Ứng dụng và trò chơi</span>
+                </Link>
+                <Link
+                  to="#"
+                  className={styles.moreItemContainer}
+                  style={{ textDecoration: "none" }}
+                >
+                  <span className={styles.moreItem}>Thích</span>
+                </Link>
+                <Link
+                  to="#"
+                  className={styles.moreItemContainer}
+                  style={{ textDecoration: "none" }}
+                >
+                  <span className={styles.moreItem}>Sự Kiện</span>
+                </Link>
+                <Link
+                  to="#"
+                  className={styles.moreItemContainer}
+                  style={{ textDecoration: "none" }}
+                >
+                  <span className={styles.moreItem}>Câu hỏi</span>
+                </Link>
+                <Link
+                  to="#"
+                  className={styles.moreItemContainer}
+                  style={{ textDecoration: "none" }}
+                >
+                  <span className={styles.moreItem}>Bài đánh giá đã viết</span>
+                </Link>
+                <Link
+                  to="#"
+                  className={styles.moreItemContainer}
+                  style={{ textDecoration: "none" }}
+                >
+                  <span className={styles.moreItem}>Nhóm</span>
+                </Link>
+                <Link
+                  to="#"
+                  className={styles.moreItemContainer}
+                  style={{ textDecoration: "none" }}
+                >
+                  <span className={styles.moreItem}>Quản lý các phần</span>
+                </Link>
+              </div>
+            )}
+          </div>
         </ul>
         {/* follow user */}
 
@@ -60,7 +163,8 @@ function HeaderProfile({ userAdmin }) {
             </button>
           </div>
           <div className={styles.buttonMoreContainer}>
-            <button className={clsx(styles.button, styles.buttonMore)}
+            <button
+              className={clsx(styles.button, styles.buttonMore)}
               onClick={() => setOpenSeeMore(!openSeeMore)}
             >
               <CgMore />
@@ -68,23 +172,23 @@ function HeaderProfile({ userAdmin }) {
             {openSeeMore && (
               <ul className={styles.seeMoreContainer}>
                 <li className={styles.iconItem}>
-                  <AiFillEye />{" "}
+                  <AiFillEye />
                   <span className={styles.contentIcon}>View As</span>
                 </li>
                 <li className={styles.iconItem}>
-                  <FaSearch />{" "}
+                  <FaSearch />
                   <span className={styles.contentIcon}>Search Profile</span>
                 </li>
                 <li className={styles.iconItem}>
-                  <AiFillWarning />{" "}
+                  <AiFillWarning />
                   <span className={styles.contentIcon}>Account Status</span>
                 </li>
                 <li className={styles.iconItem}>
-                  <IoMdTimer />{" "}
+                  <IoMdTimer />
                   <span className={styles.contentIcon}>Story Archive</span>
                 </li>
                 <li className={styles.iconItem}>
-                  <AiTwotoneSetting />{" "}
+                  <AiTwotoneSetting />
                   <span className={styles.contentIcon}>
                     Profile and Tagging Settings
                   </span>

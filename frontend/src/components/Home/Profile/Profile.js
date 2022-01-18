@@ -7,14 +7,9 @@ import ProfileContent from "./ProfileContent";
 function Profile(props) {
   const apiServer = "http://localhost:3000";
   const { user } = useAuth0();
+  console.log(user);
   const [userAdmin, setUserAdmin] = useState({});
 
-//   useEffect(() => {
-//     user &&
-//       fetch(`${apiServer}/api/user/${user.nickname}`)
-//         .then((response) => response.json())
-//         .then((users) => setUserAdmin([users]));
-//   }, [user]);
   return (
     <div className={styles.ProfileContainer}>
         <div className={styles.profile}>

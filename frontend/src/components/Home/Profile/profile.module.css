@@ -1,3 +1,4 @@
+
 .ProfileContainer {
     width: 100%;
     background-color: #333;
@@ -39,6 +40,10 @@
     color:#fff;
     /* position: relative; */
 }
+.iconMore {
+    display: flex;
+    align-items: center;
+}
 .seeMore {
     display:flex;
     align-items: center;    
@@ -47,15 +52,22 @@
     border-top: 1px solid rgb(255, 255, 255);
 }
 .listItem {
+    display:flex;
     padding:20px 0px;
 }
 .item {
-    color:#fff;
+    color:#a3a6aa;
     font-size: 17px;
     margin-right: 40px;
     font-weight: 600;
+    padding:10px 5px;
+    border-radius: 10px;
+    transition: 0.2s;
 }
-
+.item:hover {
+    background-color:#626263;
+    transition: 0.2s;
+}
 .buttonContainer {
     display: flex;
     align-items: center;
@@ -123,4 +135,95 @@
     width: 100%;
     height: 1000px;
     background-color: #18191a;
+}
+.MoreContainer {
+    position: relative;
+    cursor: pointer;
+}
+.listItemMore {
+    position: absolute;
+    width: 400px;
+    height: 260px;
+    overflow:scroll;
+    border-radius: 20px;
+    background-color: #626263;
+    top: 37px;
+    display: flex;
+    flex-direction: column;
+    padding:10px;
+}
+.listItemMore::-webkit-scrollbar {
+    display: none;
+}
+.moreItemContainer {
+    margin-bottom: 10px;
+    border-radius: 20px;
+    padding:10px 20px;
+    background-color:#333;
+    color:#fff;
+    transition: 0.2s;
+}
+.moreItemContainer:hover {
+    
+    opacity: 0.8;
+    transition: 0.2s;
+}
+.ProfileContentContainer {
+    @import center from ''
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content:space-between;
+}
+.ProfileContentLeft {
+    width: 35%;
+    background-color: #333;
+    margin-top: 20px;
+    border-radius: 20px;
+   
+}
+.ProfileContentRight {
+    width: 64%;
+    background-color: rgb(88, 63, 63);
+    margin-top: 20px;
+    border-radius: 20px;
+    
+}
+.AboutUser {
+    margin-top: 20px;
+}
+.aboutContainer {
+    padding:10px 20px;
+    padding-bottom: 30px;
+}
+.infomationUser {
+    display: flex;
+    color:#e4e6eb;
+    margin-bottom: 20px;
+}
+.linkEmail {
+    text-decoration: none;
+    color:#e4e6eb;
+}
+.buttons {
+    margin-top: 10px;
+    
+}
+.buttonProfile {
+    width: 100%;
+    padding:10px;
+    font-weight: 600;
+    border:none;
+    outline:none;
+    color:#e4e6eb;
+    background-color:#3a3b3c;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius:10px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.buttonProfile:hover {
+    opacity: 0.8;
+    transition: 0.2s;
 }
