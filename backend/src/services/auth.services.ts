@@ -17,8 +17,6 @@ export const getUserData: (authToken: string) => Promise<UserDataRes> = async (
                 timeDiff > 0
             ) {
                 return { success: true, userData: authCache.userData };
-            } else {
-                await AuthCacheModel.deleteOne({ token: authToken });
             }
         }
         const accessTokenAndUserId = [
@@ -47,6 +45,22 @@ export const getUserData: (authToken: string) => Promise<UserDataRes> = async (
                 }
             )
             .then((data) => data.data);
+        const caches = await AuthCacheModel.find({
+            "userData.nickname": userData.nickname,
+        });
+        const deletePromise: any[] = [];
+        caches.forEach((cache) => {
+            const timeDiff = Date.now() - new Date(cache.createdAt).getTime();
+            if (
+                timeDiff > variables.tokenExpiredHour * 60 * 60 * 1000 &&
+                timeDiff > 0
+            ) {
+                deletePromise.push(
+                    AuthCacheModel.findOneAndDelete({ token: cache.token })
+                );
+            }
+        });
+        await Promise.all(deletePromise);
         const newAuthCache = new AuthCacheModel({
             token: authToken,
             userData,
