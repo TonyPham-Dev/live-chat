@@ -43,7 +43,6 @@ class PostController {
                 { name: "videos", maxCount: 5 },
             ])(req, res, async (err) => {
                 if (err) {
-                    console.log("here");
                     return res.status(500).json({
                         success: false,
                         message: err.message,
@@ -53,11 +52,11 @@ class PostController {
                     const files: any = { ...req.files };
                     const images: string[] = [];
                     const videos: string[] = [];
-                    files.images.length > 0 &&
+                    files.images && files.images.length > 0 &&
                         files.images.forEach((file: Express.Multer.File) => {
                             images.push(file.filename);
                         });
-                    files.videos.length > 0 &&
+                    files.videos && files.videos.length > 0 &&
                         files.videos.forEach((file: Express.Multer.File) => {
                             videos.push(file.filename);
                         });
@@ -99,6 +98,7 @@ class PostController {
                     return res.status(200).json({
                         success: true,
                         message: "Post created",
+                        id: newPost._id
                     });
                 }
             });
