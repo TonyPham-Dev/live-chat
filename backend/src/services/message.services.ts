@@ -1,10 +1,9 @@
-import { getChatGfs } from "../config/db.config";
-// import { chatUpload } from "../config/gridFsStorage.config"
 import ChatModel from "../models/Chat.models";
 interface Base {
     success: boolean;
 }
 interface NewChat extends Base {
+    success: boolean;
     err?: string;
     chat?: any;
 }
