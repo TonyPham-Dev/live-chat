@@ -1,5 +1,6 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import Moment from "moment";
 import { Link } from "react-router-dom";
 import styles from "./profile.module.css";
 import { ImHome3 } from "react-icons/im";
@@ -21,7 +22,7 @@ function AboutUser(props) {
         </span>
         <span className={styles.infomationUser}>
           <MdAccessTimeFilled />
-          <h4 style={{marginLeft:'8px'}}>{user ? `Tham gia vào ${user && user.updated_at}` : ''}</h4>
+          <h4 style={{marginLeft:'8px'}}>{user ? `Tham gia vào ${Moment(user && user.updated_at).format('DD-MM-YYYY')}` : ''}</h4>
         </span>
         <span className={styles.infomationUser}>
           <MdContacts />

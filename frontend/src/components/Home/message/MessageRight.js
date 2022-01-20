@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-
+import { Link } from "react-router-dom";
 // import socket.io
 import io from "socket.io-client";
 // import react-icon
@@ -63,11 +63,6 @@ function MessageRight(props) {
         ...prev,
         { user: user.nickname, message: valueMess, type: "text" },
       ]);
-      // inputRef.current.focus();
-      // itemMessRef.current.scrollIntoView({
-      //   behavior: "smooth",
-      //   block: "nearest",
-      // });
       socketRef.current.emit("text-message", valueMess);
       setValueMess("");
     }
@@ -105,9 +100,9 @@ function MessageRight(props) {
     });
 
     socketRef.current = socket;
-  },[])
+  }, []);
   useEffect(() => {
-    socketRef.current.emit("change-room",chatId)
+    socketRef.current.emit("change-room", chatId);
     setSaveValueMess([]);
     props.messages.messages.forEach((message) => {
       setSaveValueMess((prev) => [
@@ -115,10 +110,9 @@ function MessageRight(props) {
         { user: message.user, message: message.message, type: message.type },
       ]);
     });
-  },[props.messages]);
+  }, [props.messages]);
 
-  useEffect(() => {
-  },[chatId])
+  useEffect(() => {}, [chatId]);
   // message image ảnh gửi lên server
   const playLoadImage = async () => {
     const formData = new FormData();
@@ -150,7 +144,7 @@ function MessageRight(props) {
   const handleIconLike = () => {
     setSaveValueMess((prev) => [
       ...prev,
-      { user: user.nickname, message: "👍", type:'text' },
+      { user: user.nickname, message: "👍", type: "text" },
     ]);
     itemMessRef.current.scrollIntoView({
       behavior: "smooth",
@@ -186,9 +180,9 @@ function MessageRight(props) {
   };
 
   // delete Image full screen
-  const handleRemoveImageFullScreen =() => {
-    setImageFullScreen(null)
-  }
+  const handleRemoveImageFullScreen = () => {
+    setImageFullScreen(null);
+  };
   return (
     <div className={styles.messageRight}>
       <div className={styles.imageMobile}>
@@ -197,23 +191,34 @@ function MessageRight(props) {
       {/* message header */}
       {user && (
         <div className={styles.messageRightContainer}>
-          <div className={styles.messageUser}>
-            <img
-              className={styles.messImage}
-              src={
-                props.userData[
-                  props.messages.users.filter((users) => users != user.nickname)
-                ]
-              }
-            />
-            <div>
-              <h3 className={styles.messageRightTitle}>
-                {props.messages.users.filter((users) => users != user.nickname)}
-              </h3>
+          <Link
+            to={`/user/${props.messages.users.filter(
+              (users) => users != user.nickname
+            )}`}
+            style={{textDecoration: "none" }}
+          >
+            <div className={styles.messageUser}>
+              <img
+                className={styles.messImage}
+                src={
+                  props.userData[
+                    props.messages.users.filter(
+                      (users) => users != user.nickname
+                    )
+                  ]
+                }
+              />
+              <div>
+                <h3 className={styles.messageRightTitle}>
+                  {props.messages.users.filter(
+                    (users) => users != user.nickname
+                  )}
+                </h3>
 
-              <span style={{ color: "#9BF66C" }}>online</span>
+                <span style={{ color: "#9BF66C" }}>online</span>
+              </div>
             </div>
-          </div>
+          </Link>
 
           <div className={styles.messageRightIcon}>
             <span className={styles.icon}>
@@ -270,10 +275,9 @@ function MessageRight(props) {
                   </li>
                 ) : (
                   <li ref={itemMessRef} className={styles.messItemLeft}>
-                   
                     <div className={styles.itemContainer}>
                       {user && value.type === "text" ? (
-                        <h5 className={styles.itemRight}> value.message </h5>
+                        <h5 className={styles.itemRight}>{value.message}</h5>
                       ) : null}
                       <div className={styles.messageImagesContainer}>
                         {user && value.type === "img"
@@ -308,7 +312,14 @@ function MessageRight(props) {
         </ul>
         {openImageFullScreen && (
           <div className={styles.imageFullScreen}>
-            <span className={styles.iconRemoveImage}
+            {openImageFullScreen && (
+              <div
+                className={styles.imageOverlay}
+                onClick={() => setImageFullScreen(null)}
+              ></div>
+            )}
+            <span
+              className={styles.iconRemoveImage}
               onClick={() => handleRemoveImageFullScreen()}
             >
               <FaTimesCircle />

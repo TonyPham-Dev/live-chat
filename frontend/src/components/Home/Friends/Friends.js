@@ -1,5 +1,7 @@
 // import icon react
 import React, { useState, useEffect, memo } from "react";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 import { GoPrimitiveDot } from "react-icons/go";
 import { FiMoreHorizontal } from "react-icons/fi";
 
@@ -13,19 +15,21 @@ function Friends({ friends }) {
   // console.log(friends);
   const [openFromSearch, setOpenFromSearch] = useState(false);
   const [saveValueSearch, setSaveValueSearch] = useState([]);
-  const [getNameFriend, setGetNameFriend] = useState('')
+  const [getNameFriend, setGetNameFriend] = useState("");
+
+  // loading
+  const [open, setOpen] = useState(true);
 
   // handle change value search
   const handleChangeSearch = (e) => {
     setSaveValueSearch((prev) => [...prev, e.target.value]);
-    console.log(saveValueSearch);
   };
   const checkObjectIsUndefined = (obj) => {
-    return obj && Object.keys(obj).length > 0
-  }
+    return obj && Object.keys(obj).length > 0;
+  };
   const checkArrayIsNull = (array) => {
-    return Object.keys(array).indexOf('names') !== -1
-  }
+    return Object.keys(array).indexOf("names") !== -1;
+  };
 
   return (
     <div className={styles.app}>
@@ -63,24 +67,48 @@ function Friends({ friends }) {
         {/* user admin */}
         <User />
         <div className={styles.totalFriends}>
-            <h3 className={styles.total}>{`${friends !== null && checkObjectIsUndefined(friends.contacts) ? friends.contacts.totalItems : ''} friends`}</h3>
+          <h3 className={styles.total}>{`${
+            friends !== null && checkObjectIsUndefined(friends.contacts)
+              ? friends.contacts.totalItems
+              : ""
+          } friends`}</h3>
         </div>
         <ul className={styles.listItem}>
           {/* render li */}
-          {friends !== null && checkObjectIsUndefined(friends.contacts) ? friends.contacts.connections.map((contact,index) => {
+          {friends !== null && checkObjectIsUndefined(friends.contacts) ? (
+            friends.contacts.connections.map((contact, index) => {
               return (
                 <li key={index} className={styles.listFriends}>
                   <div className={styles.userContainer}>
-                    <img className={styles.friendsImage} src='https://12guns.vn/code-tim-kiem-theo-ten-trong-java/imager_3161.jpg' />
-                    <h4 className={styles.friendsName}>{checkArrayIsNull(contact) ? contact.names[0].displayName : 'Không xác định'}</h4>
+                    <img
+                      className={styles.friendsImage}
+                      src="https://12guns.vn/code-tim-kiem-theo-ten-trong-java/imager_3161.jpg"
+                    />
+                    <h4 className={styles.friendsName}>
+                      {checkArrayIsNull(contact)
+                        ? contact.names[0].displayName
+                        : "Không xác định"}
+                    </h4>
                   </div>
                   <span className={styles.iconOnline}>
                     <GoPrimitiveDot />
                   </span>
                 </li>
-              )
-          } ): null}
-
+              );
+            })
+          ) : (
+              <Backdrop
+                sx={{
+                  position: 'absolute',
+                  background: "transparent",
+                  color: "#2374e1",
+                  zIndex: (theme) => theme.zIndex.drawer + 1,
+                }}
+                open={open}
+              >
+                <CircularProgress color="inherit" />
+              </Backdrop>
+          )}
         </ul>
       </div>
     </div>

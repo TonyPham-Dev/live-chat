@@ -48,6 +48,7 @@
     
 }
 .friendsName {
+    position: relative;
     color:rgb(82, 80, 80);
 }
 .friendsImage {
@@ -100,4 +101,9 @@
 }
 .total {
     color:rgb(119, 119, 119);
+}
+.backdrop {
+    position:absolute;
+    left: 10px;
+    z-index: 999999;
 }

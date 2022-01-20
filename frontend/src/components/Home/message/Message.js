@@ -13,20 +13,24 @@ function Message(props) {
   const [userData, setUserData] = useState({});
   const navigate = useNavigate();
 
-  const {chatId} = useParams()
+  const { chatId } = useParams();
   useEffect(() => {
-    fetch(apiChat + chatId, { headers: { authorization: `Bearer ${accessToken}` } })
-      .then((response) => response.json())
-      .then((chat) => {
-        if(chat.success) {
-          setMessage(prev => {
-            const prevData = [...prev]
-            prevData[prevData.findIndex(element => element._id == chatId)] = chat.chat
-            return prevData
-          })
-        }
+    chatId &&
+      fetch(apiChat + chatId, {
+        headers: { authorization: `Bearer ${accessToken}` },
       })
-  },[chatId])
+        .then((response) => response.json())
+        .then((chat) => {
+          if (chat.success) {
+            setMessage((prev) => {
+              const prevData = [...prev];
+              prevData[prevData.findIndex((element) => element._id == chatId)] =
+                chat.chat;
+              return prevData;
+            });
+          }
+        });
+  }, [chatId]);
   useEffect(() => {
     fetch(apiChat, { headers: { authorization: `Bearer ${accessToken}` } })
       .then((response) => response.json())
@@ -70,7 +74,12 @@ function Message(props) {
           </div>
           <div>
             {Object.entries(userData).length > 0 && (
-              <MessageRight messages={message[message.findIndex(element => element._id == chatId)]} userData={userData} />
+              <MessageRight
+                messages={
+                  message[message.findIndex((element) => element._id == chatId)]
+                }
+                userData={userData}
+              />
             )}
           </div>
         </div>

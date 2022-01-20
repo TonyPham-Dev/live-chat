@@ -8,6 +8,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import imageUser from "./image/imageUser.jpg";
 import styles from "./message.module.css";
+import clsx from "clsx";
 function MessageLeft(props) {
   const { user } = useAuth0();
   const apiServer = "http://localhost:3000";
@@ -22,20 +23,9 @@ function MessageLeft(props) {
   const [valueSearch, setValueSearch] = useState("");
   const [userFromApi, setUserFromApi] = useState([]);
   const [getUserFromApi, setGetUserFromApi] = useState([]);
+  const [active, setActive] = useState(0)
   const navigate = useNavigate();
-  // function create new chat
-  // const createMessageChat = (e) => {
-  //   e.preventDefault();
-  //   fetch(apiCreateMessage, {
-  //     headers: {
-  //       Authorization: `Bearer ${accessToken}`,
-  //       "content-type": "application/json",
-  //     },
-  //     method: "POST",
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => setAddUser([data]));
-  // };
+
   const checkObjectIsUndefined = (obj) => {
     return Object.keys(obj).length > 0;
   };
@@ -79,6 +69,13 @@ function MessageLeft(props) {
     setValueSearch("");
     setOpenContainerSearch(false);
   };
+
+  // handle convert box chat
+  const handleConvertBoxChat = (message,index) => {
+    navigate(`/message/${message._id}`);
+    setActive(index)
+  };
+  console.log(props.messages);
   return (
     <div className={styles.messageLeft}>
       <h3>Chat</h3>
@@ -133,9 +130,9 @@ function MessageLeft(props) {
       <div className={styles.messageBody}>
         <ul className={styles.messageBodyContainer}>
           {/* render list friends */}
-          {(user &&
-            (props.messages &&
-            props.userData)) &&
+          {user &&
+            props.messages &&
+            props.userData &&
             props.messages.map((message, index) => {
               const useFilter = message.users.filter(
                 (users) => users != user.nickname
@@ -143,8 +140,8 @@ function MessageLeft(props) {
               return (
                 <li
                   key={index}
-                  className={styles.messageUserContainer}
-                  onClick={() => navigate(`/message/${message._id}`)}
+                  className={active == index ? clsx(styles.messageUserContainer, styles.activeBg) : styles.messageUserContainer}
+                  onClick={() => handleConvertBoxChat(message, index)}
                 >
                   <img
                     className={styles.imageUser}
@@ -156,10 +153,7 @@ function MessageLeft(props) {
                       <span style={{ color: "#666" }}>
                         You:
                         <span style={{ color: "#fff", marginLeft: "10px" }}>
-                          {props.messages[index].messages.length > 0 &&
-                            props.messages[index].messages[
-                              props.messages[index].messages.length - 1
-                            ].message[0]}
+                          {props.messages[index].messages.length > 0 && props.messages[index].messages[props.messages[index].messages.length - 1 ].type === 'text' ? props.messages[index].messages[props.messages[index].messages.length - 1 ].message[0] : 'Hình ảnh'}
                         </span>
                       </span>
                     </h5>

@@ -6,7 +6,7 @@ function Logout(props) {
     return (
         <div>
             <button className='logout' onClick={() => logout()}>
-                logOut
+                log Out
             </button>
         </div>
     );

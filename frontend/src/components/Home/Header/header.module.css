@@ -37,6 +37,7 @@
     margin-left: 25px;
     color:#777574;
     transition: 0.4s;
+    cursor: pointer;
 }
 .icon.active {
     background-color: #f40;

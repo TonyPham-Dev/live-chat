@@ -86,6 +86,7 @@
 .messageUser {
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 .messImage {
     width: 50px;
@@ -117,9 +118,12 @@
 .messageFooter {
     position: absolute;
     left: 0;
-    padding:20px;
+    padding:20px 0px;
     bottom: 0%;
     width: 100%;
+    /* position:fixed; */
+    bottom: 0;
+    z-index: 9999999;
 }
 .messageButton {
     width: 100%;
@@ -152,8 +156,11 @@
     margin-bottom: 15px;
 }
 .messageUserContainer:hover {
-    background-color: rgba(243, 137, 99, 0.651);
+    background-color: #0084ff;
     transition: 0.4s;
+}
+.activeBg {
+    background-color: #0084ff;
 }
 .messageUseContent {
     margin-left: 10px;
@@ -220,6 +227,8 @@
     font-size: 20px;
 }
 .messageRightFooter {
+    position: relative;
+    z-index: 999999;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -269,12 +278,10 @@
     position: relative;
 }
 .messContainer {
-    height: 75vh;
+    height: 70vh;
     width: 100%;
-    padding:10px 10px 70px 0px;
+    /* padding:10px 10px 70px 0px; */
     overflow: scroll;
-    
-
 }
 .messContainer::-webkit-scrollbar {
     display: none;
@@ -424,8 +431,14 @@
 .imageFullScreen {
     position:fixed;
     inset:0;
-    background-color:rgba(99, 98, 98, 0.3);
     z-index: 9999999;
+}
+.imageOverlay {
+    position:fixed;
+    inset:0;
+    background-color:rgba(99, 98, 98, 0.9);
+    z-index: -1;
+    
 }
 .imageFull {    
     position:absolute;
@@ -474,7 +487,12 @@
     .imageMobile {
         display:block;
     }
-   
+    .imageFull {
+        width:80%;
+    }
+    /* .message {
+        margin-top: 94px;
+    } */
 }
 /* ipad mini */
 @media (min-width: 768px) and (max-width: 1023px) {
@@ -496,6 +514,12 @@
     .messContainer {
         height: 70vh;
     }
+    .imageFull {
+        width:80%;
+    }
+    /* .message {
+        margin-top: 102px;
+    } */
 }
 
 /* mobile */
@@ -531,10 +555,16 @@
         padding:3px;
     }
     .messContainer {
-        height: 68vh;
+        height: 62vh;
     }
     .imageMobile {
         display:block;
+    }
+    .message {
+        margin-top: 120px;
+    }
+    .imageFull {
+        width:80%;
     }
 }
 /* responsive ip6 */
@@ -546,7 +576,7 @@
 /* responsive ip5 */
 @media screen and (device-aspect-ratio: 40/71) {
     .messContainer {
-        height: 70vh;
+        height: 47vh;
     }
     .messageRightInput {
         width:55%;

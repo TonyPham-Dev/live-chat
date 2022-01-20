@@ -10,6 +10,7 @@ import Login from "./components/Login/Login";
 // import Logout from "./components/Login/Logout";
 import Home from './components/Home/Home';
 import Message from './components/Home/message/Message';
+import PostContents from './components/Home/PostContents/PostContents';
 function App() {
     const { user} = useAuth0();
     const isLogin = localStorage.getItem("isLogin");
@@ -35,12 +36,11 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/message" element={<Message />} />
           <Route path="/message/:chatId" element={<Message/>} />
-          {/* <Route path="/message/img/:chatId" element={<Message/>} /> */}
           <Route path="/friends" element={<Friends />} />
           <Route path="/friends/:username" element={<Friends />} />
           <Route path='/home' element={<Home/>}/>
-          <Route path='/user' element={<Profile/>}/>
-          {/* <Route path='/logout' element={<Logout/>}/> */}
+          <Route path='/user/:username' element={<Profile/>}/>
+          <Route path='/posts/:id' element={<Home/>}/>
         </Routes>
       </BrowserRouter>
     </div>

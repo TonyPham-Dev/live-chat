@@ -109,6 +109,7 @@
     padding:10px;
     border-radius: 20px;
     top: 46px;
+    z-index: 999999;
 }
 .iconItem {
     list-style: none;
@@ -151,6 +152,7 @@
     display: flex;
     flex-direction: column;
     padding:10px;
+    z-index: 9999999;
 }
 .listItemMore::-webkit-scrollbar {
     display: none;
@@ -169,7 +171,6 @@
     transition: 0.2s;
 }
 .ProfileContentContainer {
-    @import center from ''
     width: 80%;
     margin: 0 auto;
     display: flex;
@@ -177,14 +178,15 @@
 }
 .ProfileContentLeft {
     width: 35%;
-    background-color: #333;
+    background-color: rgb(206, 186, 186);
     margin-top: 20px;
     border-radius: 20px;
+    height: 0;
    
 }
 .ProfileContentRight {
     width: 64%;
-    background-color: rgb(88, 63, 63);
+    /* background-color: rgb(88, 63, 63); */
     margin-top: 20px;
     border-radius: 20px;
     
@@ -194,7 +196,10 @@
 }
 .aboutContainer {
     padding:10px 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius:20px;
     padding-bottom: 30px;
+    background:#3a3b3c;
 }
 .infomationUser {
     display: flex;
@@ -216,14 +221,46 @@
     border:none;
     outline:none;
     color:#e4e6eb;
-    background-color:#3a3b3c;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color:#1e1e1f;
     border-radius:10px;
     margin-top: 10px;
     cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     transition: 0.2s;
 }
 .buttonProfile:hover {
     opacity: 0.8;
     transition: 0.2s;
+}
+.profilePostContentUser {
+    margin-top: 20px;
+    border-radius:20px;
+    height: 400px;
+    background-color:#3a3b3c;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding:20px;
+}
+.profileUserImage {
+    width:50px;
+    height: 50px;
+    border-radius: 50px;
+    margin-right: 10px;
+    object-fit: cover;
+}
+.profileUser {
+    display: flex;
+    align-items: center;
+}
+.timePost {
+    color:#fff;
+}
+.profilePostUser {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.PostUtlti {
+    color:#fff;
+    font-size: 20px;
+    cursor: pointer;
 }

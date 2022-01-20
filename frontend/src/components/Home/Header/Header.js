@@ -14,10 +14,12 @@ import clsx from "clsx";
 import Notification from "./notification/Notification";
 import Logout from "../../Login/Logout";
 import logo from "../Header/image/logo.jpg";
+import { useAuth0 } from "@auth0/auth0-react";
 import imageUser from "../Header/image/imageUser.jpg";
 import styles from "./header.module.css";
 
 function Header(props) {
+  const {user} = useAuth0()
   const styleTheme = styles.icon;
   const styleActive = styles.active;
   const styleNotification = styles.notification;
@@ -125,7 +127,7 @@ function Header(props) {
             <span>{openNotification && <Notification />}</span>
           </div>
           <div className={styles.user}>
-            <Link to="/user" style={{ textDecoration: "none" }}>
+            <Link to={`/user/${user.nickname}`} style={{ textDecoration: "none" }}>
               <div className={styles.userContainer}>
                 <img className={styles.imageUser} src={props.urlPhoto} />
                 <h2 className={styles.userName}>{props.useName}</h2>
@@ -147,7 +149,7 @@ function Header(props) {
                   }
                 >
                   <Link
-                    to="/user"
+                    to={`/user/${user.nickname}`}
                     style={{ color: "#fff", textDecoration: "none" }}
                   >
                     <li className={styles.dashboardItem}>Trang cá nhân</li>

@@ -52,7 +52,10 @@
     
 }
 .textareaContainer {
-    margin-top: 20px;
+    padding:10px 20px;
+    border-radius: 20px;
+    /* margin-top: 20px; */
+ 
 }
 .input {
     width: 100%;
@@ -283,4 +286,23 @@
     color:#fff;
     font-size: 20px;
     cursor: pointer;
+}
+.profileImage {
+    width: 45px;
+    height: 45px;
+    border-radius:50px;
+}
+
+.profilePostContent {
+    display: flex;
+    align-items: center;
+}
+.profilePost {
+    padding-bottom: 20px;
+    background-color:#333333;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.ProfileTitlePost {
+    color:#fff;
+    font-weight: 600;
 }
