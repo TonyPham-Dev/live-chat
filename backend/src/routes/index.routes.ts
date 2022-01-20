@@ -5,6 +5,7 @@ import commentRoute from "./comment.routes";
 import mediaRoute from "./media.routes";
 import chatRoute from "./chat.routes";
 import userRoute from "./user.routes";
+import followRoute from "./follow.routes";
 
 const routes = (app: Application) => {
     app.use("/api/posts", postRoute);
@@ -13,6 +14,7 @@ const routes = (app: Application) => {
     app.use("/api/media", mediaRoute);
     app.use("/api/chat", chatRoute);
     app.use("/api/user", userRoute);
+    app.use("/api/follow", followRoute);
 };
 
 export default routes;

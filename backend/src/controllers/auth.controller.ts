@@ -1,7 +1,11 @@
 import { Request, Response } from "express";
 import { returnServerError } from "../app/constants";
 import UserModel from "../models/Users.models";
-import { getContacts, getUserData } from "../services/auth.services";
+import {
+    getContacts,
+    getUserData,
+    createUser,
+} from "../services/auth.services";
 
 class AuthController {
     // [POST] /auth/login
@@ -32,19 +36,21 @@ class AuthController {
                 userData.userData.identities[0].access_token
             );
             if (!user) {
-                const newUser = new UserModel({
-                    nickname: userData.userData.nickname,
-                    avatarUrl: userData.userData.picture,
-                    fullName: userData.userData.name,
-                });
-                await newUser.save();
+                const userInfo = await createUser(
+                    userData.userData.nickname,
+                    userData.userData.picture,
+                    userData.userData.name
+                );
+                if (!userInfo.success) {
+                    return returnServerError(res, userInfo.message);
+                }
                 return res.json({
                     success: true,
                     userData,
                 });
             }
 
-            return res.json({ success: true, contacts });
+            return res.json({ success: true, userData: user });
         } catch (err) {
             return returnServerError(res, err.message);
         }

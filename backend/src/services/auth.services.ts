@@ -1,4 +1,6 @@
 import variables from "../config/variables.config";
+import UserModel from "../models/Users.models";
+import FollowModel from "../models/Follow.models";
 import axios from "axios";
 import { auth0 } from "../config/auth0.config";
 import { UserDataRes, UserDataWithAccessToken } from "../app/types";
@@ -86,4 +88,27 @@ export const getContacts: (accessToken: string) => Promise<any> = async (
         )
         .then((data) => data.data);
     return contacts;
+};
+
+export const createUser: (
+    nickname: string,
+    avatarUrl: string,
+    fullName: string
+) => Promise<any> = async (nickname, avatarUrl, fullName) => {
+    try {
+        const newUser = new UserModel({
+            nickname,
+            avatarUrl,
+            fullName,
+        });
+        await newUser.save();
+        const newFollow = new FollowModel({
+            user: nickname,
+        });
+        await newFollow.save();
+        return { success: true, userData: newUser };
+    } catch (err) {
+        console.log(err);
+        return { success: false, message: err.message };
+    }
 };
