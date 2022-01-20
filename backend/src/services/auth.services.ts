@@ -47,6 +47,16 @@ export const getUserData: (authToken: string) => Promise<UserDataRes> = async (
                 }
             )
             .then((data) => data.data);
+        const userFromDB = await UserModel.findOne({
+            nickname: userData.nickname,
+        });
+        if (!userFromDB) {
+            return {
+                success: false,
+                message: "User not found in DB",
+                userData,
+            };
+        }
         const caches = await AuthCacheModel.find({
             "userData.nickname": userData.nickname,
         });

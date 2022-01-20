@@ -21,21 +21,7 @@ class AuthController {
             const userData = await getUserData(
                 req.headers.authorization.split(" ")[1]
             );
-            if (!userData.success) {
-                return res.status(500).json({
-                    success: false,
-                    message: userData.message,
-                });
-            }
-
-            // add to mongodb
-            const user = await UserModel.findOne({
-                nickname: userData.userData.nickname,
-            });
-            const contacts = await getContacts(
-                userData.userData.identities[0].access_token
-            );
-            if (!user) {
+            if (!userData.success && userData.userData) {
                 const userInfo = await createUser(
                     userData.userData.nickname,
                     userData.userData.picture,
@@ -50,7 +36,7 @@ class AuthController {
                 });
             }
 
-            return res.json({ success: true, userData: user });
+            return res.json({ success: true, userData: userData.userData });
         } catch (err) {
             return returnServerError(res, err.message);
         }
