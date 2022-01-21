@@ -25,7 +25,8 @@ class AuthController {
                 const userInfo = await createUser(
                     userData.userData.nickname,
                     userData.userData.picture,
-                    userData.userData.name
+                    userData.userData.name,
+                    userData.userData.email
                 );
                 if (!userInfo.success) {
                     return returnServerError(res, userInfo.message);

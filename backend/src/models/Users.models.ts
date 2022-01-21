@@ -4,6 +4,8 @@ const UserSchema = new Schema({
     nickname: { type: String, required: true },
     avatarUrl: { type: String, required: true },
     fullName: { type: String, required: true },
+    email: { type: String, required: true },
+    createdAt: { type: Date, required: true, default: Date.now },
 });
 
 UserSchema.virtual("posts", {

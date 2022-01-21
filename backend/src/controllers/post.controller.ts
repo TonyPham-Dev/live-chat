@@ -7,6 +7,23 @@ import { getUserData } from "../services/auth.services";
 import { deleteImgs } from "../services/image.services";
 
 class PostController {
+    // [GET] /posts
+    // @desc Get post for homepage
+    public async index(req: Request, res: Response) {
+        try {
+            if (!req.headers.authorization) {
+                return res.status(403).json({
+                    success: false,
+                    message: "User is not logged in",
+                });
+            }
+            const userData = await getUserData(
+                req.headers.authorization.split(" ")[1]
+            );
+        } catch (err) {
+            return returnServerError(res, err.message);
+        }
+    }
     // [GET] /posts/:postId
     // @desc Get post from postId
     public async getFromPostId(req: Request, res: Response) {
@@ -20,7 +37,7 @@ class PostController {
                     message: "Post not found",
                 });
             }
-            return res.status(200).json({
+            return res.json({
                 success: true,
                 post,
             });
@@ -52,11 +69,13 @@ class PostController {
                     const files: any = { ...req.files };
                     const images: string[] = [];
                     const videos: string[] = [];
-                    files.images && files.images.length > 0 &&
+                    files.images &&
+                        files.images.length > 0 &&
                         files.images.forEach((file: Express.Multer.File) => {
                             images.push(file.filename);
                         });
-                    files.videos && files.videos.length > 0 &&
+                    files.videos &&
+                        files.videos.length > 0 &&
                         files.videos.forEach((file: Express.Multer.File) => {
                             videos.push(file.filename);
                         });
@@ -98,7 +117,7 @@ class PostController {
                     return res.status(200).json({
                         success: true,
                         message: "Post created",
-                        id: newPost._id
+                        id: newPost._id,
                     });
                 }
             });

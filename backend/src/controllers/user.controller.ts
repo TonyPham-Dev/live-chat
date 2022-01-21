@@ -26,6 +26,12 @@ class UserController {
     // @desc Get friends
     public async getFriends(req: Request, res: Response) {
         try {
+            if (!req.headers.authorization) {
+                return res.status(403).json({
+                    success: false,
+                    message: "User is not logged in",
+                });
+            }
             const userData = await getUserData(
                 req.headers.authorization.split(" ")[1]
             );

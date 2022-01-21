@@ -103,13 +103,15 @@ export const getContacts: (accessToken: string) => Promise<any> = async (
 export const createUser: (
     nickname: string,
     avatarUrl: string,
-    fullName: string
-) => Promise<any> = async (nickname, avatarUrl, fullName) => {
+    fullName: string,
+    email: string
+) => Promise<any> = async (nickname, avatarUrl, fullName, email) => {
     try {
         const newUser = new UserModel({
             nickname,
             avatarUrl,
             fullName,
+            email,
         });
         await newUser.save();
         const newFollow = new FollowModel({
