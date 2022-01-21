@@ -10,7 +10,7 @@ import {
 class AuthController {
     // [POST] /auth/login
     // @desc Login user
-    public async login(req: Request, res: Response) {
+    public async login(req: Request, res: Response): Promise<Response> {
         try {
             if (!req.headers.authorization) {
                 return res.status(403).json({

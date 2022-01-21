@@ -7,7 +7,10 @@ import { getUserData } from "../services/auth.services";
 class CommentController {
     // [GET] /comments/:postId
     // @desc Get all comments from a post
-    public async getCommentFromPost(req: Request, res: Response) {
+    public async getCommentFromPost(
+        req: Request,
+        res: Response
+    ): Promise<Response> {
         try {
             const { postId } = req.params;
             // get post
@@ -26,7 +29,10 @@ class CommentController {
 
     // [POST] /comments/:postId
     // @desc Add a comment to a post
-    public async addCommentToPost(req: Request, res: Response) {
+    public async addCommentToPost(
+        req: Request,
+        res: Response
+    ): Promise<Response> {
         try {
             if (!req.headers.authorization) {
                 return res.status(403).json({

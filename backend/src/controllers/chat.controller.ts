@@ -9,7 +9,7 @@ import { newChat } from "../services/message.services";
 class ChatController {
     // [GET] /api/chat/:chatId
     // @desc Get chat conversation
-    public async getChat(req: Request, res: Response) {
+    public async getChat(req: Request, res: Response): Promise<Response> {
         try {
             const chat = await ChatModel.findById(req.params.chatId);
             if (!chat) {
@@ -25,7 +25,7 @@ class ChatController {
     }
     // [GET] /chat
     // @desc Get all chat
-    public async getAll(req: Request, res: Response) {
+    public async getAll(req: Request, res: Response): Promise<Response> {
         try {
             if (!req.headers.authorization) {
                 return res.status(403).json({
@@ -52,7 +52,7 @@ class ChatController {
     }
     // [POST] /chat/new
     // @desc Create new chat conversation
-    public async newChat(req: Request, res: Response) {
+    public async newChat(req: Request, res: Response): Promise<Response> {
         try {
             if (!req.headers.authorization) {
                 return res.status(403).json({
@@ -105,7 +105,8 @@ class ChatController {
         }
     }
     // [POST] /chat/img/:chatId
-    public async newImg(req: Request, res: Response) {
+    // @desc Add img to chat
+    public async newImg(req: Request, res: Response): Promise<Response> {
         try {
             chatUpload.array("images", 10)(req, res, async (err) => {
                 if (err) {
@@ -154,7 +155,7 @@ class ChatController {
         }
     }
     // [POST] /api/chat/addMessage/:chatId
-    public async addMessage(req: Request, res: Response) {
+    public async addMessage(req: Request, res: Response): Promise<Response> {
         try {
             await newTextMessage(
                 req.body.nickname,

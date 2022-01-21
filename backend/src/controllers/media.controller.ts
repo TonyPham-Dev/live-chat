@@ -5,7 +5,7 @@ import { getGfs, getChatGfs } from "../config/db.config";
 class ImageController {
     // [GET] /api/media/:filename
     // @desc Get images from filename
-    public filename(req: Request, res: Response) {
+    public filename(req: Request, res: Response): void {
         getGfs()
             .find({ filename: req.params.filename })
             .toArray((err: Error, files: Express.Multer.File[]) => {
@@ -24,7 +24,7 @@ class ImageController {
     }
     // [GET] /api/media/chat/:filename
     // @desc Get chat images from filename
-    public chatImg(req: Request, res: Response) {
+    public chatImg(req: Request, res: Response): void {
         getChatGfs()
             .find({ filename: req.params.filename })
             .toArray((err: Error, files: Express.Multer.File[]) => {

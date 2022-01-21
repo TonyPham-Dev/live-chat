@@ -5,7 +5,7 @@ import { followUser, getFollow } from "../services/follow.services";
 class FollowController {
     // [GET] /follow/:user
     // @desc Get user follow
-    public async index(req: Request, res: Response) {
+    public async index(req: Request, res: Response): Promise<Response> {
         try {
             const { user } = req.params;
             if (!user) {
@@ -25,7 +25,7 @@ class FollowController {
     }
     // [GET] /follow/toggle/:user
     // @desc Toggle follow
-    public async toggleFollow(req: Request, res: Response) {
+    public async toggleFollow(req: Request, res: Response): Promise<Response> {
         try {
             if (!req.headers.authorization) {
                 return res.status(403).json({

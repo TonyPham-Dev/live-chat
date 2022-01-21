@@ -42,7 +42,6 @@ class UserController {
                 });
             }
 
-            // add to mongodb
             const user = await UserModel.findOne({
                 nickname: userData.userData.nickname,
             });

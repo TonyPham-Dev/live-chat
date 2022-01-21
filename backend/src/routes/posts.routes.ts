@@ -3,6 +3,7 @@ import PostController from "../controllers/post.controller";
 
 const router = Router();
 
+router.get("/", PostController.index);
 router.get("/:postId", PostController.getFromPostId);
 router.post("/new", PostController.newPost);
 router.put("/edit/:postId", PostController.editPost);

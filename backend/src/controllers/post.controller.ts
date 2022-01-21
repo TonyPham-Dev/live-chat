@@ -5,28 +5,68 @@ import { postUpload } from "../config/gridFsStorage.config";
 import { returnServerError } from "../app/constants";
 import { getUserData } from "../services/auth.services";
 import { deleteImgs } from "../services/image.services";
+import { getFollow } from "../services/follow.services";
 
 class PostController {
     // [GET] /posts
     // @desc Get post for homepage
-    public async index(req: Request, res: Response) {
+    public async index(req: Request, res: Response): Promise<Response> {
         try {
+            const { page = 1, all } = req.query;
             if (!req.headers.authorization) {
                 return res.status(403).json({
                     success: false,
                     message: "User is not logged in",
                 });
             }
+            const limitPerPage = 10;
+            if (all === "true") {
+                const posts = await PostModel.find({})
+                    .limit(limitPerPage)
+                    .skip(limitPerPage * (Number(page) - 1))
+                    .sort({ createdAt: -1 });
+                const count = await PostModel.countDocuments();
+                return res.json({
+                    success: true,
+                    posts,
+                    pages: Math.ceil(count / limitPerPage),
+                });
+            }
             const userData = await getUserData(
                 req.headers.authorization.split(" ")[1]
             );
+            if (!userData.success) {
+                return res
+                    .status(403)
+                    .json({ success: false, message: "User is not logged in" });
+            }
+            const follow = await getFollow(userData.userData.nickname);
+            if (!follow.success) {
+                return res
+                    .status(403)
+                    .json({ success: false, message: "User is not logged in" });
+            }
+            const posts = await PostModel.find({
+                author: { $in: follow.follow.following },
+            })
+                .limit(limitPerPage)
+                .skip(limitPerPage * (Number(page) - 1))
+                .sort({ createdAt: -1 });
+            const count = await PostModel.find({
+                author: { $in: follow.follow.following },
+            }).countDocuments();
+            return res.json({
+                success: true,
+                posts,
+                pages: Math.ceil(count / limitPerPage),
+            });
         } catch (err) {
             return returnServerError(res, err.message);
         }
     }
     // [GET] /posts/:postId
     // @desc Get post from postId
-    public async getFromPostId(req: Request, res: Response) {
+    public async getFromPostId(req: Request, res: Response): Promise<Response> {
         try {
             const postId = req.params.postId;
             const post = await PostModel.findById(postId);
@@ -47,7 +87,7 @@ class PostController {
     }
     // [POST] /posts/new
     // @desc Create new post
-    public async newPost(req: Request, res: Response) {
+    public async newPost(req: Request, res: Response): Promise<Response> {
         try {
             if (!req.headers.authorization) {
                 return res.status(403).json({
@@ -127,7 +167,7 @@ class PostController {
     }
     // [PUT] /posts/edit/:postId
     // @desc Edit post
-    public async editPost(req: Request, res: Response) {
+    public async editPost(req: Request, res: Response): Promise<Response> {
         try {
             const { postId } = req.params;
             const post = await PostModel.findById(postId);
@@ -144,7 +184,7 @@ class PostController {
     }
     // [DELETE] /posts/del/:postId
     // @desc Delete post
-    public async deletePost(req: Request, res: Response) {
+    public async deletePost(req: Request, res: Response): Promise<Response> {
         try {
             const { postId } = req.params;
             const post = await PostModel.findById(postId);
