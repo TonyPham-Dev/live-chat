@@ -8,6 +8,19 @@ class UserController {
     // @desc Get user basic information
     public async getUser(req: Request, res: Response) {
         try {
+            const { full } = req.query;
+            if (full === "true") {
+                const user = await UserModel.findOne({
+                    nickname: req.params.username,
+                }).populate(["posts", "follow"]);
+                if (!user) {
+                    return res.status(404).json({
+                        success: false,
+                        message: "User not found",
+                    });
+                }
+                return res.json({ success: true, user });
+            }
             const user = await UserModel.findOne({
                 nickname: req.params.username,
             });

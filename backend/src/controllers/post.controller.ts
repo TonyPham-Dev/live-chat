@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import PostModel from "../models/Posts.models";
+import LikeModel from "../models/Like.models";
 import CommentModel from "../models/Comments.models";
 import { postUpload } from "../config/gridFsStorage.config";
 import { returnServerError } from "../app/constants";
@@ -8,6 +9,7 @@ import { deleteImgs } from "../services/image.services";
 import { getFollow } from "../services/follow.services";
 
 class PostController {
+    private static populateList: string[] = ["comment", "userInfo", "like"];
     // [GET] /posts
     // @desc Get post for homepage
     public async index(req: Request, res: Response): Promise<Response> {
@@ -22,6 +24,7 @@ class PostController {
             const limitPerPage = 10;
             if (all === "true") {
                 const posts = await PostModel.find({})
+                    .populate(PostController.populateList)
                     .limit(limitPerPage)
                     .skip(limitPerPage * (Number(page) - 1))
                     .sort({ createdAt: -1 });
@@ -49,6 +52,7 @@ class PostController {
             const posts = await PostModel.find({
                 author: { $in: follow.follow.following },
             })
+                .populate(PostController.populateList)
                 .limit(limitPerPage)
                 .skip(limitPerPage * (Number(page) - 1))
                 .sort({ createdAt: -1 });
@@ -69,7 +73,9 @@ class PostController {
     public async getFromPostId(req: Request, res: Response): Promise<Response> {
         try {
             const postId = req.params.postId;
-            const post = await PostModel.findById(postId);
+            const post = await PostModel.findById(postId).populate(
+                PostController.populateList
+            );
             // check if post exists
             if (!post) {
                 return res.status(404).json({
@@ -148,12 +154,20 @@ class PostController {
                         vidList: videos,
                         author: userData.userData.nickname,
                     });
-                    await newPost.save();
                     const newPostComment = new CommentModel({
                         postId: newPost._id,
                         commentList: [],
                     });
-                    await newPostComment.save();
+                    const newPostLike = new LikeModel({
+                        postId: newPost._id,
+                        likeList: [],
+                        likeCount: 0,
+                    });
+                    await Promise.all([
+                        newPost.save(),
+                        newPostLike.save(),
+                        newPostComment.save(),
+                    ]);
                     return res.status(200).json({
                         success: true,
                         message: "Post created",
