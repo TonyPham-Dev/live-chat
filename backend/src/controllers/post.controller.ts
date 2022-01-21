@@ -55,6 +55,15 @@ class PostController {
                     message: "User is not logged in",
                 });
             }
+            const userData = await getUserData(
+                req.headers.authorization.split(" ")[1]
+            );
+            if (!userData.success) {
+                return res.status(500).json({
+                    success: false,
+                    message: userData.message,
+                });
+            }
             postUpload.fields([
                 { name: "images", maxCount: 10 },
                 { name: "videos", maxCount: 5 },
@@ -90,15 +99,6 @@ class PostController {
                         return res.status(400).json({
                             success: false,
                             message: "Post body is required",
-                        });
-                    }
-                    const userData = await getUserData(
-                        req.headers.authorization.split(" ")[1]
-                    );
-                    if (!userData.success) {
-                        return res.status(500).json({
-                            success: false,
-                            message: userData.message,
                         });
                     }
 
