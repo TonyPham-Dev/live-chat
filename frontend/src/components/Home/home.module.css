@@ -1,36 +1,35 @@
 .home {
-    display: flex;
-    width: 98%;
-    margin: 0 auto;
-    padding:0px 15px;
-    background-color: rgb(214, 214, 214);
-    margin-top: 93px;
-    /* position: relative; */
+  display: flex;
+  width: 98%;
+  margin: 0 auto;
+  padding: 0px 15px;
+  background-color: rgb(214, 214, 214);
+  margin-top: 93px;
+  /* position: relative; */
 }
 .friends {
-    position:fixed;
-    width: 20%;
-    left: 30px;
-    /* height: 100vh; */
+  position: fixed;
+  width: 20%;
+  left: 30px;
+  /* height: 100vh; */
 }
 .postContents {
-    position:relative;
-    left: 48%;
-    transform: translateX(-50%);
-    width: 50%;
-    /* height: 100vh; */
-    /* overflow:scroll; */
+  position: relative;
+  left: 48%;
+  transform: translateX(-50%);
+  width: 50%;
 }
 .postContents::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 .posts {
-    position:fixed;
-    width: 25%;
-    right: 30px;
-    margin-right: 20px;
-    /* height: 100vh; */
+  position: fixed;
+  width: 25%;
+  right: 30px;
+  margin-right: 20px;
+  /* height: 100vh; */
 }
+
 
 /* responsive */
 /* @media (min-width: 1024px) and (max-width: 1365px) {
@@ -45,4 +44,3 @@
         width: 100%;
     }
 } */
-

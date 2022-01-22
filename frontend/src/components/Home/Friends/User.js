@@ -37,9 +37,7 @@ function User() {
             <img
               className={styles.friendsImage}
               src={
-                checkObjectIsNull(users)
-                  ? users.user.avatarUrl
-                  : "https://static2.yan.vn/YanNews/2167221/202003/dan-mang-du-trend-thiet-ke-avatar-du-kieu-day-mau-sac-tu-anh-mac-dinh-f4781c7a.jpg"
+                checkObjectIsNull(users) && users.user.avatarUrl ? users.user.avatarUrl : "https://static2.yan.vn/YanNews/2167221/202003/dan-mang-du-trend-thiet-ke-avatar-du-kieu-day-mau-sac-tu-anh-mac-dinh-f4781c7a.jpg"
               }
             />
             <h4 className={styles.friendsName}>

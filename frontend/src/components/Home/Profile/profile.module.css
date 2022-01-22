@@ -134,7 +134,6 @@
 }
 .profileContent {
     width: 100%;
-    height: 1000px;
     background-color: #18191a;
 }
 .MoreContainer {
@@ -235,7 +234,6 @@
 .profilePostContentUser {
     margin-top: 20px;
     border-radius:20px;
-    height: 400px;
     background-color:#3a3b3c;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     padding:20px;
@@ -263,4 +261,275 @@
     color:#fff;
     font-size: 20px;
     cursor: pointer;
+}
+.titlePostProfile {
+    margin-top: 10px;
+    color:#dbdbdb;
+}
+.imagePost {
+    display:grid;
+    grid-template-columns: auto auto auto;
+    margin-top: 30px;
+    
+}
+
+.imagePostProfile {
+    width:100%;
+    height: 200px;
+    object-fit: cover;
+    padding:0px 10px;
+    margin-bottom: 10px;
+    border-radius:20px;
+}
+.likeAndCommentsProfile {
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+    /* height: 200px; */
+    padding:0px 10px;
+    margin-top: 30px;
+}
+.likeProfile {
+    display: flex;
+    align-items:center;
+}
+.iconLikeProfile {
+    color:#046fe3;
+    cursor: pointer;
+}
+.countLikeProfile {
+    font-weight: 600;
+    color: #b0b3b8;
+    margin-left: 5px;
+}
+.commentProfile {
+    display: flex;
+    align-items:center;
+    color:#b0b3b8;
+    cursor: pointer;
+}
+.countCommentProfile {
+    margin-right: 5px;
+    font-weight: 600;
+    color:#b0b3b8;
+}
+
+.likeAndCommentContainerProfile {
+    display: flex;
+    align-items:center;
+    width:100%;
+    border-top: 1px solid rgb(185, 184, 184);
+    border-bottom: 1px solid rgb(185, 184, 184);
+    padding:5px;
+    margin-top: 30px;
+}
+.likeContainerProfile {
+    width: calc(100% / 3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    /* text-align: center; */
+    cursor: pointer;
+    border-radius:10px;
+    padding:10px;
+    transition: 0.4s;
+}
+.likeContainerProfile:hover {
+    background-color:rgb(151, 151, 151);
+    border-radius:10px;
+    transition: 0.4s;
+    color:#fff;
+}
+.iconLikesProfile {
+    margin-right: 5px;
+    font-size: 20px;
+    color:#b0b3b8;
+}
+.titleLikeProfile {
+    font-weight: 600;
+    font-size: 17px;
+    color:#b0b3b8;
+}
+.commentContainerProfile {
+    width: calc(100% / 3);
+    display: flex;
+    /* align-items:center; */
+    justify-content: center;
+    cursor: pointer;
+    border-radius:10px;
+    padding:10px;
+    transition: 0.4s;
+}
+.commentContainerProfile:hover {
+    background-color:rgb(151, 151, 151);
+    border-radius:10px;
+    transition: 0.4s;
+    color:#fff;
+}
+.iconCommentsProfile {
+    margin-right: 5px;
+    font-size: 20px;
+    color:#b0b3b8;
+}
+.titleCommentProfile {
+    font-weight: 600;
+    font-size: 17px;
+    color:#b0b3b8;
+}
+.shareContainerProfile {
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    width: calc(100% / 3);
+    cursor: pointer;
+    border-radius:10px;
+    padding:10px;
+    transition: 0.4s;
+}
+.shareContainerProfile:hover {
+    background-color:rgb(151, 151, 151);
+    border-radius:10px;
+    transition: 0.4s;
+    color:#fff;
+
+}
+.iconShareProfile {
+    font-size: 20px;
+    margin-right: 5px;
+    color:#b0b3b8;
+}
+.titleShareProfile {
+    font-weight: 600;
+    font-size: 17px;
+    color:#b0b3b8;
+}
+.inputCommentContainerProfile {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+.userInputProfile {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius:50px;
+    margin-right: 5px;
+}
+.inputProfile {
+    width:95%;
+}
+.listCommentsProfile {
+    width: 100%;
+    /* height: 100px; */
+    margin-top: 30px;
+}
+.listCommentProfile {
+      /* display: flex;
+    align-items: center; */
+    margin-bottom: 10px;
+}
+.itemProfile {
+    display: flex;
+    align-items: center;
+}
+.userCommentProfile {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius:50px; 
+    cursor: pointer;
+}
+.contentCommentProfile {
+    margin-left: 9px;
+    background-color:rgb(145, 145, 145);
+    padding:10px;
+    border-radius:20px;
+    color:rgb(233, 233, 233);
+}
+.nameUserProfile {
+    cursor: pointer;
+}
+.commentEmojiProfile {
+    margin-left: 73px;
+    margin-top: 5px;
+    display: flex;
+    color:#b0b3b8;
+}
+.itemIconProfile {
+    margin-right: 20px;
+    cursor: pointer;
+    font-size: 18px;
+}
+.profileContentImage {
+    width: 100%;
+    margin-top: 20px;
+    /* height: 500px; */
+    background-color:#3a3b3c;
+    border-radius:20px;
+    box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+}
+.profileImageContainer {
+    padding:20px;
+}
+.allImagePost {
+    color:#fff;
+}
+.profileContentFriends {
+    width: 100%;
+    margin-top: 20px;
+    background-color:#3a3b3c;
+    border-radius:20px;
+    box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+}
+.profileAllImages {
+    /* width: 100%; */
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding:10px 20px;
+}
+.imageAllPost {
+    width:100%;
+    height: 100px;
+    border-radius:15px;
+    object-fit: cover;
+    padding:0px 5px;
+    margin-bottom: 10px;
+}
+.profileAllFriends {
+    padding:20px;
+}
+.friendsTitle {
+    color:#fff;
+}
+.allFriendsContainers {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+.allFriendsContainer {
+    /* position: relative; */
+    display:flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+.imageAlls {
+
+}
+.allFriends {
+    width:100%;
+    height: 100px;
+    padding:5px;
+    border-radius: 15px;
+    /* margin-bottom: 5px; */
+}
+.totalFriends {
+    color:#fff;
+    margin-top: 5px;
+}
+.friendsName {
+    /* position:absolute; */
+    text-align: center;
+}
+.nameFriends {
+    font-size: 14px;
+    color:#fff;
 }

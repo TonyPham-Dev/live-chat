@@ -21,10 +21,8 @@ function Home() {
   const [valuePost, setValuePost] = useState([]);
   // id from post
   const [idPost, setIdPost] = useState('');
-  // useEffect(() => {
-  //   console.log(idPost);
-  // },[idPost])
-  // call api friends contact
+  const [allPost, setAllPost] = useState([])
+
   const checkObjectIsUndefined = (obj) => {
     return Object.keys(obj).length > 0;
   };
@@ -52,6 +50,21 @@ function Home() {
     }
   }, [idPost]);
 
+  // get all post from GET /api/posts/(?page=x&all=true | | ?page=x)
+  useEffect( async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      }
+    }
+    await axios.get(`${apiServer}/api/posts?page=1&all=true`,config)
+      .then(response => {
+        if(checkObjectIsUndefined(response))  { 
+          setAllPost(response.data.posts)
+        }
+      })
+  },[user])
+
   return (
     <>
     <HomeContext.Provider value={{IdPostHandle:setIdPost, id:idPost}}>
@@ -61,7 +74,7 @@ function Home() {
         </div>
 
         <div className={styles.postContents}>
-          <PostContents Post = {valuePost}/>
+          <PostContents Post = {valuePost} allPost = {allPost}/>
         </div>
 
         <div className={styles.posts}>

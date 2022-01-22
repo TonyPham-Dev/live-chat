@@ -2,15 +2,15 @@ import React from 'react';
 import styles from './profile.module.css'
 import ProFileContentLeft from './ProFileContentLeft';
 import ProFileContentRight from './ProFileContentRight';
-function ProfileContent(props) {
+function ProfileContent({ user }) {
     return (
         <div className={styles.ProfileContentContainer}>
             <div className={styles.ProfileContentLeft}>
-                <ProFileContentLeft/>
+                <ProFileContentLeft user={user} />
             </div>
 
             <div className={styles.ProfileContentRight}>
-                <ProFileContentRight/>
+                <ProFileContentRight user={user} />
             </div>
         </div>
     );

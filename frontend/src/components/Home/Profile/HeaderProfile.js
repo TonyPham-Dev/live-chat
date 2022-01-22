@@ -11,8 +11,8 @@ import imageUser from "../PostContents/image/imageUser.jpg";
 import styles from "./profile.module.css";
 import clsx from "clsx";
 import { useAuth0 } from "@auth0/auth0-react";
-function HeaderProfile({ userAdmin }) {
-  const { user } = useAuth0();
+function HeaderProfile({ userAdmin, user }) {
+  // const { user } = useAuth0();
   const [openSeeMore, setOpenSeeMore] = useState(false);
   const [openMore, setOpenMore] = useState(false);
   return (
@@ -23,12 +23,12 @@ function HeaderProfile({ userAdmin }) {
           <div className={styles.coverImage}>
             <img className={styles.image} src={coverImage} />
             <div className={styles.avatarUser}>
-              <img className={styles.avatar} src={user && user.picture} />
+              <img className={styles.avatar} src={user && user.avatarUrl} />
             </div>
           </div>
         </div>
         <div className={styles.nameUser}>
-          <h1>{user && user.name}</h1>
+          <h1>{user && user.fullName}</h1>
         </div>
       </div>
       {/* see more */}

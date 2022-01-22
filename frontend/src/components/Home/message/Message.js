@@ -68,9 +68,9 @@ function Message(props) {
       <div className={styles.message}>
         <div className={styles.messageContainer}>
           <div>
-            {Object.entries(userData).length > 0 && (
+            {/* {Object.entries(userData).length > 0 && ( */}
               <MessageLeft messages={message} userData={userData} />
-            )}
+            {/* )} */}
           </div>
           <div>
             {Object.entries(userData).length > 0 && (

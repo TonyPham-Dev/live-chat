@@ -75,7 +75,6 @@ function MessageLeft(props) {
     navigate(`/message/${message._id}`);
     setActive(index)
   };
-  console.log(props.messages);
   return (
     <div className={styles.messageLeft}>
       <h3>Chat</h3>

@@ -96,11 +96,14 @@ function Posts(props) {
 
   // handle input file image
   const handelInputFileImage = (e) => {
-    setFileImage((prev) => [...prev, e.target.files[0]]);
-    setSaveFileImage((prev) => [
-      ...prev,
-      URL.createObjectURL(e.target.files[0]),
-    ]);
+   
+    Array.from(e.target.files).forEach(file => {
+      setFileImage((prev) => [...prev, file]);
+      setSaveFileImage((prev) => [
+          ...prev,
+          URL.createObjectURL(file),
+        ]);
+    })
   };
   // remove file image
   const handleDeleteFile = (index) => {
@@ -113,8 +116,15 @@ function Posts(props) {
 
   // handle input file video mp4
   const handleVideoPostChange = (e) => {
-    setFileVideo((prev) => [...prev, e.target.files[0]]);
-    setSaveVideo((prev) => [...prev, URL.createObjectURL(e.target.files[0])]);
+    // setFileVideo((prev) => [...prev, e.target.files[0]]);
+    // setSaveVideo((prev) => [...prev, URL.createObjectURL(e.target.files[0])]);
+    Array.from(e.target.files).forEach(file => {
+      setFileVideo((prev) => [...prev, file]);
+      setSaveVideo((prev) => [
+          ...prev,
+          URL.createObjectURL(file),
+        ]);
+    })
   };
 
   // when click remove file video mp4
@@ -239,6 +249,7 @@ function Posts(props) {
                         className={styles.videoPost}
                         id="videoPost"
                         type="file"
+                        multiple
                         disabled={fileVideo.length >= 5}
                         accept="video/mp4,video/x-m4v,video/*"
                         onChange={(e) => handleVideoPostChange(e)}
@@ -264,7 +275,9 @@ function Posts(props) {
           </div>
         )}
 
-        {openFormPost && <div className={styles.OverLay}></div>}
+        {openFormPost && <div className={styles.OverLay} 
+        onClick={() => setOpenFromPost(false)}
+          ></div>}
 
         {/* user */}
         <div className={styles.userPost}>

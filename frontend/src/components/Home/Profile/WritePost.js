@@ -6,17 +6,16 @@ import { BsFillImageFill } from "react-icons/bs";
 import { RiVideoFill } from "react-icons/ri";
 import { IoIosVideocam } from "react-icons/io";
 import styles from "../Posts/post.module.css";
-function WritePost(props) {
-    const { user} = useAuth0();
+function WritePost({user}) {
     return (
       <div className={clsx(styles.textareaContainer, styles.profilePost)}>
         <form className={styles.profilePostContent}>
           <div className={styles.profileRightUser}>
-            <img className={styles.profileImage} src={user && user.picture} />
+            <img className={styles.profileImage} src={user && user.avatarUrl} />
           </div>
           <InputEmoji
             className={styles.inputPost}
-            placeholder={`What's on your mind,${user && user.name}?`}
+            placeholder={`What's on your mind,${user && user.fullName}?`}
           />
         </form>
         <div className={styles.imageAndVideoAndStreaming}>
