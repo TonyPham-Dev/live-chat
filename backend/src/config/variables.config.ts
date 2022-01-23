@@ -2,8 +2,10 @@ import { EnvVariables } from "../app/types";
 import dotenv from "dotenv";
 dotenv.config();
 
+const dbUri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DB}?authSource=${process.env.DB_DB}`;
+
 const variables: EnvVariables = {
-    dbUri: process.env.DB_URI || "",
+    dbUri: dbUri || "",
     auth0DomainUrl: process.env.AUTH0_DOMAIN_URL || "",
     auth0Audience: process.env.AUTH0_AUDIENCE || "",
     auth0ClientSecret: process.env.AUTH0_CLIENT_SECRET || "",
