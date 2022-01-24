@@ -41,6 +41,7 @@ function App() {
           <Route path='/home' element={<Home/>}/>
           <Route path='/user/:username' element={<Profile/>}/>
           <Route path='/posts/:id' element={<Home/>}/>
+          <Route path='/like/:postId' element={<PostContents/>}/>
         </Routes>
       </BrowserRouter>
     </div>

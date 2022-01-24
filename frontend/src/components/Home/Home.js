@@ -19,13 +19,14 @@ function Home() {
   const accessToken = localStorage.getItem("accessToken");
   const [friends, setFriends] = useState(null);
   const [valuePost, setValuePost] = useState([]);
+
   // id from post
   const [idPost, setIdPost] = useState('');
   const [allPost, setAllPost] = useState([])
-
   const checkObjectIsUndefined = (obj) => {
     return Object.keys(obj).length > 0;
   };
+  // friends
   useEffect(() => {
     user &&
       fetch(`${apiServer}/api/user/friends/${user.nickname}`, {
@@ -64,6 +65,7 @@ function Home() {
         }
       })
   },[user])
+
 
   return (
     <>
