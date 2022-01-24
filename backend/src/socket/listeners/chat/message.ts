@@ -11,21 +11,21 @@ const messageHandler: (io: Server) => void = (io) => {
         socket.join(roomId);
         console.log("connected to socket.io");
 
-    socket.on("text-message", async (message: string) => {
-      const newMess = await newTextMessage(nickname, roomIdTemp, message);
-      if (newMess.success) {
-        socket.broadcast.to(roomIdTemp).emit("new-text", nickname, message);
-      }
+        socket.on("text-message", async (message: string) => {
+            const newMess = await newTextMessage(nickname, roomIdTemp, message);
+            if (newMess.success) {
+                socket.emit("new-text", nickname, message);
+            }
+        });
+        socket.on("img-message", (imgs: string[]) => {
+            socket.emit("new-img", nickname, imgs);
+        });
+        socket.on("change-room", (newRoomId: string) => {
+            socket.join(newRoomId);
+            socket.leave(roomId);
+            roomIdTemp = newRoomId;
+        });
     });
-    socket.on("img-message", (imgs: string[]) => {
-      socket.broadcast.to(roomIdTemp).emit("new-img", nickname, imgs);
-    });
-    socket.on("change-room", (newRoomId: string) => {
-      socket.join(newRoomId);
-      socket.leave(roomId);
-      roomIdTemp = newRoomId;
-    });
-  });
 };
 
 export default messageHandler;
