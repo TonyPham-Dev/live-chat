@@ -45,3 +45,14 @@ export interface UserDataRes {
     message?: string;
     userData?: UserDataWithAccessToken;
 }
+
+export interface UserData {
+    _id: string;
+    nickname: string;
+    avatarUrl: string;
+    fullName: string;
+    email: string;
+    createdAt: Date;
+    __v: number;
+    id: string;
+}

@@ -3,6 +3,7 @@ import CommentModel from "../models/Comments.models";
 import PostModel from "../models/Posts.models";
 import { returnServerError } from "../app/constants";
 import { getUserData } from "../services/auth.services";
+import { getComment } from "../services/comment.services";
 
 class CommentController {
     // [GET] /comments/:postId
@@ -13,15 +14,24 @@ class CommentController {
     ): Promise<Response> {
         try {
             const { postId } = req.params;
-            // get post
-            const comments = await CommentModel.findOne({ postId });
-            // check if post exist
-            if (!comments) {
-                return res.status(404).json({
-                    message: "No post found",
+            if (!postId) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Post ID is required",
                 });
             }
-            return res.json({ success: true, comments });
+            const comments = await getComment(postId);
+            if (!comments.success) {
+                return res.status(500).json({
+                    success: false,
+                    message: comments.message,
+                });
+            }
+            return res.json({
+                success: true,
+                comments: comments.comments,
+                usersInfo: comments.usersBasicInfo,
+            });
         } catch (err) {
             return returnServerError(res, err.message);
         }
@@ -46,6 +56,12 @@ class CommentController {
                 return res.status(400).json({
                     success: false,
                     message: "Content is required",
+                });
+            }
+            if (!postId) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Post ID is required",
                 });
             }
 

@@ -7,6 +7,7 @@ import { returnServerError } from "../app/constants";
 import { getUserData } from "../services/auth.services";
 import { deleteImgs } from "../services/image.services";
 import { getFollow } from "../services/follow.services";
+import { getAllPost, getPostById } from "../services/post.services";
 
 class PostController {
     private static populateList: string[] = ["comment", "userInfo", "like"];
@@ -21,49 +22,18 @@ class PostController {
                     message: "User is not logged in",
                 });
             }
-            const limitPerPage = 10;
-            if (all === "true") {
-                const posts = await PostModel.find({})
-                    .populate(PostController.populateList)
-                    .limit(limitPerPage)
-                    .skip(limitPerPage * (Number(page) - 1))
-                    .sort({ createdAt: -1 });
-                const count = await PostModel.countDocuments();
-                return res.json({
-                    success: true,
-                    posts,
-                    pages: Math.ceil(count / limitPerPage),
+            const posts = await getAllPost(
+                Number(page),
+                req.headers.authorization.split(" ")[1],
+                all ? true : false
+            );
+            if (!posts.success) {
+                return res.status(posts.status).json({
+                    success: false,
+                    message: posts.message,
                 });
             }
-            const userData = await getUserData(
-                req.headers.authorization.split(" ")[1]
-            );
-            if (!userData.success) {
-                return res
-                    .status(403)
-                    .json({ success: false, message: "User is not logged in" });
-            }
-            const follow = await getFollow(userData.userData.nickname);
-            if (!follow.success) {
-                return res
-                    .status(403)
-                    .json({ success: false, message: "User is not logged in" });
-            }
-            const posts = await PostModel.find({
-                author: { $in: follow.follow.following },
-            })
-                .populate(PostController.populateList)
-                .limit(limitPerPage)
-                .skip(limitPerPage * (Number(page) - 1))
-                .sort({ createdAt: -1 });
-            const count = await PostModel.find({
-                author: { $in: follow.follow.following },
-            }).countDocuments();
-            return res.json({
-                success: true,
-                posts,
-                pages: Math.ceil(count / limitPerPage),
-            });
+            return res.json(posts);
         } catch (err) {
             return returnServerError(res, err.message);
         }
@@ -72,21 +42,20 @@ class PostController {
     // @desc Get post from postId
     public async getFromPostId(req: Request, res: Response): Promise<Response> {
         try {
-            const postId = req.params.postId;
-            const post = await PostModel.findById(postId).populate(
-                PostController.populateList
-            );
-            // check if post exists
-            if (!post) {
-                return res.status(404).json({
+            const { postId } = req.params;
+            if (!postId) {
+                return res.status(400).json({
                     success: false,
-                    message: "Post not found",
+                    message: "Post ID is required",
                 });
             }
-            return res.json({
-                success: true,
-                post,
-            });
+            const posts = await getPostById(postId);
+            if (!posts.success) {
+                return res
+                    .status(posts.status)
+                    .json({ success: false, message: posts.message });
+            }
+            return res.json(posts);
         } catch (err) {
             return returnServerError(res, err.message);
         }
