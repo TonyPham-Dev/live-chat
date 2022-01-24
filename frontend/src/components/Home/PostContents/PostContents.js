@@ -5,11 +5,18 @@ import Moment from "moment";
 import axios from "axios";
 import clsx from "clsx";
 import { AiFillLike } from "react-icons/ai";
-import { BiLike, BiComment } from "react-icons/bi";
-import { RiShareForwardLine } from "react-icons/ri";
+import { BiLike, BiComment, BiCommentEdit } from "react-icons/bi";
+import {
+  RiShareForwardLine,
+  RiDeleteBin5Fill,
+  RiDeleteBack2Fill,
+} from "react-icons/ri";
 import InputEmoji from "react-input-emoji";
 import { ImImages } from "react-icons/im";
 import { TiDeleteOutline } from "react-icons/ti";
+import { MdModeEdit } from "react-icons/md";
+import { GiEarthAsiaOceania } from "react-icons/gi";
+import { BsCodeSlash, BsFillBellSlashFill, BsCalendar3 } from "react-icons/bs";
 
 import imageUser from "./image/imageUser.jpg";
 import postImage1 from "./image/postImage1.jpg";
@@ -20,18 +27,33 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import styles from "./postContent.module.css";
 const apiServer = "http://localhost:3000";
 function PostContents({ Post, allPost }) {
+  const dashboardRef = useRef();
   const accessToken = localStorage.getItem("accessToken");
   const { user } = useAuth0();
   const [text, setText] = useState("");
-  const [saveText, setSaveText] = useState(["test"]);
+  const [saveText, setSaveText] = useState([]);
   const imageRef = useRef(null);
   const [posts, setPosts] = useState([]);
   const [imgFull, setImgFull] = useState("");
   const [id, setId] = useState("");
   const [allPosts, setAllPosts] = useState([]);
+  console.log(allPosts);
   const [liked, setLiked] = useState(false);
-
-
+  const [openDashboard, setOpenDashboard] = useState(false);
+  const [saveIdPost, setSaveIdPost] = useState(null);
+  // useEffect(() => {
+  //   if (saveIdPost) {
+  //     console.log(saveIdPost);
+  //     window.onclick = (e) => {
+  //       console.log(e.target);
+  //       if (e.target != dashboardRef) {
+  //         setSaveIdPost("");
+  //       }
+  //     };
+  //   }
+  // }, [saveIdPost]);
+  // const [comments, setComments] = useState([]);
+  // console.log(comments);
   // scroll to top when restart app
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -76,33 +98,47 @@ function PostContents({ Post, allPost }) {
   };
   // post comment in post
   const handleOnEnter = async (id) => {
+    console.log(id);
     setSaveText((prev) => [...prev, text]); // comment lại sau
-    const formData = new FormData();
-    formData.append("comments", saveText);
-    console.log(formData);
-    const config = {
+
+    // post comment
+    await fetch(`${apiServer}/api/comments/${id}`, {
+      method: "POST",
       headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
         authorization: `Bearer ${accessToken}`,
       },
-      body: formData
-    };
-    
-    // post comment
-    await axios
-      .post(`${apiServer}/api/comments/${id}`, config)
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
+      body: JSON.stringify({ content: text }),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
 
     // get comments
-    await axios
-      .get(`${apiServer}/api/comments/${id}`)
-      .then((response) => console.log(response));
+    await axios.get(`${apiServer}/api/comments/${id}`).then((response) =>
+      setAllPosts((prev) => {
+        const newPosts = [...prev];
+        const index = prev.indexOf(prev.find((post) => post._id == id));
+        newPosts[index].comment[0] = response.data;
+        return newPosts;
+      })
+    );
   };
   useEffect(() => {
     if (allPost.length > 0) {
       setAllPosts(allPost);
     }
   }, [allPost]);
+
+  // open dashboard
+  const handleOpenDashboard = (id) => {
+    if (saveIdPost) {
+      setSaveIdPost("");
+    } else {
+      setSaveIdPost(id);
+    }
+    // setOpenDashboard(!openDashboard)
+  };
   return (
     <>
       <div className={styles.app}>
@@ -128,10 +164,73 @@ function PostContents({ Post, allPost }) {
                       </div>
                     </div>
                   </Link>
-                  <div>
-                    <span className={styles.userMore}>
+                  {/* edit and remove post */}
+                  <div className={styles.removeAndEditPost}>
+                    <span
+                      className={styles.userMore}
+                      onClick={() => handleOpenDashboard(post.id)}
+                    >
                       <FiMoreHorizontal />
                     </span>
+                    {/* icons remove post */}
+                    {saveIdPost == post.id && (
+                      <span
+                        ref={dashboardRef}
+                        className={clsx(
+                          styles.removeAndEditPostContainer,
+                          styles.clickDashboard
+                        )}
+                      >
+                        <div className={styles.iconOfRemovePost}>
+                          <span className={styles.iconOfDashboard}>
+                            <MdModeEdit />
+                          </span>
+                          <span>Chỉnh sửa bài viết</span>
+                        </div>
+                        <div className={styles.iconOfRemovePost}>
+                          <span className={styles.iconOfDashboard}>
+                            <BiCommentEdit />
+                          </span>
+                          <span>Xem lịch sử chỉnh sửa</span>
+                        </div>
+                        <div className={styles.iconOfRemovePost}>
+                          <span className={styles.iconOfDashboard}>
+                            <GiEarthAsiaOceania />
+                          </span>
+                          <span>Chỉnh sửa đối tượng</span>
+                        </div>
+                        <div className={styles.iconOfRemovePost}>
+                          <span className={styles.iconOfDashboard}>
+                            <RiDeleteBin5Fill />
+                          </span>
+                          <span>Xóa bài viết</span>
+                        </div>
+                        <div className={styles.iconOfRemovePost}>
+                          <span className={styles.iconOfDashboard}>
+                            <BsCodeSlash />
+                          </span>
+                          <span>Nhúng</span>
+                        </div>
+                        <div className={styles.iconOfRemovePost}>
+                          <span className={styles.iconOfDashboard}>
+                            <BsFillBellSlashFill />
+                          </span>
+                          <span>Tắt thông báo bài viết</span>
+                        </div>
+                        <div className={styles.iconOfRemovePost}>
+                          <span className={styles.iconOfDashboard}>
+                            <BsCalendar3 />
+                          </span>
+                          <span>Chỉnh sửa ngày</span>
+                        </div>
+                        <div className={styles.iconOfRemovePost}>
+                          <span className={styles.iconOfDashboard}>
+                            <RiDeleteBack2Fill />
+                          </span>
+                          <span>Ẩn khỏi trang cá nhân</span>
+                        </div>
+                      </span>
+                    )}
                   </div>
                 </div>
                 {/* content */}
@@ -189,7 +288,9 @@ function PostContents({ Post, allPost }) {
                   <div className={styles.likeAndComments}>
                     <div className={styles.like}>
                       <span className={styles.iconLike}>
-                        <AiFillLike />
+                        <span>
+                          <AiFillLike />
+                        </span>
                       </span>
                       <span className={styles.countLike}>
                         {post.like[0].likeList.length > 0 &&
@@ -197,7 +298,7 @@ function PostContents({ Post, allPost }) {
                       </span>
                     </div>
                     <div className={styles.comment}>
-                      <span className={styles.countComment}>50</span>
+                      <span className={styles.countComment}>{post.comment[0].commentList.length}</span>
                       <span className={styles.comments}>Comment</span>
                     </div>
                   </div>
@@ -242,7 +343,7 @@ function PostContents({ Post, allPost }) {
                       value={text}
                       onChange={setText}
                       cleanOnEnter
-                      onEnter={ () => handleOnEnter(post.id)}
+                      onEnter={() => handleOnEnter(post.id)}
                       placeholder="Write a comment..."
                     />
                   </span>
@@ -251,33 +352,38 @@ function PostContents({ Post, allPost }) {
                 {/* list comments */}
                 <div className={styles.listComments}>
                   {/* render list comment */}
-                  {saveText.map((text, index) => {
-                    return (
-                      <div key={index} className={styles.listComment}>
-                        <div className={styles.item}>
-                          <img
-                            className={styles.userComment}
-                            src={user && user.picture}
-                          />
-                          <div className={styles.contentComment}>
-                            <h3 className={styles.nameUser}>
-                              {user && user.name}
-                            </h3>
-                            <h4>{text}</h4>
+                  {/* {saveText.map((text, index) => { */}
+                  {/* return ( */}
+                  <div key={index} className={styles.listComment}>
+                    {post.comment[0].commentList.map((comment, index) => {
+                      return (
+                        <>
+                          <div className={styles.item} key={index}>
+                            <img
+                              className={styles.userComment}
+                              src={user && user.picture}
+                            />
+                            <div className={styles.contentComment}>
+                              <h3 className={styles.nameUser}>
+                                {user && user.name}
+                              </h3>
+                              <h4>{comment.content}</h4>
+                            </div>
                           </div>
-                        </div>
-                        <div className={styles.commentEmoji}>
-                          <span className={styles.itemIcon}>
-                            <BiLike />
-                          </span>
-                          <span className={styles.itemIcon}>
-                            <BiComment />
-                          </span>
-                          <span className={styles.itemIcon}>2 Giờ</span>
-                        </div>
-                      </div>
-                    );
-                  })}
+                          <div className={styles.commentEmoji}>
+                            <span className={styles.itemIcon}>
+                              <BiLike />
+                            </span>
+                            <span className={styles.itemIcon}>
+                              <BiComment />
+                            </span>
+                            <span className={styles.itemIcon}>2 Giờ</span>
+                          </div>
+                        </>
+                      );
+                    })}
+                  </div>
+                  {/* })} */}
                 </div>
               </div>
             );

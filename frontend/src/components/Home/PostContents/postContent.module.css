@@ -280,3 +280,27 @@
     cursor: pointer;
     z-index: 999;
 }
+.removeAndEditPost {
+    position: relative;
+}
+.removeAndEditPostContainer {
+    position:absolute;  
+    right: 0;
+    top: 25px;
+    border-radius:20px;
+    padding:20px;
+    border:1px solid rgb(151, 150, 150);
+    width:250px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    background-color:#3a3b3c; 
+    z-index: 999999;
+}
+.iconOfRemovePost {
+    margin-bottom: 20px;
+    cursor: pointer;
+    color:rgb(194, 194, 194);
+    font-weight: 600;
+}
+.iconOfDashboard {
+    margin-right: 5px;
+}
