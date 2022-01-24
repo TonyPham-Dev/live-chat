@@ -21,7 +21,7 @@ class CommentController {
                     message: "No post found",
                 });
             }
-            return res.json(comments);
+            return res.json({ success: true, comments });
         } catch (err) {
             return returnServerError(res, err.message);
         }
