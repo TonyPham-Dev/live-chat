@@ -34,6 +34,7 @@ const serverUrl = "http://localhost:3000";
 const listMessApi = "http://localhost:3000/api/chat";
 
 function MessageRight(props) {
+  console.log(props.messages.users);
   // scroll to bottom
   const messagesEnd = useRef();
 
@@ -59,10 +60,10 @@ function MessageRight(props) {
     console.log(valueMess);
     // play load text
     if (valueMess.trim() !== "") {
-      setSaveValueMess((prev) => [
-        ...prev,
-        { user: user.nickname, message: valueMess, type: "text" },
-      ]);
+      // setSaveValueMess((prev) => [
+      //   ...prev,
+      //   { user: user.nickname, message: valueMess, type: "text" },
+      // ]);
       socketRef.current.emit("text-message", valueMess);
       setValueMess("");
     }
@@ -193,9 +194,9 @@ function MessageRight(props) {
         <div className={styles.messageRightContainer}>
           <Link
             to={`/user/${props.messages.users.filter(
-              (users) => users != user.nickname
+              (users) => users != user && user.nickname
             )}`}
-            style={{textDecoration: "none" }}
+            style={{ textDecoration: "none" }}
           >
             <div className={styles.messageUser}>
               <img
@@ -277,17 +278,45 @@ function MessageRight(props) {
                   <li ref={itemMessRef} className={styles.messItemLeft}>
                     <div className={styles.itemContainer}>
                       {user && value.type === "text" ? (
-                        <h5 className={styles.itemRight}>{value.message}</h5>
+                        <div className={styles.itemImageUser}>
+                          {user && (
+                            <img
+                              className={styles.imageUserMessage}
+                              src={
+                                props.userData[
+                                  props.messages.users.filter(
+                                    (users) => users != user.nickname
+                                  )
+                                ]
+                              }
+                            />
+                          )}
+                          <h5 className={styles.itemRight}>{value.message}</h5>
+                        </div>
                       ) : null}
                       <div className={styles.messageImagesContainer}>
                         {user && value.type === "img"
                           ? value.message.map((img, index) => (
-                              <img
-                                onClick={(img) => handleOpenImageMess(img)}
-                                key={index}
-                                className={styles.messageImages}
-                                src={`http://localhost:3000/api/media/chat/${img}`}
-                              />
+                              <div className={styles.userAlignImage}>
+                                {user && (
+                                  <img
+                                    className={styles.imageUserMessage}
+                                    src={
+                                      props.userData[
+                                        props.messages.users.filter(
+                                          (users) => users != user.nickname
+                                        )
+                                      ]
+                                    }
+                                  />
+                                )}
+                                <img
+                                  onClick={(img) => handleOpenImageMess(img)}
+                                  key={index}
+                                  className={styles.messageImages}
+                                  src={`http://localhost:3000/api/media/chat/${img}`}
+                                />
+                              </div>
                             ))
                           : null}
                       </div>
