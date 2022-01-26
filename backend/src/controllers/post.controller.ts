@@ -6,7 +6,6 @@ import { postUpload } from "../config/gridFsStorage.config";
 import { returnServerError } from "../app/constants";
 import { getUserData } from "../services/auth.services";
 import { deleteImgs } from "../services/image.services";
-import { getFollow } from "../services/follow.services";
 import { getAllPost, getPostById } from "../services/post.services";
 
 class PostController {
@@ -198,7 +197,7 @@ class PostController {
                     message: "Post not found",
                 });
             }
-            if (!userData.userData.nickname === post.author) {
+            if (!userData.userData.nickname !== post.author) {
                 return res.status(401).json({
                     success: false,
                     message: "User is not authorized",
@@ -207,6 +206,7 @@ class PostController {
             const response = await Promise.all([
                 deleteImgs([...post.imgList, ...post.vidList]),
                 PostModel.findByIdAndDelete(postId),
+                CommentModel.findOneAndDelete({ postId }),
             ]);
             if (!response[0].success) {
                 return returnServerError(res, response[0].message);
