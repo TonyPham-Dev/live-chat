@@ -198,7 +198,7 @@ class PostController {
                     message: "Post not found",
                 });
             }
-            if (!userData.userData.nickname !== post.author) {
+            if (userData.userData.nickname !== post.author) {
                 return res.status(401).json({
                     success: false,
                     message: "User is not authorized",
