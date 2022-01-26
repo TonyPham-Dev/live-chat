@@ -25,7 +25,7 @@ class PostController {
             const posts = await getAllPost(
                 Number(page),
                 req.headers.authorization.split(" ")[1],
-                all ? true : false
+                all ? true : false,
             );
             if (!posts.success) {
                 return res.status(posts.status).json({
@@ -71,7 +71,7 @@ class PostController {
                 });
             }
             const userData = await getUserData(
-                req.headers.authorization.split(" ")[1]
+                req.headers.authorization.split(" ")[1],
             );
             if (!userData.success) {
                 return res.status(500).json({
@@ -170,11 +170,38 @@ class PostController {
     public async deletePost(req: Request, res: Response): Promise<Response> {
         try {
             const { postId } = req.params;
+            if (!postId) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Post ID is required",
+                });
+            }
+            if (!req.headers.authorization) {
+                return res.status(403).json({
+                    success: false,
+                    message: "User is not logged in",
+                });
+            }
+            const userData = await getUserData(
+                req.headers.authorization.split(" ")[1],
+            );
+            if (!userData.success) {
+                return res.status(500).json({
+                    success: false,
+                    message: userData.message,
+                });
+            }
             const post = await PostModel.findById(postId);
             if (!post) {
                 return res.status(404).json({
                     success: false,
                     message: "Post not found",
+                });
+            }
+            if (!userData.userData.nickname === post.author) {
+                return res.status(401).json({
+                    success: false,
+                    message: "User is not authorized",
                 });
             }
             const response = await Promise.all([
