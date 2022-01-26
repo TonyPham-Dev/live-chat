@@ -139,7 +139,7 @@ class PostController {
                     return res.status(200).json({
                         success: true,
                         message: "Post created",
-                        id: newPost._id,
+                        post: newPost,
                     });
                 }
             });
