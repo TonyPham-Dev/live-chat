@@ -136,10 +136,11 @@ class PostController {
                         newPostLike.save(),
                         newPostComment.save(),
                     ]);
+                    const responsePost = await getPostById(newPost.id);
                     return res.status(200).json({
                         success: true,
                         message: "Post created",
-                        id: newPost._id,
+                        post: responsePost.post,
                     });
                 }
             });
@@ -190,6 +191,7 @@ class PostController {
                     message: userData.message,
                 });
             }
+
             const post = await PostModel.findById(postId);
             if (!post) {
                 return res.status(404).json({
@@ -197,7 +199,7 @@ class PostController {
                     message: "Post not found",
                 });
             }
-            if (!userData.userData.nickname !== post.author) {
+            if (userData.userData.nickname !== post.author) {
                 return res.status(401).json({
                     success: false,
                     message: "User is not authorized",
