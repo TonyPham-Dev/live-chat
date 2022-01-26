@@ -7,6 +7,7 @@ const CommentSchema = new Schema(
             {
                 author: String,
                 content: String,
+                createdAt: { type: Date, default: Date.now },
             },
         ],
     },
@@ -14,7 +15,7 @@ const CommentSchema = new Schema(
         timestamps: true,
         toJSON: { virtuals: true },
         toObject: { virtuals: true },
-    }
+    },
 );
 
 const CommentModel = model("Comment", CommentSchema, "comments");
