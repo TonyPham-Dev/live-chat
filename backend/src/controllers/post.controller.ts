@@ -190,6 +190,7 @@ class PostController {
                     message: userData.message,
                 });
             }
+
             const post = await PostModel.findById(postId);
             if (!post) {
                 return res.status(404).json({
