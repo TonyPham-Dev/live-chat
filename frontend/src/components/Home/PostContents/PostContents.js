@@ -26,7 +26,7 @@ import postImage4 from "./image/postImage4.jpg";
 import { FiMoreHorizontal } from "react-icons/fi";
 import styles from "./postContent.module.css";
 const apiServer = "http://localhost:3000";
-function PostContents({ Post, allPost }) {
+function PostContents({ Post, allPost, userData }) {
   const dashboardRef = useRef();
   const accessToken = localStorage.getItem("accessToken");
   const { user } = useAuth0();
@@ -37,23 +37,10 @@ function PostContents({ Post, allPost }) {
   const [imgFull, setImgFull] = useState("");
   const [id, setId] = useState("");
   const [allPosts, setAllPosts] = useState([]);
-  console.log(allPosts);
   const [liked, setLiked] = useState(false);
   const [openDashboard, setOpenDashboard] = useState(false);
   const [saveIdPost, setSaveIdPost] = useState(null);
-  // useEffect(() => {
-  //   if (saveIdPost) {
-  //     console.log(saveIdPost);
-  //     window.onclick = (e) => {
-  //       console.log(e.target);
-  //       if (e.target != dashboardRef) {
-  //         setSaveIdPost("");
-  //       }
-  //     };
-  //   }
-  // }, [saveIdPost]);
-  // const [comments, setComments] = useState([]);
-  // console.log(comments);
+
   // scroll to top when restart app
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -139,6 +126,27 @@ function PostContents({ Post, allPost }) {
     }
     // setOpenDashboard(!openDashboard)
   };
+
+  // delete Post
+  const handleDeletePost = async (id, index) => {
+    const config = {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      }
+    }
+    await fetch(`${apiServer}/api/posts/del/${id}`, config)
+      .then((response) => {
+        if(response.ok) {
+          allPosts.splice(index, 1)
+          setSaveIdPost("");
+        }
+        response.json()
+      })
+      .then((data) => {
+      })
+      .catch((err) => console.log(err))
+  }
   return (
     <>
       <div className={styles.app}>
@@ -152,11 +160,11 @@ function PostContents({ Post, allPost }) {
                     <div className={styles.userContainer}>
                       <img
                         className={styles.imageUser}
-                        src={post && post.userInfo[0].avatarUrl}
+                        src={userData[post.author].avatarUrl}
                       />
                       <div>
                         <h4 style={{ color: "#3a3b3c" }}>
-                          {post && post.userInfo[0].fullName}
+                          {userData[post.author].fullName}
                         </h4>
                         <h5 style={{ color: "#3a3b3c", marginTop: "5px" }}>
                           {Moment(post.createdAt).format("LTS")}
@@ -199,7 +207,9 @@ function PostContents({ Post, allPost }) {
                           </span>
                           <span>Chỉnh sửa đối tượng</span>
                         </div>
-                        <div className={styles.iconOfRemovePost}>
+                        <div className={styles.iconOfRemovePost} 
+                          onClick={() => handleDeletePost(post.id, index)}
+                        >
                           <span className={styles.iconOfDashboard}>
                             <RiDeleteBin5Fill />
                           </span>
@@ -298,7 +308,7 @@ function PostContents({ Post, allPost }) {
                       </span>
                     </div>
                     <div className={styles.comment}>
-                      <span className={styles.countComment}>{post.comment[0].commentList.length}</span>
+                      <span className={styles.countComment}>{post.comment[0].commentList && post.comment[0].commentList.length}</span>
                       <span className={styles.comments}>Comment</span>
                     </div>
                   </div>
@@ -354,11 +364,12 @@ function PostContents({ Post, allPost }) {
                   {/* render list comment */}
                   {/* {saveText.map((text, index) => { */}
                   {/* return ( */}
-                  <div key={index} className={styles.listComment}>
-                    {post.comment[0].commentList.map((comment, index) => {
+                  <div className={styles.listComment}>
+                    {checkObjectIsUndefined(post.comment[0]) && post.comment[0].commentList ? post.comment[0].commentList.map((comment, index) => {
+                      // {console.log(comment)} 
                       return (
-                        <>
-                          <div className={styles.item} key={index}>
+                        <React.Fragment key={index}>
+                          <div className={styles.item}>
                             <img
                               className={styles.userComment}
                               src={user && user.picture}
@@ -377,11 +388,11 @@ function PostContents({ Post, allPost }) {
                             <span className={styles.itemIcon}>
                               <BiComment />
                             </span>
-                            <span className={styles.itemIcon}>2 Giờ</span>
+                            <span className={styles.itemIcon}>{Moment(post.comment[0].updateAt).format('LT')}</span>
                           </div>
-                        </>
+                        </React.Fragment>
                       );
-                    })}
+                    }) : null}
                   </div>
                   {/* })} */}
                 </div>

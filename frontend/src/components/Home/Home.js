@@ -19,7 +19,7 @@ function Home() {
   const accessToken = localStorage.getItem("accessToken");
   const [friends, setFriends] = useState(null);
   const [valuePost, setValuePost] = useState([]);
-
+  const [userData, setUserData] = useState({})
   // id from post
   const [idPost, setIdPost] = useState('');
   const [allPost, setAllPost] = useState([])
@@ -47,6 +47,7 @@ function Home() {
       await axios.get(`${apiServer}/api/posts/${idPost}`)
       .then(response => {
         setValuePost(prev => [...prev,response.data.post]);
+        
       })
     }
   }, [idPost]);
@@ -62,6 +63,7 @@ function Home() {
       .then(response => {
         if(checkObjectIsUndefined(response))  { 
           setAllPost(response.data.posts)
+          setUserData(response.data.usersData)
         }
       })
   },[user])
@@ -76,7 +78,7 @@ function Home() {
         </div>
 
         <div className={styles.postContents}>
-          <PostContents Post = {valuePost} allPost = {allPost}/>
+          <PostContents Post = {valuePost} allPost = {allPost} userData={userData}/>
         </div>
 
         <div className={styles.posts}>

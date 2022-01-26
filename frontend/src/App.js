@@ -1,5 +1,6 @@
 import {Routes, Route, BrowserRouter } from 'react-router-dom'
-import { useState, useEffect } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import {useAuth0} from '@auth0/auth0-react';
 import Header from "./components/Home/Header/Header";
 import Profile from "./components/Home/Profile/Profile";
