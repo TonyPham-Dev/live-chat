@@ -5,7 +5,7 @@ import CommentModel from "../models/Comments.models";
 import { postUpload } from "../config/gridFsStorage.config";
 import { returnServerError } from "../app/constants";
 import { getUserData } from "../services/auth.services";
-import { deleteImgs } from "../services/image.services";
+import { deleteMedias } from "../services/media.services";
 import { getAllPost, getPostById } from "../services/post.services";
 
 class PostController {
@@ -103,7 +103,7 @@ class PostController {
                             videos.push(file.filename);
                         });
                     if (!body) {
-                        const response = await deleteImgs([
+                        const response = await deleteMedias([
                             ...images,
                             ...videos,
                         ]);
@@ -148,11 +148,33 @@ class PostController {
             return returnServerError(res, err.message);
         }
     }
-    // [PUT] /posts/edit/:postId
+    // [PUT] /posts/:postId
     // @desc Edit post
     public async editPost(req: Request, res: Response): Promise<Response> {
         try {
             const { postId } = req.params;
+            if (!postId) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Post ID is required",
+                });
+            }
+            if (!req.headers.authorization) {
+                return res.status(403).json({
+                    success: false,
+                    message: "User is not logged in",
+                });
+            }
+            const userData = await getUserData(
+                req.headers.authorization.split(" ")[1],
+            );
+            if (!userData.success) {
+                return res.status(500).json({
+                    success: false,
+                    message: userData.message,
+                });
+            }
+
             const post = await PostModel.findById(postId);
             if (!post) {
                 return res.status(404).json({
@@ -160,12 +182,81 @@ class PostController {
                     message: "Post not found",
                 });
             }
-            return res.json({ success: true, message: "Post edited" });
+            if (userData.userData.nickname !== post.author) {
+                return res.status(401).json({
+                    success: false,
+                    message: "User is not authorized",
+                });
+            }
+
+            postUpload.fields([
+                { name: "images", maxCount: 10 },
+                { name: "videos", maxCount: 5 },
+            ])(req, res, async (err) => {
+                if (err) {
+                    return res.status(500).json({
+                        success: false,
+                        message: err.message,
+                    });
+                } else {
+                    const { body } = req.body;
+                    const files: any = { ...req.files };
+                    const images: string[] = [];
+                    const videos: string[] = [];
+                    files.images &&
+                        files.images.length > 0 &&
+                        files.images.forEach((file: Express.Multer.File) => {
+                            images.push(file.filename);
+                        });
+                    files.videos &&
+                        files.videos.length > 0 &&
+                        files.videos.forEach((file: Express.Multer.File) => {
+                            videos.push(file.filename);
+                        });
+                    if (!body) {
+                        const response = await deleteMedias([
+                            ...images,
+                            ...videos,
+                        ]);
+                        if (!response.success) {
+                            return returnServerError(res, response.message);
+                        }
+                        return res.status(400).json({
+                            success: false,
+                            message: "Post body is required",
+                        });
+                    }
+                    const deletePrevMedia = await deleteMedias([
+                        ...post.imgList,
+                        ...post.vidList,
+                    ]);
+                    if (!deletePrevMedia.success) {
+                        return returnServerError(res, deletePrevMedia.message);
+                    }
+                    console.log(images);
+
+                    const newPost = await PostModel.findByIdAndUpdate(
+                        postId,
+                        {
+                            body,
+                            imgList: images,
+                            vidList: videos,
+                        },
+                        { new: true },
+                    );
+                    const responsePost = await getPostById(newPost.id);
+                    return res.json({
+                        success: true,
+                        message: "Post edited",
+                        post: responsePost.post,
+                    });
+                }
+            });
         } catch (err) {
             return returnServerError(res, err.message);
         }
     }
-    // [DELETE] /posts/del/:postId
+    // [DELETE] /posts/:postId
     // @desc Delete post
     public async deletePost(req: Request, res: Response): Promise<Response> {
         try {
@@ -206,7 +297,7 @@ class PostController {
                 });
             }
             const response = await Promise.all([
-                deleteImgs([...post.imgList, ...post.vidList]),
+                deleteMedias([...post.imgList, ...post.vidList]),
                 PostModel.findByIdAndDelete(postId),
                 CommentModel.findOneAndDelete({ postId }),
             ]);
