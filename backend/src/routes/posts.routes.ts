@@ -6,7 +6,7 @@ const router = Router();
 router.get("/", PostController.index);
 router.get("/:postId", PostController.getFromPostId);
 router.post("/new", PostController.newPost);
-router.put("/edit/:postId", PostController.editPost);
-router.delete("/del/:postId", PostController.deletePost);
+router.put("/:postId", PostController.editPost);
+router.delete("/:postId", PostController.deletePost);
 
 export default router;

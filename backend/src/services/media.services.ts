@@ -4,10 +4,13 @@ interface File extends Express.Multer.File {
     _id: string;
 }
 
-export const deleteImgs: (
+export const deleteMedias: (
     imgsName: string[],
 ) => Promise<{ success: boolean; message?: string }> = async (imgsName) => {
     try {
+        if (imgsName.length === 0) {
+            return { success: true };
+        }
         const promiseList: any[] = [];
         imgsName.forEach((imgName) => {
             promiseList.push(
