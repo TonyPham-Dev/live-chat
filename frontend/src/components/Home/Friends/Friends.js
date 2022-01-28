@@ -11,6 +11,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import imageUser from "./image/imageUser.jpg";
 import User from "./User";
 function Friends({ friends }) {
+  const {logout} = useAuth0()
   // console.log(friends.contacts.connections[0]);
   // console.log(friends);
   const [openFromSearch, setOpenFromSearch] = useState(false);

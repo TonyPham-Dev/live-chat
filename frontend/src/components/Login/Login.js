@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import Button from '@mui/material/Button';
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import Button from "@mui/material/Button";
 import { BsGoogle } from "react-icons/bs";
 import { Routes, useNavigate, Outlet } from "react-router-dom";
 
 import styles from "./login.module.css";
 
 function Login(props) {
-  const { isAuthenticated, loginWithPopup, user, getAccessTokenSilently,logout } =
-    useAuth0();
+  const {
+    isAuthenticated,
+    loginWithPopup,
+    user,
+    getAccessTokenSilently,
+    logout,
+  } = useAuth0();
   const [stateLogin, setStateLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -23,7 +28,6 @@ function Login(props) {
   useEffect(() => {
     async function checkUser() {
       if (isAuthenticated) {
-        localStorage.setItem("isLogin", true);
         const accessToken = await getAccessTokenSilently({
           audience: "https://live-chat-app.us.auth0.com/api/v2/",
           scope: "openid read:user_idp_tokens read:current_user",
@@ -35,18 +39,14 @@ function Login(props) {
           },
           method: "POST",
         }).then((data) => {
-          if(data.status == 500) {
-            logout()
-          }
-          data.json()
-          // setLoading(true)
+          data.json();
         });
-        
+
         await navigate("/home");
         // console.log(user)
       } else {
-        setOpen(open)
-        setLoading(false)
+        setOpen(open);
+        setLoading(false);
         await navigate("/");
         return <Outlet />;
       }
@@ -56,14 +56,12 @@ function Login(props) {
   }, [isAuthenticated]);
 
   // loading
-  
- 
- 
+
   return (
-   <>
+    <>
       <div className={styles.loginContainer}>
-      {open && <div className={styles.loadings}></div>}
-      
+        {open && <div className={styles.loadings}></div>}
+
         <div className={styles.loginBorder}>
           <div className={styles.login}>
             <button className={styles.buttonLogin} onClick={handleLogin}>
@@ -72,18 +70,17 @@ function Login(props) {
               </span>
               Login với Google
             </button>
-          
           </div>
         </div>
-          
-          <Backdrop
-              sx={{ color: '#0084ff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-              open={open}
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop>
+
+        <Backdrop
+          sx={{ color: "#0084ff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
       </div>
-   </>
+    </>
   );
 }
 

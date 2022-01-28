@@ -17,23 +17,32 @@ import { MdModeEdit } from "react-icons/md";
 import { GiEarthAsiaOceania } from "react-icons/gi";
 import { BsCodeSlash, BsFillBellSlashFill, BsCalendar3 } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
-import styles from "./postContent.module.css";
-function Post({ post, userData, indexPost, setAllPosts }) {
+import styles from '../PostContents/postContent.module.css'
+function PostsProfile({ user, post, indexPost }) {
+  console.log(post);
   const apiServer = "http://localhost:3000";
   const dashboardRef = useRef();
   const accessToken = localStorage.getItem("accessToken");
-  const { user } = useAuth0();
   const [text, setText] = useState("");
   const [saveText, setSaveText] = useState([]);
   const imageRef = useRef(null);
   const [posts, setPosts] = useState([]);
   const [imgFull, setImgFull] = useState("");
   const [id, setId] = useState("");
-  //   const [allPosts, setAllPosts] = useState([]);
+  const [allPosts, setAllPosts] = useState([]);
+  console.log(allPosts);
   const [liked, setLiked] = useState(false);
   const [openDashboard, setOpenDashboard] = useState(false);
   const [saveIdPost, setSaveIdPost] = useState(null);
   const [openDashboardDeletePost, setOpenDashboardDeletePost] = useState(false);
+
+  //
+  const [friends, setFriends] = useState(null);
+  const [valuePost, setValuePost] = useState([]);
+  // const [userData, setUserData] = useState({});
+  // id from post
+  const [idPost, setIdPost] = useState("");
+  // const [allPost, setAllPost] = useState([]);
   // scroll to top when restart app
   //   useEffect(() => {
   //     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -180,20 +189,17 @@ function Post({ post, userData, indexPost, setAllPosts }) {
           </div>
         </div>
       )}
-      <div className={styles.posts}>
+      <div className={clsx(styles.posts, styles.postsProfile)}>
         {/* user */}
         <div className={styles.user}>
           <Link to="/user" style={{ textDecoration: "none" }}>
             <div className={styles.userContainer}>
-              <img
-                className={styles.imageUser}
-                src={userData[post.author].avatarUrl}
-              />
+              <img className={styles.imageUser} src={user.avatarUrl} />
               <div>
-                <h4 style={{ color: "#3a3b3c", userSelect:'none' }}>
-                  {userData[post.author].fullName}
+                <h4 style={{ color: "#fff", userSelect: "none" }}>
+                  {user.fullName}
                 </h4>
-                <h5 style={{ color: "#3a3b3c", marginTop: "5px" }}>
+                <h5 style={{ color: "#fff", marginTop: "5px" }}>
                   {Moment(post.createdAt).format("LLL")}
                 </h5>
               </div>
@@ -202,8 +208,8 @@ function Post({ post, userData, indexPost, setAllPosts }) {
           {/* edit and remove post */}
           <div className={styles.removeAndEditPost}>
             <span
-              className={styles.userMore}
-              onClick={() => handleOpenDashboard(post.id)}
+              className={clsx(styles.userMore, styles.userMoreProfile)}
+              onClick={() => handleOpenDashboard(user.id)}
             >
               <FiMoreHorizontal />
             </span>
@@ -278,51 +284,55 @@ function Post({ post, userData, indexPost, setAllPosts }) {
         <div className={styles.content}>
           {/* title content */}
           <div>
-            <h4 className={styles.titleContent} style={{ color: "#3a3a3a" }}>
+            <h4 className={styles.titleContent} style={{ color: "#fff" }}>
               {/* {console.log(post.body)} */}
               {post.body}
             </h4>
           </div>
 
           {/* image content */}
-          {post.imgList.length > 0 &&  <div className={styles.imageContent}>
-            <div ref={imageRef} className={styles.container}>
-              {post.imgList.map((img, index) => {
-                return (
-                  <img
-                    key={index}
-                    style={{
-                      width: `calc(100% /${post.imgList.length}`,
-                    }}
-                    className={styles.postImage}
-                    src={`${apiServer}/api/media/${img}`}
-                    onClick={() => handleImageFullImage(img, index)}
-                  />
-                );
-              })}
-            </div>
-          </div>}
-          {/* video content */}
-          {post.vidList.length > 0 && <div className={styles.videoContent}>
+          {post.imgList.length > 0 && (
             <div className={styles.imageContent}>
               <div ref={imageRef} className={styles.container}>
-                {post.vidList.map((video, index) => {
+                {post.imgList.map((img, index) => {
                   return (
-                    <video
+                    <img
                       key={index}
                       style={{
-                        width: `calc(100% /${post.vidList.length}`,
+                        width: `calc(100% /${post.imgList.length}`,
                       }}
-                      controls
-                      className={styles.postVideo}
-                      src={`${apiServer}/api/media/${video}`}
-                      // onClick={() => handleImageFullImage(img, index)}
+                      className={styles.postImage}
+                      src={`${apiServer}/api/media/${img}`}
+                      onClick={() => handleImageFullImage(img, index)}
                     />
                   );
                 })}
               </div>
             </div>
-          </div>}
+          )}
+          {/* video content */}
+          {post.vidList.length > 0 && (
+            <div className={styles.videoContent}>
+              <div className={styles.imageContent}>
+                <div ref={imageRef} className={styles.container}>
+                  {post.vidList.map((video, index) => {
+                    return (
+                      <video
+                        key={index}
+                        style={{
+                          width: `calc(100% /${post.vidList.length}`,
+                        }}
+                        controls
+                        className={styles.postVideo}
+                        src={`${apiServer}/api/media/${video}`}
+                        // onClick={() => handleImageFullImage(img, index)}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
           {/* count like and comment */}
           <div className={styles.likeAndComments}>
             <div className={styles.like}>
@@ -354,7 +364,7 @@ function Post({ post, userData, indexPost, setAllPosts }) {
           <div className={styles.likeAndCommentContainer}>
             <div
               className={
-                post && post.like[0].likeList.includes(user && user.nickname)
+                checkObjectIsUndefined(post) && post.like[0].likeList.includes(user && user.nickname)
                   ? clsx(styles.likeContainer, styles.likes)
                   : styles.likeContainer
               }
@@ -387,7 +397,7 @@ function Post({ post, userData, indexPost, setAllPosts }) {
               value={text}
               onChange={setText}
               cleanOnEnter
-              onEnter={() => handleOnEnter(post.id)}
+              onEnter={() => handleOnEnter(user.id)}
               placeholder="Write a comment..."
             />
           </span>
@@ -399,10 +409,8 @@ function Post({ post, userData, indexPost, setAllPosts }) {
           {/* {saveText.map((text, index) => { */}
           {/* return ( */}
           <div className={styles.listComment}>
-            {checkObjectIsUndefined(post.comment[0]) &&
-            post.comment[0].commentList
+            {checkObjectIsUndefined(post) && post.comment[0].commentList
               ? post.comment[0].commentList.map((comment, index) => {
-                 
                   return (
                     <React.Fragment key={index}>
                       <div className={styles.item}>
@@ -417,17 +425,17 @@ function Post({ post, userData, indexPost, setAllPosts }) {
                           <h4>{comment.content}</h4>
                         </div>
                       </div>
-                        <div className={styles.commentEmoji}>
-                          <span className={styles.itemIcon}>
-                            <BiLike />
-                          </span>
-                          <span className={styles.itemIcon}>
-                            <BiComment />
-                          </span>
-                          <span className={styles.itemIcon}>
-                            {Moment(comment.createdAt).format("LT")}
-                          </span>
-                        </div>
+                      <div className={styles.commentEmoji}>
+                        <span className={styles.itemIcon}>
+                          <BiLike />
+                        </span>
+                        <span className={styles.itemIcon}>
+                          <BiComment />
+                        </span>
+                        <span className={styles.itemIcon}>
+                          {Moment(comment.createdAt).format("LT")}
+                        </span>
+                      </div>
                     </React.Fragment>
                   );
                 })
@@ -440,4 +448,4 @@ function Post({ post, userData, indexPost, setAllPosts }) {
   );
 }
 
-export default Post;
+export default PostsProfile;

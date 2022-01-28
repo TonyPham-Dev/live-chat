@@ -10,8 +10,6 @@ import { IoIosVideocam } from "react-icons/io";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { FaTimesCircle } from "react-icons/fa";
 import { TiDeleteOutline } from "react-icons/ti";
-import postImage1 from "../PostContents/image/postImage1.jpg";
-import postImage2 from "../PostContents/image/postImage2.jpg";
 import coverImage from "../PostContents/image/coverImage.jpg";
 import styles from "./post.module.css";
 import clsx from "clsx";
@@ -44,7 +42,6 @@ function Posts({setAllPost}) {
     // post content
     const formData = new FormData();
     formData.append("body", valuePost); // text
-
     fileImage.forEach((image) => {
       formData.append("images", image); // image
     });
@@ -62,7 +59,6 @@ function Posts({setAllPost}) {
     await axios
       .post(`${urlServer}/api/posts/new`, formData, config) 
       .then((response) => {
-        // console.log(response.data);
         setIdPost(response.data.post.id);
         setAllPost(prev =>  [response.data.post,...prev])
       })
@@ -112,13 +108,14 @@ function Posts({setAllPost}) {
       (file, indexImage) => indexImage !== index
     );
     URL.revokeObjectURL(fileRemove);
+    URL.revokeObjectURL(fileImage);
+
     setSaveFileImage(fileRemove);
+    setFileImage(fileRemove)
   };
 
   // handle input file video mp4
   const handleVideoPostChange = (e) => {
-    // setFileVideo((prev) => [...prev, e.target.files[0]]);
-    // setSaveVideo((prev) => [...prev, URL.createObjectURL(e.target.files[0])]);
     Array.from(e.target.files).forEach(file => {
       setFileVideo((prev) => [...prev, file]);
       setSaveVideo((prev) => [
@@ -134,7 +131,9 @@ function Posts({setAllPost}) {
       (file, indexVideo) => indexVideo !== index
     );
     URL.revokeObjectURL(fileVideoRemove);
+    URL.revokeObjectURL(fileVideo);
     setSaveVideo(fileVideoRemove);
+    setFileVideo(fileVideoRemove)
   };
 
   return (
@@ -174,7 +173,7 @@ function Posts({setAllPost}) {
                 </form>
 
                 {/* render image post */}
-                {saveFileImage
+                {saveFileImage && fileVideo
                   ? saveFileImage.map((image, index) => {
                       return (
                         <span className={styles.renderImagePost} key={index}>
@@ -315,7 +314,7 @@ function Posts({setAllPost}) {
           </form>
           <div className={styles.imageAndVideoAndStreaming}>
             <span className={clsx(styles.iconInput, styles.image)}>
-              <BsFillImageFill />{" "}
+              <BsFillImageFill />
               <span className={styles.titleIcon}>Image</span>
             </span>
             <span className={clsx(styles.iconInput, styles.video)}>

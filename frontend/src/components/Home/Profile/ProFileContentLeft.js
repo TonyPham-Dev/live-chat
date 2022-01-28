@@ -38,9 +38,9 @@ function ProFileContentLeft({ user }) {
         {/* {console.log(user.posts)} */}
         {checkObjectIsUndefined(user) &&
           user.posts.map((post, index) => {
-            {
-              console.log(post);
-            }
+            // {
+            //   console.log(post);
+            // }
             return (
               <div className={styles.profileAllImages} key={index}>
                 {/* {checkObjectIsUndefined(post) &&

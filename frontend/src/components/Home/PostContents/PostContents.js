@@ -1,25 +1,7 @@
 import React, { useEffect, useState, useRef, memo } from "react";
 import Post from "./Post"
 import { useAuth0 } from "@auth0/auth0-react";
-import { Link } from "react-router-dom";
-import Moment from "moment";
-import axios from "axios";
-import clsx from "clsx";
-import { AiFillLike } from "react-icons/ai";
-import { BiLike, BiComment, BiCommentEdit } from "react-icons/bi";
-import {
-  RiShareForwardLine,
-  RiDeleteBin5Fill,
-  RiDeleteBack2Fill,
-} from "react-icons/ri";
-import InputEmoji from "react-input-emoji";
-import { MdModeEdit } from "react-icons/md";
-import { GiEarthAsiaOceania } from "react-icons/gi";
-import { BsCodeSlash, BsFillBellSlashFill, BsCalendar3 } from "react-icons/bs";
-
-import { FiMoreHorizontal } from "react-icons/fi";
 import styles from "./postContent.module.css";
-const apiServer = "http://localhost:3000";
 function PostContents({ post, allPost, userData }) {
   const dashboardRef = useRef();
   const accessToken = localStorage.getItem("accessToken");

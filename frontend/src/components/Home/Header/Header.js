@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect, memo } from "react";
 import { Link,useLocation } from "react-router-dom";
 import {
   AiFillHome,
@@ -80,7 +80,7 @@ function Header(props) {
               className={
                 active === 3 ? styleTheme + " " + styleActive : styleTheme
               }
-              onClick={() => setActive(3)}
+              // onClick={() => setActive(3)}
             >
               <FaUserFriends />
             </span>
@@ -157,7 +157,7 @@ function Header(props) {
                   <li className={styles.dashboardItem}>Dark mode</li>
                   <Link to="" style={{ textDecoration: "none" }}>
                     <li className={styles.dashboardItem}>
-                      <Logout />
+                      <Logout logout = {props.removeAuthentication} />
                     </li>
                   </Link>
                 </ul>
@@ -194,7 +194,7 @@ function Header(props) {
             className={
               active === 3 ? styleTheme + " " + styleActive : styleTheme
             }
-            onClick={() => setActive(3)}
+            // onClick={() => setActive(3)}
           >
             <FaUserFriends />
           </span>
@@ -226,4 +226,4 @@ function Header(props) {
   );
 }
 
-export default Header;
+export default memo(Header);

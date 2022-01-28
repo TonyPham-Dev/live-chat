@@ -3,7 +3,7 @@ import styles from "./profile.module.css";
 import ProFileContentLeft from "./ProFileContentLeft";
 import ProFileContentRight from "./ProFileContentRight";
 function ProfileContent({ user }) {
-  console.log(user);
+  // console.log(user);
   const [postContent, setPostContent] = useState([]);
 
   useEffect(() => {

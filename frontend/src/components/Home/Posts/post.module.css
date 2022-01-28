@@ -1,6 +1,6 @@
 .postContainer {
     margin-top: 10px;
-    height: 100vh;
+    /* height: 100vh; */
 }
 .coverImage {
     width:100%;
@@ -305,6 +305,10 @@
 .ProfileTitlePost {
     color:#fff;
     font-weight: 600;
+}
+.textProfile {
+    color:#fff;
+    margin-left: 10px;
 }
 /* responsive tablet big */
 @media (min-width: 1024px) and (max-width: 1365px) {
