@@ -136,10 +136,11 @@ class PostController {
                         newPostLike.save(),
                         newPostComment.save(),
                     ]);
+                    const responsePost = await getPostById(newPost.id);
                     return res.status(200).json({
                         success: true,
                         message: "Post created",
-                        post: newPost,
+                        post: responsePost.post,
                     });
                 }
             });

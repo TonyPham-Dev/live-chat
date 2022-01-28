@@ -306,3 +306,21 @@
     color:#fff;
     font-weight: 600;
 }
+/* responsive tablet big */
+@media (min-width: 1024px) and (max-width: 1365px) {
+    .writerContainer {
+        width:80%;
+    }
+}
+/* responsive tablet small */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .writerContainer {
+        width:80%;
+    }
+}
+/* responsive mobile */
+@media (max-width: 767px) {
+    .writerContainer {
+        width:80%;
+    }
+}

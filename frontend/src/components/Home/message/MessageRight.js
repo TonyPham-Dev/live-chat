@@ -194,7 +194,7 @@ function MessageRight(props) {
         <div className={styles.messageRightContainer}>
           <Link
             to={`/user/${props.messages.users.filter(
-              (users) => users != user && user.nickname
+              (users) => users !== user.nickname
             )}`}
             style={{ textDecoration: "none" }}
           >
@@ -297,7 +297,7 @@ function MessageRight(props) {
                       <div className={styles.messageImagesContainer}>
                         {user && value.type === "img"
                           ? value.message.map((img, index) => (
-                              <div className={styles.userAlignImage}>
+                              <div className={styles.userAlignImage} key={index}>
                                 {user && (
                                   <img
                                     className={styles.imageUserMessage}
@@ -312,7 +312,7 @@ function MessageRight(props) {
                                 )}
                                 <img
                                   onClick={(img) => handleOpenImageMess(img)}
-                                  key={index}
+                                  
                                   className={styles.messageImages}
                                   src={`http://localhost:3000/api/media/chat/${img}`}
                                 />

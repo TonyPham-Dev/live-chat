@@ -1,19 +1,25 @@
-import React from 'react';
-import styles from './profile.module.css'
-import ProFileContentLeft from './ProFileContentLeft';
-import ProFileContentRight from './ProFileContentRight';
+import React, { useEffect, useState } from "react";
+import styles from "./profile.module.css";
+import ProFileContentLeft from "./ProFileContentLeft";
+import ProFileContentRight from "./ProFileContentRight";
 function ProfileContent({ user }) {
-    return (
-        <div className={styles.ProfileContentContainer}>
-            <div className={styles.ProfileContentLeft}>
-                <ProFileContentLeft user={user} />
-            </div>
+  console.log(user);
+  const [postContent, setPostContent] = useState([]);
 
-            <div className={styles.ProfileContentRight}>
-                <ProFileContentRight user={user} />
-            </div>
-        </div>
-    );
+  useEffect(() => {
+    setPostContent(user.posts);
+  }, [user]);
+  return (
+    <div className={styles.ProfileContentContainer}>
+      <div className={styles.ProfileContentLeft}>
+        <ProFileContentLeft user={user} />
+      </div>
+
+      <div className={styles.ProfileContentRight}>
+        <ProFileContentRight postContent={postContent} user={user} />
+      </div>
+    </div>
+  );
 }
 
 export default ProfileContent;

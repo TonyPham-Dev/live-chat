@@ -37,3 +37,9 @@ body.dark-mode {
   position: absolute;
   z-index: -1;
 }
+.overlayBackground {
+  position:fixed;
+  inset:0;
+  background-color:rgba(138, 136, 136, 0.1);
+  
+}

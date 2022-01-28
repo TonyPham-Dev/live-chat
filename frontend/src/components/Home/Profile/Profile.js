@@ -11,17 +11,17 @@ function Profile(props) {
   const { user } = useAuth0();
   const {username} = useParams();
   const [aboutUser, setAboutUser] = useState({})
-  console.log(aboutUser);
+  // console.log(aboutUser);
   useEffect(() => {
-    username !== undefined && axios.get(`${apiServer}/api/user/${username}`)
+    username !== undefined && axios.get(`${apiServer}/api/user/${username}?full=true`)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (response.data.success) {
           setAboutUser(response.data.user)
         }
       })
   },[username]);
-  console.log(aboutUser);
+
   return (
     <div className={styles.ProfileContainer}>
         <div className={styles.profile}>

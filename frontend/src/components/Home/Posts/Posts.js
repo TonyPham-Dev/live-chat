@@ -17,7 +17,7 @@ import styles from "./post.module.css";
 import clsx from "clsx";
 import Notification from "./Notification";
 
-function Posts(props) {
+function Posts({setAllPost}) {
   const urlServer = "http://localhost:3000";
   const accessToken = localStorage.getItem("accessToken");
   const { user } = useAuth0();
@@ -60,10 +60,11 @@ function Posts(props) {
       },
     };
     await axios
-      .post(`${urlServer}/api/posts/new`, formData, config) // chỗ này
+      .post(`${urlServer}/api/posts/new`, formData, config) 
       .then((response) => {
-        setIdPost(response.data.id);
-        // console.log(response);
+        // console.log(response.data);
+        setIdPost(response.data.post.id);
+        setAllPost(prev =>  [response.data.post,...prev])
       })
       .catch((error) => {
         console.log(error);

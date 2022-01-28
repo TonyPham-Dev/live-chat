@@ -78,11 +78,11 @@ function Home() {
         </div>
 
         <div className={styles.postContents}>
-          <PostContents Post = {valuePost} allPost = {allPost} userData={userData}/>
+          <PostContents post = {valuePost} allPost = {allPost} userData={userData}/>
         </div>
 
         <div className={styles.posts}>
-          <Posts />
+          <Posts setAllPost={setAllPost}/>
         </div>
       </div>
     </HomeContext.Provider>

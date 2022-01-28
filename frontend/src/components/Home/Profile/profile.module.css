@@ -1,535 +1,528 @@
-
 .ProfileContainer {
-    width: 100%;
-    background-color: #333;
+  width: 100%;
+  background-color: #333;
 }
 .profile {
-    margin-top: 100px;
-    /* width: 1200px; */
-    width: 80%;
-    margin: 0 auto;
+  margin-top: 100px;
+  /* width: 1200px; */
+  width: 80%;
+  margin: 0 auto;
 }
 .headerProfile {
-    position: relative;
-    width:100%;
-    height: 500px;
+  position: relative;
+  width: 100%;
+  height: 500px;
 }
 
 .image {
-    width: 100%;
-    height: 500px;
-    object-fit: cover;   
-    border-radius: 20px;
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 20px;
 }
 .avatarUser {
-    position: absolute;
-    bottom: -40px;
-    left: 50%;
-    transform: translateX(-50%);
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .avatar {
-    border:4px solid rgb(88, 88, 88);
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    object-fit: cover;
+  border: 4px solid rgb(88, 88, 88);
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 .nameUser {
-    text-align: center;
-    margin-top: 50px;
-    color:#fff;
-    /* position: relative; */
+  text-align: center;
+  margin-top: 50px;
+  color: #fff;
+  /* position: relative; */
 }
 .iconMore {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .seeMore {
-    display:flex;
-    align-items: center;    
-    justify-content:space-between;
-    margin-top: 20px;
-    border-top: 1px solid rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  border-top: 1px solid rgb(255, 255, 255);
 }
 .listItem {
-    display:flex;
-    padding:20px 0px;
+  display: flex;
+  padding: 20px 0px;
 }
 .item {
-    color:#a3a6aa;
-    font-size: 17px;
-    margin-right: 40px;
-    font-weight: 600;
-    padding:10px 5px;
-    border-radius: 10px;
-    transition: 0.2s;
+  color: #a3a6aa;
+  font-size: 17px;
+  margin-right: 40px;
+  font-weight: 600;
+  padding: 10px 5px;
+  border-radius: 10px;
+  transition: 0.2s;
 }
 .item:hover {
-    background-color:#626263;
-    transition: 0.2s;
+  background-color: #626263;
+  transition: 0.2s;
 }
 .buttonContainer {
-    display: flex;
-    align-items: center;
-
+  display: flex;
+  align-items: center;
 }
 .buttonEdit {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 .buttonMoreContainer {
-    position: relative;
-    margin-left: 20px;
+  position: relative;
+  margin-left: 20px;
 }
 .button {
-    padding:10px;
-    border:none;
-    outline:none;
-    border-radius: 20px;
-    color:#fff;
-    background-color:#626263;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    font-weight: 600;
-    cursor: pointer;
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  color: #fff;
+  background-color: #626263;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  font-weight: 600;
+  cursor: pointer;
 }
 .buttonLiked {
-    background-color:#2374e1;
-    border-radius: 20px;
+  background-color: #2374e1;
+  border-radius: 20px;
 }
 
 .buttonMore {
-    padding:10px 20px;
-    font-weight: 600;
+  padding: 10px 20px;
+  font-weight: 600;
 }
 .seeMoreContainer {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width:340px;
-    background-color:#626263;
-    padding:10px;
-    border-radius: 20px;
-    top: 46px;
-    z-index: 999999;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 340px;
+  background-color: #626263;
+  padding: 10px;
+  border-radius: 20px;
+  top: 46px;
+  z-index: 999999;
 }
 .iconItem {
-    list-style: none;
-    padding:10px;
-    color:#fff;
-    font-weight: 600;
-    background-color:#333;
-    margin-bottom: 10px;
-    border-radius: 20px;
-    display:flex;
-    align-items: center;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    cursor: pointer;
-    transition: 0.2s;
+  list-style: none;
+  padding: 10px;
+  color: #fff;
+  font-weight: 600;
+  background-color: #333;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
+  transition: 0.2s;
 }
 .iconItem:hover {
-    opacity: 0.8;
-    transition: 0.2s;
+  opacity: 0.8;
+  transition: 0.2s;
 }
 .contentIcon {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 .profileContent {
-    width: 100%;
-    background-color: #18191a;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #18191a;
 }
 .MoreContainer {
-    position: relative;
-    cursor: pointer;
+  position: relative;
+  cursor: pointer;
 }
 .listItemMore {
-    position: absolute;
-    width: 400px;
-    height: 260px;
-    overflow:scroll;
-    border-radius: 20px;
-    background-color: #626263;
-    top: 37px;
-    display: flex;
-    flex-direction: column;
-    padding:10px;
-    z-index: 9999999;
+  position: absolute;
+  width: 400px;
+  height: 260px;
+  overflow: scroll;
+  border-radius: 20px;
+  background-color: #626263;
+  top: 37px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  z-index: 9999999;
 }
 .listItemMore::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 .moreItemContainer {
-    margin-bottom: 10px;
-    border-radius: 20px;
-    padding:10px 20px;
-    background-color:#333;
-    color:#fff;
-    transition: 0.2s;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  transition: 0.2s;
 }
 .moreItemContainer:hover {
-    
-    opacity: 0.8;
-    transition: 0.2s;
+  opacity: 0.8;
+  transition: 0.2s;
 }
 .ProfileContentContainer {
-    width: 80%;
-    margin: 0 auto;
-    display: flex;
-    justify-content:space-between;
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  /* min-height: 100vh; */
 }
 .ProfileContentLeft {
-    width: 35%;
-    background-color: rgb(206, 186, 186);
-    margin-top: 20px;
-    border-radius: 20px;
-    height: 0;
-   
+  width: 35%;
+  background-color: rgb(206, 186, 186);
+  margin-top: 20px;
+  border-radius: 20px;
+  height: 0;
 }
 .ProfileContentRight {
-    width: 64%;
-    /* background-color: rgb(88, 63, 63); */
-    margin-top: 20px;
-    border-radius: 20px;
-    
+  width: 64%;
+  /* background-color: rgb(88, 63, 63); */
+  margin-top: 20px;
+  border-radius: 20px;
 }
 .AboutUser {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 .aboutContainer {
-    padding:10px 20px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    border-radius:20px;
-    padding-bottom: 30px;
-    background:#3a3b3c;
+  padding: 10px 20px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 20px;
+  padding-bottom: 30px;
+  background: #3a3b3c;
 }
 .infomationUser {
-    display: flex;
-    color:#e4e6eb;
-    margin-bottom: 20px;
+  display: flex;
+  color: #e4e6eb;
+  margin-bottom: 20px;
 }
 .linkEmail {
-    text-decoration: none;
-    color:#e4e6eb;
+  text-decoration: none;
+  color: #e4e6eb;
 }
 .buttons {
-    margin-top: 10px;
-    
+  margin-top: 10px;
 }
 .buttonProfile {
-    width: 100%;
-    padding:10px;
-    font-weight: 600;
-    border:none;
-    outline:none;
-    color:#e4e6eb;
-    background-color:#1e1e1f;
-    border-radius:10px;
-    margin-top: 10px;
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    transition: 0.2s;
+  width: 100%;
+  padding: 10px;
+  font-weight: 600;
+  border: none;
+  outline: none;
+  color: #e4e6eb;
+  background-color: #1e1e1f;
+  border-radius: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  transition: 0.2s;
 }
 .buttonProfile:hover {
-    opacity: 0.8;
-    transition: 0.2s;
+  opacity: 0.8;
+  transition: 0.2s;
 }
 .profilePostContentUser {
-    margin-top: 20px;
-    border-radius:20px;
-    background-color:#3a3b3c;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    padding:20px;
+  margin-top: 20px;
+  border-radius: 20px;
+  background-color: #3a3b3c;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 20px;
 }
 .profileUserImage {
-    width:50px;
-    height: 50px;
-    border-radius: 50px;
-    margin-right: 10px;
-    object-fit: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin-right: 10px;
+  object-fit: cover;
 }
 .profileUser {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .timePost {
-    color:#fff;
+  color: #fff;
 }
 .profilePostUser {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .PostUtlti {
-    color:#fff;
-    font-size: 20px;
-    cursor: pointer;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
 }
 .titlePostProfile {
-    margin-top: 10px;
-    color:#dbdbdb;
+  margin-top: 10px;
+  color: #dbdbdb;
 }
 .imagePost {
-    display:grid;
-    grid-template-columns: auto auto auto;
-    margin-top: 30px;
-    
+  display: grid;
+  grid-template-columns: auto auto auto;
+  margin-top: 30px;
 }
 
 .imagePostProfile {
-    width:100%;
-    height: 200px;
-    object-fit: cover;
-    padding:0px 10px;
-    margin-bottom: 10px;
-    border-radius:20px;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  padding: 0px 10px;
+  margin-bottom: 10px;
+  border-radius: 20px;
 }
 .likeAndCommentsProfile {
-    display: flex;
-    justify-content:space-between;
-    align-items:center;
-    /* height: 200px; */
-    padding:0px 10px;
-    margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* height: 200px; */
+  padding: 0px 10px;
+  margin-top: 30px;
 }
 .likeProfile {
-    display: flex;
-    align-items:center;
+  display: flex;
+  align-items: center;
 }
 .iconLikeProfile {
-    color:#046fe3;
-    cursor: pointer;
+  color: #046fe3;
+  cursor: pointer;
 }
 .countLikeProfile {
-    font-weight: 600;
-    color: #b0b3b8;
-    margin-left: 5px;
+  font-weight: 600;
+  color: #b0b3b8;
+  margin-left: 5px;
 }
 .commentProfile {
-    display: flex;
-    align-items:center;
-    color:#b0b3b8;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #b0b3b8;
+  cursor: pointer;
 }
 .countCommentProfile {
-    margin-right: 5px;
-    font-weight: 600;
-    color:#b0b3b8;
+  margin-right: 5px;
+  font-weight: 600;
+  color: #b0b3b8;
 }
 
 .likeAndCommentContainerProfile {
-    display: flex;
-    align-items:center;
-    width:100%;
-    border-top: 1px solid rgb(185, 184, 184);
-    border-bottom: 1px solid rgb(185, 184, 184);
-    padding:5px;
-    margin-top: 30px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-top: 1px solid rgb(185, 184, 184);
+  border-bottom: 1px solid rgb(185, 184, 184);
+  padding: 5px;
+  margin-top: 30px;
 }
 .likeContainerProfile {
-    width: calc(100% / 3);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    /* text-align: center; */
-    cursor: pointer;
-    border-radius:10px;
-    padding:10px;
-    transition: 0.4s;
+  width: calc(100% / 3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* text-align: center; */
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 10px;
+  transition: 0.4s;
 }
 .likeContainerProfile:hover {
-    background-color:rgb(151, 151, 151);
-    border-radius:10px;
-    transition: 0.4s;
-    color:#fff;
+  background-color: rgb(151, 151, 151);
+  border-radius: 10px;
+  transition: 0.4s;
+  color: #fff;
 }
 .iconLikesProfile {
-    margin-right: 5px;
-    font-size: 20px;
-    color:#b0b3b8;
+  margin-right: 5px;
+  font-size: 20px;
+  color: #b0b3b8;
 }
 .titleLikeProfile {
-    font-weight: 600;
-    font-size: 17px;
-    color:#b0b3b8;
+  font-weight: 600;
+  font-size: 17px;
+  color: #b0b3b8;
 }
 .commentContainerProfile {
-    width: calc(100% / 3);
-    display: flex;
-    /* align-items:center; */
-    justify-content: center;
-    cursor: pointer;
-    border-radius:10px;
-    padding:10px;
-    transition: 0.4s;
+  width: calc(100% / 3);
+  display: flex;
+  /* align-items:center; */
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 10px;
+  transition: 0.4s;
 }
 .commentContainerProfile:hover {
-    background-color:rgb(151, 151, 151);
-    border-radius:10px;
-    transition: 0.4s;
-    color:#fff;
+  background-color: rgb(151, 151, 151);
+  border-radius: 10px;
+  transition: 0.4s;
+  color: #fff;
 }
 .iconCommentsProfile {
-    margin-right: 5px;
-    font-size: 20px;
-    color:#b0b3b8;
+  margin-right: 5px;
+  font-size: 20px;
+  color: #b0b3b8;
 }
 .titleCommentProfile {
-    font-weight: 600;
-    font-size: 17px;
-    color:#b0b3b8;
+  font-weight: 600;
+  font-size: 17px;
+  color: #b0b3b8;
 }
 .shareContainerProfile {
-    display: flex;
-    align-items: center;
-    justify-content:center;
-    width: calc(100% / 3);
-    cursor: pointer;
-    border-radius:10px;
-    padding:10px;
-    transition: 0.4s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% / 3);
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 10px;
+  transition: 0.4s;
 }
 .shareContainerProfile:hover {
-    background-color:rgb(151, 151, 151);
-    border-radius:10px;
-    transition: 0.4s;
-    color:#fff;
-
+  background-color: rgb(151, 151, 151);
+  border-radius: 10px;
+  transition: 0.4s;
+  color: #fff;
 }
 .iconShareProfile {
-    font-size: 20px;
-    margin-right: 5px;
-    color:#b0b3b8;
+  font-size: 20px;
+  margin-right: 5px;
+  color: #b0b3b8;
 }
 .titleShareProfile {
-    font-weight: 600;
-    font-size: 17px;
-    color:#b0b3b8;
+  font-weight: 600;
+  font-size: 17px;
+  color: #b0b3b8;
 }
 .inputCommentContainerProfile {
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
 }
 .userInputProfile {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius:50px;
-    margin-right: 5px;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50px;
+  margin-right: 5px;
 }
 .inputProfile {
-    width:95%;
+  width: 95%;
 }
 .listCommentsProfile {
-    width: 100%;
-    /* height: 100px; */
-    margin-top: 30px;
+  width: 100%;
+  /* height: 100px; */
+  margin-top: 30px;
 }
 .listCommentProfile {
-      /* display: flex;
+  /* display: flex;
     align-items: center; */
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .itemProfile {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .userCommentProfile {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius:50px; 
-    cursor: pointer;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50px;
+  cursor: pointer;
 }
 .contentCommentProfile {
-    margin-left: 9px;
-    background-color:rgb(145, 145, 145);
-    padding:10px;
-    border-radius:20px;
-    color:rgb(233, 233, 233);
+  margin-left: 9px;
+  background-color: rgb(145, 145, 145);
+  padding: 10px;
+  border-radius: 20px;
+  color: rgb(233, 233, 233);
 }
 .nameUserProfile {
-    cursor: pointer;
+  cursor: pointer;
 }
 .commentEmojiProfile {
-    margin-left: 73px;
-    margin-top: 5px;
-    display: flex;
-    color:#b0b3b8;
+  margin-left: 73px;
+  margin-top: 5px;
+  display: flex;
+  color: #b0b3b8;
 }
 .itemIconProfile {
-    margin-right: 20px;
-    cursor: pointer;
-    font-size: 18px;
+  margin-right: 20px;
+  cursor: pointer;
+  font-size: 18px;
 }
 .profileContentImage {
-    width: 100%;
-    margin-top: 20px;
-    /* height: 500px; */
-    background-color:#3a3b3c;
-    border-radius:20px;
-    box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+  width: 100%;
+  margin-top: 20px;
+  /* height: 500px; */
+  background-color: #3a3b3c;
+  border-radius: 20px;
+  box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
 }
 .profileImageContainer {
-    padding:20px;
+  padding: 20px;
 }
 .allImagePost {
-    color:#fff;
+  color: #fff;
 }
 .profileContentFriends {
-    width: 100%;
-    margin-top: 20px;
-    background-color:#3a3b3c;
-    border-radius:20px;
-    box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+  width: 100%;
+  margin-top: 20px;
+  background-color: #3a3b3c;
+  border-radius: 20px;
+  box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
 }
 .profileAllImages {
-    /* width: 100%; */
-    display: grid;
-    grid-template-columns: auto auto auto;
-    padding:10px 20px;
+  /* width: 100%; */
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 10px 20px;
 }
 .imageAllPost {
-    width:100%;
-    height: 100px;
-    border-radius:15px;
-    object-fit: cover;
-    padding:0px 5px;
-    margin-bottom: 10px;
+  width: 100%;
+  height: 100px;
+  border-radius: 15px;
+  object-fit: cover;
+  padding: 0px 5px;
+  margin-bottom: 10px;
 }
 .profileAllFriends {
-    padding:20px;
+  padding: 20px;
 }
 .friendsTitle {
-    color:#fff;
+  color: #fff;
 }
 .allFriendsContainers {
-    display: grid;
-    grid-template-columns: auto auto auto;
+  display: grid;
+  grid-template-columns: auto auto auto;
 }
 .allFriendsContainer {
-    /* position: relative; */
-    display:flex;
-    flex-direction: column;
-    margin-bottom: 15px;
+  /* position: relative; */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
 }
 .imageAlls {
-
 }
 .allFriends {
-    width:100%;
-    height: 100px;
-    padding:5px;
-    border-radius: 15px;
-    /* margin-bottom: 5px; */
+  width: 100%;
+  height: 100px;
+  padding: 5px;
+  border-radius: 15px;
+  /* margin-bottom: 5px; */
 }
 .totalFriends {
-    color:#fff;
-    margin-top: 5px;
+  color: #fff;
+  margin-top: 5px;
 }
 .friendsName {
-    /* position:absolute; */
-    text-align: center;
+  /* position:absolute; */
+  text-align: center;
 }
 .nameFriends {
-    font-size: 14px;
-    color:#fff;
+  font-size: 14px;
+  color: #fff;
 }

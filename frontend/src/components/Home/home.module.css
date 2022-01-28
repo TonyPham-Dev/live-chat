@@ -5,6 +5,7 @@
   padding: 0px 15px;
   background-color: rgb(214, 214, 214);
   margin-top: 93px;
+  min-height: 100vh;
   /* position: relative; */
 }
 .friends {
@@ -30,17 +31,63 @@
   /* height: 100vh; */
 }
 
+/* responsive tablet big */
+@media (min-width: 1024px) and (max-width: 1365px) {
+  .home {
+    width: 100%;
+  }
+  .friends {
+    display: none;
+  }
+  .posts {
+    width: 35%;
+    right: 15px;
+    margin-right: 0;
+  }
+  .postContents {
+    width: 63%;
 
-/* responsive */
-/* @media (min-width: 1024px) and (max-width: 1365px) {
-    .home {
-        width: 100%;
-    }
-    .posts {
-        display:none;
-        
-    }
-    .postContents {
-        width: 100%;
-    }
-} */
+    left: 0;
+    transform: translateX(-0%);
+  }
+}
+
+/* responsive tablet small */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .home {
+    width: 100%;
+  }
+  .friends {
+    display: none;
+  }
+  .posts {
+    width: 35%;
+    right: 15px;
+    margin-right: 0;
+  }
+  .postContents {
+    width: 63%;
+
+    left: 0;
+    transform: translateX(-0%);
+  }
+}
+/* responsive mobile */
+@media (max-width: 767px){
+  .home {
+    width: 100%;
+    padding: 0;
+  }
+  .friends {
+    display: none;
+  }
+  .posts {
+    display:none;
+  }
+  .postContents {
+    width: 100%;
+
+    left: 0;
+    transform: translateX(-0%);
+  }
+}

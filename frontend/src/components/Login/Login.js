@@ -9,7 +9,7 @@ import { Routes, useNavigate, Outlet } from "react-router-dom";
 import styles from "./login.module.css";
 
 function Login(props) {
-  const { isAuthenticated, loginWithPopup, user, getAccessTokenSilently } =
+  const { isAuthenticated, loginWithPopup, user, getAccessTokenSilently,logout } =
     useAuth0();
   const [stateLogin, setStateLogin] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -35,6 +35,9 @@ function Login(props) {
           },
           method: "POST",
         }).then((data) => {
+          if(data.status == 500) {
+            logout()
+          }
           data.json()
           // setLoading(true)
         });

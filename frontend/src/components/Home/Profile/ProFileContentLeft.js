@@ -4,8 +4,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import AboutUser from "./AboutUser";
 import styles from "./profile.module.css";
 
-const apiServer = "http://localhost:3000";
 function ProFileContentLeft({ user }) {
+  const apiServer = "http://localhost:3000";
   const accessToken = localStorage.getItem("accessToken");
   const [friends, setFriends] = useState([]);
   useEffect(async () => {
@@ -35,56 +35,28 @@ function ProFileContentLeft({ user }) {
         <div className={styles.profileImageContainer}>
           <h3 className={styles.allImagePost}>Ảnh</h3>
         </div>
-        <div className={styles.profileAllImages}>
-          <img
-            className={styles.imageAllPost}
-            src="https://images5.alphacoders.com/568/568499.jpg"
-          />
-          <img
-            className={styles.imageAllPost}
-            src="https://images5.alphacoders.com/568/568499.jpg"
-          />
-          <img
-            className={styles.imageAllPost}
-            src="https://images5.alphacoders.com/568/568499.jpg"
-          />
-          <img
-            className={styles.imageAllPost}
-            src="https://images5.alphacoders.com/568/568499.jpg"
-          />
-          <img
-            className={styles.imageAllPost}
-            src="https://images5.alphacoders.com/568/568499.jpg"
-          />
-          <img
-            className={styles.imageAllPost}
-            src="https://images5.alphacoders.com/568/568499.jpg"
-          />
-          <img
-            className={styles.imageAllPost}
-            src="https://images5.alphacoders.com/568/568499.jpg"
-          />
-          <img
-            className={styles.imageAllPost}
-            src="https://images5.alphacoders.com/568/568499.jpg"
-          />
-          <img
-            className={styles.imageAllPost}
-            src="https://images5.alphacoders.com/568/568499.jpg"
-          />
-          <img
-            className={styles.imageAllPost}
-            src="https://images5.alphacoders.com/568/568499.jpg"
-          />
-          <img
-            className={styles.imageAllPost}
-            src="https://images5.alphacoders.com/568/568499.jpg"
-          />
-          <img
-            className={styles.imageAllPost}
-            src="https://images5.alphacoders.com/568/568499.jpg"
-          />
-        </div>
+        {/* {console.log(user.posts)} */}
+        {checkObjectIsUndefined(user) &&
+          user.posts.map((post, index) => {
+            {
+              console.log(post);
+            }
+            return (
+              <div className={styles.profileAllImages} key={index}>
+                {/* {checkObjectIsUndefined(post) &&
+                post.imgList &&
+                post.imgList.length > 0
+                  ? post.imgList.map((img, index) => {
+                      <img
+                        key={index}
+                        className={styles.imageAllPost}
+                        src={img}
+                      />;
+                    })
+                  : null} */}
+              </div>
+            );
+          })}
       </div>
 
       {/* this is friends */}
