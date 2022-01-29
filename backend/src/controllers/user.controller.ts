@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import UserModel from "../models/Users.models";
 import { returnServerError } from "../app/constants";
-import { getContacts } from "../services/auth.services";
-import { getUserData } from "../services/auth.services";
+import { getContacts, getUserData } from "../services/auth.services";
+import { getPostByAuthor } from "../services/post.services";
 class UserController {
     // [GET] /api/user/:username
     // @desc Get user basic information
@@ -12,14 +12,15 @@ class UserController {
             if (full === "true") {
                 const user = await UserModel.findOne({
                     nickname: req.params.username,
-                }).populate(["posts", "follow"]);
+                }).populate([{ path: "follow" }]);
                 if (!user) {
                     return res.status(404).json({
                         success: false,
                         message: "User not found",
                     });
                 }
-                return res.json({ success: true, user });
+                const posts = await getPostByAuthor(user.nickname);
+                return res.json({ success: true, user, posts });
             }
             const user = await UserModel.findOne({
                 nickname: req.params.username,
@@ -46,7 +47,7 @@ class UserController {
                 });
             }
             const userData = await getUserData(
-                req.headers.authorization.split(" ")[1]
+                req.headers.authorization.split(" ")[1],
             );
             if (!userData.success) {
                 return res.status(500).json({
@@ -59,7 +60,7 @@ class UserController {
                 nickname: userData.userData.nickname,
             });
             const contacts = await getContacts(
-                userData.userData.identities[0].access_token
+                userData.userData.identities[0].access_token,
             );
             if (!user) {
                 return res.json({

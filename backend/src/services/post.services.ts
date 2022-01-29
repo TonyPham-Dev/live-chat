@@ -22,7 +22,7 @@ const populateList: string[] = ["comment", "like"];
 export const getAllPost: (
     page: number,
     accessToken: string,
-    all: boolean
+    all: boolean,
 ) => Promise<GetAllPostRes> = async (page, accessToken, all) => {
     try {
         const limitPerPage = 10;
@@ -75,12 +75,12 @@ export const getAllPost: (
                                     author: string;
                                     content: string;
                                     _id: string;
-                                }) => comment.author
+                                }) => comment.author,
                             ),
                         ],
                     ])
-                    .flat(Infinity)
-            )
+                    .flat(Infinity),
+            ),
         );
         const usersData = await UserModel.find({ nickname: { $in: users } });
         const usersBasicInfo: UserBasicInfo = {};
@@ -110,7 +110,10 @@ export const getPostById: (postId: string) => Promise<any> = async (postId) => {
             };
         }
         const users = Array.from(
-            new Set([...post.comment[0].commentList.map((c: any) => c.author)])
+            new Set([
+                post.author,
+                ...post.comment[0].commentList.map((c: any) => c.author),
+            ]),
         );
         const usersData = await UserModel.find({ nickname: { $in: users } });
         const usersBasicInfo: UserBasicInfo = {};
@@ -119,6 +122,32 @@ export const getPostById: (postId: string) => Promise<any> = async (postId) => {
         });
         return { success: true, post, usersData: usersBasicInfo };
     } catch (err) {
-        return { success: false, message: err.message, status };
+        return { success: false, message: err.message, status: err.status };
+    }
+};
+
+export const getPostByAuthor: (author: string) => Promise<any> = async (
+    author,
+) => {
+    try {
+        const post = await PostModel.findOne({ author }).populate(populateList);
+        if (!post) {
+            return {
+                success: false,
+                message: "Post not found",
+                status: 404,
+            };
+        }
+        const users = Array.from(
+            new Set([...post.comment[0].commentList.map((c: any) => c.author)]),
+        );
+        const usersData = await UserModel.find({ nickname: { $in: users } });
+        const usersBasicInfo: UserBasicInfo = {};
+        users.forEach((user) => {
+            usersBasicInfo[user] = usersData.find((u) => u.nickname === user);
+        });
+        return { success: true, post, usersData: usersBasicInfo };
+    } catch (err) {
+        return { success: false, message: err.message, status: err.status };
     }
 };
