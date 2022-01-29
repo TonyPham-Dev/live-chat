@@ -77,7 +77,7 @@ function PostsProfile({ user, post, indexPost }) {
         setAllPosts((prev) => {
           const newPosts = [...prev];
           // index
-          const index = prev.indexOf(prev.find((post) => post._id == id));
+          const index = prev.indexOf(prev.find((posts) => posts._id == id));
           // set lại
           newPosts[index].like[0] = response.data.likes;
           return newPosts;
@@ -341,7 +341,7 @@ function PostsProfile({ user, post, indexPost }) {
                   <AiFillLike />
                 </span>
               </span>
-              <span className={styles.countLike}>
+              <span className={clsx(styles.countLike, styles.countLikeProfile)}>
                 {post.like[0].likeList.length > 0 &&
                   `${post.like[0].likeList[0] ? "Bạn" : ""} ${
                     post.like[0].likeCount - 1 == 0 ? "" : "cùng"
@@ -353,18 +353,18 @@ function PostsProfile({ user, post, indexPost }) {
               </span>
             </div>
             <div className={styles.comment}>
-              <span className={styles.countComment}>
+              <span className={clsx(styles.countComment, styles.countCommentProfile)}>
                 {post.comment[0].commentList &&
                   post.comment[0].commentList.length}
               </span>
-              <span className={styles.comments}>Comment</span>
+              <span className={clsx(styles.comments, styles.commentProfile)}>Comment</span>
             </div>
           </div>
           {/* button like and comment and share*/}
           <div className={styles.likeAndCommentContainer}>
             <div
               className={
-                checkObjectIsUndefined(post) && post.like[0].likeList.includes(user && user.nickname)
+                checkObjectIsUndefined(post) &&  post.like[0].likeList.includes(user && user.nickname)
                   ? clsx(styles.likeContainer, styles.likes)
                   : styles.likeContainer
               }
@@ -391,7 +391,7 @@ function PostsProfile({ user, post, indexPost }) {
         </div>
         {/* input comment */}
         <div className={styles.inputCommentContainer}>
-          <img src={user && user.picture} className={styles.userInput} />
+          <img src={user && user.avatarUrl} className={styles.userInput} />
           <span className={styles.input}>
             <InputEmoji
               value={text}

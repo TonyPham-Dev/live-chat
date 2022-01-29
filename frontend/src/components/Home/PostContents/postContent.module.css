@@ -398,6 +398,16 @@
 .userMoreProfile {
     color:#fff;
 }
+.commentProfile {
+    color:#fff;
+}
+.countCommentProfile {
+    color:#fff;
+
+}
+.countLikeProfile {
+    color:#fff;
+}
 /* responsive tablet big*/
 @media (min-width:1024px) and (max-width:1365px){
     .app {

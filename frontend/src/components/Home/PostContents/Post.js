@@ -114,13 +114,14 @@ function Post({ post, userData, indexPost, setAllPosts }) {
 
   // delete Post
   const handleDeletePost = async (id, index) => {
+    console.log(id);
     const config = {
       method: "DELETE",
       headers: {
         authorization: `Bearer ${accessToken}`,
       },
     };
-    await fetch(`${apiServer}/api/posts/del/${id}`, config)
+    await fetch(`${apiServer}/api/posts/${id}`, config)
       .then((response) => {
         if (response.ok) {
           console.log(index);
