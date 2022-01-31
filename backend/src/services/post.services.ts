@@ -130,8 +130,8 @@ export const getPostByAuthor: (author: string) => Promise<any> = async (
     author,
 ) => {
     try {
-        const post = await PostModel.findOne({ author }).populate(populateList);
-        if (!post) {
+        const posts = await PostModel.find({ author }).populate(populateList);
+        if (!posts) {
             return {
                 success: false,
                 message: "Post not found",
@@ -139,14 +139,27 @@ export const getPostByAuthor: (author: string) => Promise<any> = async (
             };
         }
         const users = Array.from(
-            new Set([...post.comment[0].commentList.map((c: any) => c.author)]),
+            new Set(
+                posts
+                    .map((post: any) =>
+                        post.comment[0].commentList.map(
+                            (cmt: any) => cmt.author,
+                        ),
+                    )
+                    .flat(Infinity),
+            ),
         );
+        console.log(users);
+
+        // const users = Array.from(
+        //     new Set([...posts.comment[0].commentList.map((c: any) => c.author)]),
+        // );
         const usersData = await UserModel.find({ nickname: { $in: users } });
         const usersBasicInfo: UserBasicInfo = {};
         users.forEach((user) => {
             usersBasicInfo[user] = usersData.find((u) => u.nickname === user);
         });
-        return { success: true, post, usersData: usersBasicInfo };
+        return { success: true, post: posts, usersData: usersBasicInfo };
     } catch (err) {
         return { success: false, message: err.message, status: err.status };
     }
