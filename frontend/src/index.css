@@ -39,7 +39,12 @@ body.dark-mode {
 }
 .overlayBackground {
   position:fixed;
-  inset:0;
+  /* inset:0; */
+  width:100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
   background-color:rgba(138, 136, 136, 0.1);
-  
+  /* background-color: rgb(51, 50, 50); */
+  z-index: 99999999;
 }

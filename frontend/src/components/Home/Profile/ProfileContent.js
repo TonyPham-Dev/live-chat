@@ -6,9 +6,9 @@ function ProfileContent({ user }) {
   // console.log(user);
   const [postContent, setPostContent] = useState([]);
 
-  useEffect(() => {
-    setPostContent(user.posts);
-  }, [user]);
+  // useEffect(() => {
+  //   setPostContent(user.posts);
+  // }, [user]);
   return (
     <div className={styles.ProfileContentContainer}>
       <div className={styles.ProfileContentLeft}>
@@ -16,7 +16,7 @@ function ProfileContent({ user }) {
       </div>
 
       <div className={styles.ProfileContentRight}>
-        <ProFileContentRight postContent={postContent} user={user} />
+        <ProFileContentRight user={user} />
       </div>
     </div>
   );

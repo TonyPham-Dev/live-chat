@@ -34,6 +34,7 @@ function Post({ post, userData, indexPost, setAllPosts }) {
   const [openDashboard, setOpenDashboard] = useState(false);
   const [saveIdPost, setSaveIdPost] = useState(null);
   const [openDashboardDeletePost, setOpenDashboardDeletePost] = useState(false);
+  const [numberOfElement, setNumberOfElement] = useState(3);
   // scroll to top when restart app
   //   useEffect(() => {
   //     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -138,61 +139,75 @@ function Post({ post, userData, indexPost, setAllPosts }) {
       .catch((err) => console.log(err));
     setOpenDashboardDeletePost(false);
   };
+
+  // giới hạn comment là 3
+  const sliceData = post.comment[0].commentList.slice(0, numberOfElement);
+
+  const handleLoadMoreComment = () => {
+    setNumberOfElement(numberOfElement + numberOfElement);
+  };
   return (
     <>
       {openDashboardDeletePost && (
-        <div
-          className="overlayBackground"
-          onClick={() => setOpenDashboardDeletePost(false)}
-        ></div>
+        // <div>
+          <div
+            className="overlayBackground"
+            onClick={() => setOpenDashboardDeletePost(false)}
+          ></div>
       )}
-      {openDashboardDeletePost && (
-        <div className={styles.dashboardDeletePost}>
-          <div className={styles.dashboard}>
-            <div className={styles.dashboardHeader}>
-              <h3>Xóa bài viết</h3>
-              <span
-                className={styles.iconDeletePost}
-                onClick={() => setOpenDashboardDeletePost(false)}
-              >
-                <TiDelete />
-              </span>
-            </div>
-            <div className={styles.dashboardContent}>
-              <h4>
-                Xóa bài viết sẽ không thể thu hồi lại được, bạn có chắc xóa bài
-                viết ?
-              </h4>
-            </div>
-            <div className={styles.dashboardButton}>
-              <button
-                className={styles.ButtonClear}
-                onClick={() => setOpenDashboardDeletePost(false)}
-              >
-                Huỷ
-              </button>
-              <button
-                className={styles.ButtonDelete}
-                onClick={() => handleDeletePost(post.id, indexPost)}
-              >
-                Xóa
-              </button>
+     {openDashboardDeletePost && (
+          <div className={styles.dashboardDeletePost}>
+            <div className={styles.dashboard}>
+              <div className={styles.dashboardHeader}>
+                <h3>Xóa bài viết</h3>
+                <span
+                  className={styles.iconDeletePost}
+                  onClick={() => setOpenDashboardDeletePost(false)}
+                >
+                  <TiDelete />
+                </span>
+              </div>
+              <div className={styles.dashboardContent}>
+                <h4>
+                  Xóa bài viết sẽ không thể thu hồi lại được, bạn có chắc xóa
+                  bài viết ?
+                </h4>
+              </div>
+              <div className={styles.dashboardButton}>
+                <button
+                  className={styles.ButtonClear}
+                  onClick={() => setOpenDashboardDeletePost(false)}
+                >
+                  Huỷ
+                </button>
+                <button
+                  className={styles.ButtonDelete}
+                  onClick={() => handleDeletePost(post.id, indexPost)}
+                >
+                  Xóa
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        // </div>
       )}
       <div className={styles.posts}>
         {/* user */}
         <div className={styles.user}>
-          <Link to="/user" style={{ textDecoration: "none" }}>
+          <Link
+            to={`/user/${user && user.nickname}?full=true`}
+            style={{ textDecoration: "none" }}
+          >
             <div className={styles.userContainer}>
-              <img
-                className={styles.imageUser}
-                src={userData[post.author].avatarUrl}
-              />
+              {userData[post.author].avatarUrl && (
+                <img
+                  className={styles.imageUser}
+                  src={userData[post.author].avatarUrl}
+                />
+              )}
               <div>
-                <h4 style={{ color: "#3a3b3c", userSelect:'none' }}>
-                  {userData[post.author].fullName}
+                <h4 style={{ color: "#3a3b3c", userSelect: "none" }}>
+                  {userData && userData[post.author].fullName}
                 </h4>
                 <h5 style={{ color: "#3a3b3c", marginTop: "5px" }}>
                   {Moment(post.createdAt).format("LLL")}
@@ -286,44 +301,48 @@ function Post({ post, userData, indexPost, setAllPosts }) {
           </div>
 
           {/* image content */}
-          {post.imgList.length > 0 &&  <div className={styles.imageContent}>
-            <div ref={imageRef} className={styles.container}>
-              {post.imgList.map((img, index) => {
-                return (
-                  <img
-                    key={index}
-                    style={{
-                      width: `calc(100% /${post.imgList.length}`,
-                    }}
-                    className={styles.postImage}
-                    src={`${apiServer}/api/media/${img}`}
-                    onClick={() => handleImageFullImage(img, index)}
-                  />
-                );
-              })}
-            </div>
-          </div>}
-          {/* video content */}
-          {post.vidList.length > 0 && <div className={styles.videoContent}>
+          {post.imgList.length > 0 && (
             <div className={styles.imageContent}>
               <div ref={imageRef} className={styles.container}>
-                {post.vidList.map((video, index) => {
+                {post.imgList.map((img, index) => {
                   return (
-                    <video
+                    <img
                       key={index}
                       style={{
-                        width: `calc(100% /${post.vidList.length}`,
+                        width: `calc(100% /${post.imgList.length}`,
                       }}
-                      controls
-                      className={styles.postVideo}
-                      src={`${apiServer}/api/media/${video}`}
-                      // onClick={() => handleImageFullImage(img, index)}
+                      className={styles.postImage}
+                      src={`${apiServer}/api/media/${img}`}
+                      onClick={() => handleImageFullImage(img, index)}
                     />
                   );
                 })}
               </div>
             </div>
-          </div>}
+          )}
+          {/* video content */}
+          {post.vidList.length > 0 && (
+            <div className={styles.videoContent}>
+              <div className={styles.imageContent}>
+                <div ref={imageRef} className={styles.container}>
+                  {post.vidList.map((video, index) => {
+                    return (
+                      <video
+                        key={index}
+                        style={{
+                          width: `calc(100% /${post.vidList.length}`,
+                        }}
+                        controls
+                        className={styles.postVideo}
+                        src={`${apiServer}/api/media/${video}`}
+                        // onClick={() => handleImageFullImage(img, index)}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
           {/* count like and comment */}
           <div className={styles.likeAndComments}>
             <div className={styles.like}>
@@ -339,7 +358,7 @@ function Post({ post, userData, indexPost, setAllPosts }) {
                   } ${
                     post.like[0].likeCount - 1 == 0
                       ? ""
-                      : post.like[0].likeCount + "người khác"
+                      : post.like[0].likeCount + " người khác"
                   }`}
               </span>
             </div>
@@ -402,22 +421,22 @@ function Post({ post, userData, indexPost, setAllPosts }) {
           <div className={styles.listComment}>
             {checkObjectIsUndefined(post.comment[0]) &&
             post.comment[0].commentList
-              ? post.comment[0].commentList.map((comment, index) => {
-                 
+              ? sliceData.map((comment, index) => {
                   return (
                     <React.Fragment key={index}>
-                      <div className={styles.item}>
-                        <img
-                          className={styles.userComment}
-                          src={user && user.picture}
-                        />
-                        <div className={styles.contentComment}>
-                          <h3 className={styles.nameUser}>
-                            {user && user.name}
-                          </h3>
-                          <h4>{comment.content}</h4>
+                      <div key={index}>
+                        <div className={styles.item}>
+                          <img
+                            className={styles.userComment}
+                            src={user && user.picture}
+                          />
+                          <div className={styles.contentComment}>
+                            <h3 className={styles.nameUser}>
+                              {user && user.name}
+                            </h3>
+                            <h4>{comment.content}</h4>
+                          </div>
                         </div>
-                      </div>
                         <div className={styles.commentEmoji}>
                           <span className={styles.itemIcon}>
                             <BiLike />
@@ -429,10 +448,22 @@ function Post({ post, userData, indexPost, setAllPosts }) {
                             {Moment(comment.createdAt).format("LT")}
                           </span>
                         </div>
+                      </div>
                     </React.Fragment>
                   );
                 })
               : null}
+            {/* load more comments */}
+            {post.comment[0].commentList.length > 2 && (
+              <div
+                className={styles.loadMoreComments}
+                onClick={() => handleLoadMoreComment()}
+              >
+                <button className={styles.moreComments}>
+                  Xem thêm bình luận
+                </button>
+              </div>
+            )}
           </div>
           {/* })} */}
         </div>

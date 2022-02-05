@@ -28,26 +28,26 @@ function User() {
 
   return (
     <div>
-      <span className={styles.listFriends}>
-        <Link
-          to={`/user/${user && user.nickname}`}
-          style={{ textDecoration: "none" }}
-        >
+      <Link
+        to={`/user/${user && user.nickname}?full=true`}
+        style={{ textDecoration: "none" }}
+      >
+        <span className={styles.listFriends}>
           <div className={styles.userContainer}>
             <img
               className={styles.friendsImage}
               src={
-                checkObjectIsNull(users) && users.user.avatarUrl ? users.user.avatarUrl : "https://static2.yan.vn/YanNews/2167221/202003/dan-mang-du-trend-thiet-ke-avatar-du-kieu-day-mau-sac-tu-anh-mac-dinh-f4781c7a.jpg"
+                checkObjectIsNull(users) && users.user.avatarUrl
+                  ? users.user.avatarUrl
+                  : "https://static2.yan.vn/YanNews/2167221/202003/dan-mang-du-trend-thiet-ke-avatar-du-kieu-day-mau-sac-tu-anh-mac-dinh-f4781c7a.jpg"
               }
             />
             <h4 className={styles.friendsName}>
-              {checkObjectIsNull(users) ? (
-                users.user.fullName
-              ) : null}
+              {checkObjectIsNull(users) ? users.user.fullName : null}
             </h4>
           </div>
-        </Link>
-      </span>
+        </span>
+      </Link>
     </div>
   );
 }

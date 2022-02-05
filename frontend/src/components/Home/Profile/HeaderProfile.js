@@ -12,9 +12,13 @@ import styles from "./profile.module.css";
 import clsx from "clsx";
 import { useAuth0 } from "@auth0/auth0-react";
 function HeaderProfile({ userAdmin, user }) {
-  // const { user } = useAuth0();
+  console.log(user);
   const [openSeeMore, setOpenSeeMore] = useState(false);
   const [openMore, setOpenMore] = useState(false);
+   // check friends is null or undefined
+   const checkObjectIsUndefined = (obj) => {
+    return obj && Object.keys(obj).length > 0;
+  };
   return (
     <div>
       <div className={styles.pageProfile}>
@@ -23,12 +27,12 @@ function HeaderProfile({ userAdmin, user }) {
           <div className={styles.coverImage}>
             <img className={styles.image} src={coverImage} />
             <div className={styles.avatarUser}>
-              <img className={styles.avatar} src={user && user.avatarUrl} />
+              <img className={styles.avatar} src={checkObjectIsUndefined(user) ? user.user.avatarUrl : undefined} />
             </div>
           </div>
         </div>
         <div className={styles.nameUser}>
-          <h1>{user && user.fullName}</h1>
+          <h1>{checkObjectIsUndefined(user) && user.user.fullName}</h1>
         </div>
       </div>
       {/* see more */}

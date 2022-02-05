@@ -101,6 +101,7 @@ function Friends({ friends }) {
               <Backdrop
                 sx={{
                   position: 'absolute',
+                  top:'-40%',
                   background: "transparent",
                   color: "#2374e1",
                   zIndex: (theme) => theme.zIndex.drawer + 1,

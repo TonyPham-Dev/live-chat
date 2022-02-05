@@ -22,6 +22,9 @@ function Home({logOut}) {
   // id from post
   const [idPost, setIdPost] = useState("");
   const [allPost, setAllPost] = useState([]);
+  const [savePage, setSavePage] = useState(1)
+  const [lengthPage, setLengthPage] = useState(1);
+  console.log("🚀 ~ file: Home.js ~ line 26 ~ Home ~ savePage", savePage)
   const checkObjectIsUndefined = (obj) => {
     return Object.keys(obj).length > 0;
   };
@@ -61,14 +64,17 @@ function Home({logOut}) {
       },
     };
     await axios
-      .get(`${apiServer}/api/posts?page=1&all=true`, config)
+      .get(`${apiServer}/api/posts?page=${savePage}&all=true`, config)
       .then((response) => {
         if (checkObjectIsUndefined(response)) {
-          setAllPost(response.data.posts);
-          setUserData(response.data.usersData);
+          setAllPost(prev => [...prev, ...response.data.posts]);
+          setUserData(prev => {
+            return {...prev, ...response.data.usersData}
+          });
+          setLengthPage(response.data.pages)
         }
       });
-  }, [user]);
+  }, [user,savePage]);
 
   return (
     <>
@@ -78,11 +84,15 @@ function Home({logOut}) {
             <Friends friends={friends} />
           </div>
 
-          <div className={styles.postContents}>
+          <div className={styles.postContents} id='testOverlay'>
             <PostContents
+              
               post={valuePost}
               allPost={allPost}
               userData={userData}
+              setSavePage ={setSavePage}
+              savePage = {savePage}
+              lengthPage = {lengthPage}
             />
           </div>
 

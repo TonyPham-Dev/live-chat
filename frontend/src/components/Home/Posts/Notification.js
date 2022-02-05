@@ -5,7 +5,7 @@ import postImage2 from '../PostContents/image/postImage2.jpg'
 import styles from './post.module.css'
 function Notification(props) {
     return (
-        <div>
+        <div >
             {/* Lastest Activity */}
             <div className={styles.activityContainer}>
                 <div className={styles.activityHeader}>

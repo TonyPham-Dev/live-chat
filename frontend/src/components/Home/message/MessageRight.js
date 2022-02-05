@@ -195,7 +195,7 @@ function MessageRight(props) {
           <Link
             to={`/user/${props.messages.users.filter(
               (users) => users !== user.nickname
-            )}`}
+            )}?full=true`}
             style={{ textDecoration: "none" }}
           >
             <div className={styles.messageUser}>

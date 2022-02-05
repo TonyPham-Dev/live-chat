@@ -1,6 +1,11 @@
 .postContainer {
     margin-top: 10px;
     /* height: 100vh; */
+    max-height: calc(100vh - 130px);
+    overflow-y: auto;
+}
+.postContainer::-webkit-scrollbar {
+    display: none;
 }
 .coverImage {
     width:100%;

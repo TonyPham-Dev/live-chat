@@ -11,7 +11,7 @@ import { TiDeleteOutline } from "react-icons/ti";
 import { RiVideoFill } from "react-icons/ri";
 import styles from "../Posts/post.module.css";
 function WritePost({ user }) {
-  // console.log(user);
+  console.log(user);
   const apiServer = "http://localhost:3000";
   const accessToken = localStorage.getItem("accessToken");
   const [openFormPost, setOpenFromPost] = useState(false);
@@ -29,9 +29,6 @@ function WritePost({ user }) {
   const [userData, setUserData] = useState({});
   const [idPost, setIdPost] = useState("");
   const valueRef = useRef();
-  const checkObjectIsUndefined = (obj) => {
-    return obj && Object.keys(obj).length > 0;
-  };
   // get all post from GET /api/posts/(?page=x&all=true | | ?page=x)
   useEffect(async () => {
     const config = {
@@ -140,6 +137,9 @@ function WritePost({ user }) {
     setFileVideo(fileVideoRemove);
   };
 
+  const checkObjectIsUndefined = (obj) => {
+    return Object.keys(obj).length > 0;
+  };
   return (
     <div className={styles.postContainer}>
       {openFormPost && (
@@ -157,15 +157,15 @@ function WritePost({ user }) {
             {/* user admin */}
             <div className={styles.contentPost}>
               <div className={styles.userPost}>
-                <img className={styles.imageAdmin} src={user && user.avatarUrl} />
-                <h4>{user && user.fullName}</h4>
+                <img className={styles.imageAdmin} src={checkObjectIsUndefined(user) ? user.user.avatarUrl : undefined} />
+                <h4>{checkObjectIsUndefined(user) && user.user.fullName}</h4>
               </div>
               <form>
                 <InputEmoji
                   ref={valueRef}
                   value={valuePost}
                   className={styles.inputPost}
-                  placeholder={`What's on your mind,${user && user.fullName}?`}
+                  placeholder={`What's on your mind,${checkObjectIsUndefined(user) && user.user.fullName}?`}
                   onChange={setValuePost}
                 />
               </form>

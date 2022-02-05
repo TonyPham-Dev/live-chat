@@ -127,7 +127,7 @@ function Header(props) {
             <span>{openNotification && <Notification />}</span>
           </div>
           <div className={styles.user}>
-            <Link to={`/user/${user.nickname}`} style={{ textDecoration: "none" }}>
+            <Link to={`/user/${user.nickname}?full=true`} style={{ textDecoration: "none" }}>
               <div className={styles.userContainer}>
                 <img className={styles.imageUser} src={props.urlPhoto} />
                 <h2 className={styles.userName}>{props.useName}</h2>
