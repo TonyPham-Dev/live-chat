@@ -194,8 +194,9 @@ function Post({ post, userData, indexPost, setAllPosts }) {
       <div className={styles.posts}>
         {/* user */}
         <div className={styles.user}>
+          {console.log(userData[post.author])}
           <Link
-            to={`/user/${user && user.nickname}?full=true`}
+            to={`/user/${userData[post.author].nickname}?full=true`}
             style={{ textDecoration: "none" }}
           >
             <div className={styles.userContainer}>

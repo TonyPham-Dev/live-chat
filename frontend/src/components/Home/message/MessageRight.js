@@ -9,6 +9,7 @@ import {
   BsImages,
   BsLink45Deg,
 } from "react-icons/bs";
+import {MdSend} from "react-icons/md"
 import { HiVideoCamera } from "react-icons/hi";
 import { IoMdInformationCircle, IoMdAddCircle } from "react-icons/io";
 import { MdMoreVert } from "react-icons/md";
@@ -143,10 +144,10 @@ function MessageRight(props) {
   };
   // handle click icon like
   const handleIconLike = () => {
-    setSaveValueMess((prev) => [
-      ...prev,
-      { user: user.nickname, message: "👍", type: "text" },
-    ]);
+    // setSaveValueMess((prev) => [
+    //   ...prev,
+    //   { user: user.nickname, message: "👍", type: "text" },
+    // ]);
     itemMessRef.current.scrollIntoView({
       behavior: "smooth",
       block: "nearest",
@@ -420,7 +421,7 @@ function MessageRight(props) {
                   }
                   onClick={handleSubmitValue}
                 >
-                  Gửi
+                  <MdSend/>
                 </span>
                 <span
                   onClick={handleIconLike}
