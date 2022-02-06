@@ -282,7 +282,7 @@ function Posts({setAllPost}) {
         {/* user */}
         <div className={styles.userPost}>
           <img className={styles.coverImage} src={coverImage} />
-          <Link to="/user">
+          <Link to={`/user/${user && user.nickname}?full=true`}>
             <div className={styles.user}>
               <img className={styles.avatar} src={user && user.picture} />
               <div className={styles.nameUser}>

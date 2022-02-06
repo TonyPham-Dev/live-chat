@@ -21,7 +21,6 @@ import styles from "../PostContents/postContent.module.css";
 function PostsProfile({ user, post, indexPost }) {
   const { user: userFromAuth0 } = useAuth0();
   // console.log(userFromAuth0);
-  console.log(user.posts.userData);
   const apiServer = "http://localhost:3000";
   const dashboardRef = useRef();
   const accessToken = localStorage.getItem("accessToken");
@@ -193,7 +192,6 @@ function PostsProfile({ user, post, indexPost }) {
       )}
       {checkObjectIsUndefined(user) &&
         user.posts.post.map((post, index) => {
-          console.log(post);
           return (
             <div
               className={clsx(styles.posts, styles.postsProfile)}

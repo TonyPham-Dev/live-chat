@@ -17,7 +17,6 @@ function Profile(props) {
       axios
         .get(`${apiServer}/api/user/${username}?full=true`)
         .then((response) => {
-          console.log(response);
           if (response.data.success) {
             setAboutUser(response.data);
           }

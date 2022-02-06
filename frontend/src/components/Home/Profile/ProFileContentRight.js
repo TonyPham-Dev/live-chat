@@ -11,7 +11,6 @@ import { RiShareForwardLine } from "react-icons/ri";
 import styles from "./profile.module.css";
 import PostsProfile from "./PostsProfile";
 function ProFileContentRight({ user }) {
-  console.log(user);
   const [text, setText] = useState("");
   const [saveText, setSaveText] = useState(["test"]);
   const [saveUrlImage, setSaveUrlImage] = useState([]);
