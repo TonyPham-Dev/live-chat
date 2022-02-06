@@ -1,21 +1,15 @@
+
 import React, { useState, useRef, useEffect, useContext } from "react";
-import {HomeContext} from '../Home'
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import InputEmoji from "react-input-emoji";
-import { Link } from "react-router-dom";
 import { BsFillImageFill } from "react-icons/bs";
 import { RiVideoFill } from "react-icons/ri";
 import { IoIosVideocam } from "react-icons/io";
-import { FiMoreHorizontal } from "react-icons/fi";
-import { FaTimesCircle } from "react-icons/fa";
 import { TiDeleteOutline } from "react-icons/ti";
-import coverImage from "../PostContents/image/coverImage.jpg";
-import styles from "./post.module.css";
 import clsx from "clsx";
-import Notification from "./Notification";
-
-function Posts({setAllPost}) {
+import styles from '../Posts/post.module.css'
+function PostContentHeader({setAllPost}) {
   const urlServer = "http://localhost:3000";
   const accessToken = localStorage.getItem("accessToken");
   const { user } = useAuth0();
@@ -31,10 +25,10 @@ function Posts({setAllPost}) {
 
   const [idPost, setIdPost] = useState("");
   // context
-  const contextPost = useContext(HomeContext)
-  useEffect(() => {
-    contextPost.IdPostHandle(idPost) // gọi lên isPosthandle lấy id
-  },[idPost])
+  // const contextPost = useContext(HomeContext)
+  // useEffect(() => {
+  //   contextPost.IdPostHandle(idPost) // gọi lên isPosthandle lấy id
+  // },[idPost])
   const valueRef = useRef();
 
   // submit value input post
@@ -135,39 +129,34 @@ function Posts({setAllPost}) {
     setSaveVideo(fileVideoRemove);
     setFileVideo(fileVideoRemove)
   };
-
-  return (
-    // <IdContext.Provider value={idPost}>
-      <div className={styles.postContainer}>
-        {/* input posts */}
-
-        {openFormPost && (
-          <div className={styles.writerContainer}>
+    return (
+        <>
+            <div className={clsx(styles.writerContainer, styles.postContentHeader)}>
             <div className={styles.writePost}>
               <div className={styles.titlePostContainer}>
-                <h4 className={styles.titlePost}>Create Post</h4>
-                <span
+                <h4 className={clsx(styles.titlePost,styles.titlePostHeader)}>Create Post</h4>
+                {/* <span
                   className={styles.iconClosePost}
                   onClick={() => setOpenFromPost(false)}
                 >
                   <FaTimesCircle />
-                </span>
+                </span> */}
               </div>
               {/* user admin */}
               <div className={styles.contentPost}>
                 <div className={styles.userPost}>
                   <img
-                    className={styles.imageAdmin}
+                    className={clsx(styles.imageAdmin)}
                     src={user && user.picture}
                   />
-                  <h4>{user && user.name}</h4>
+                  <h4 className={ styles.imageAdminHeader}>{user && user.name}</h4>
                 </div>
                 <form>
                   <InputEmoji
                     ref={valueRef}
                     value={valuePost}
                     className={styles.inputPost}
-                    placeholder={`What's on your mind,${user ? user.name:''}?`}
+                    placeholder={`What's on your mind,${user ? user.name : ''}?`}
                     onChange={setValuePost}
                   />
                 </form>
@@ -218,7 +207,7 @@ function Posts({setAllPost}) {
                       </label>
                       <label
                         htmlFor="imagePost"
-                        className={clsx(styles.titleIcon, styles.iconPost)}
+                        className={clsx(styles.titleIcon, styles.iconPost,styles.titleIconHeader)}
                       >
                         Image
                       </label>
@@ -241,7 +230,7 @@ function Posts({setAllPost}) {
                       </label>
                       <label
                         htmlFor="videoPost"
-                        className={clsx(styles.titleIcon, styles.iconPost)}
+                        className={clsx(styles.titleIcon, styles.iconPost,styles.titleIconHeader)}
                       >
                         Video
                       </label>
@@ -260,7 +249,7 @@ function Posts({setAllPost}) {
                   {/* streaming */}
                   <span className={clsx(styles.iconInput, styles.streaming)}>
                     <IoIosVideocam />
-                    <span className={clsx(styles.titleIcon, styles.iconPost)}>
+                    <span className={clsx(styles.titleIcon, styles.iconPost,styles.titleIconHeader)}>
                       Streaming
                     </span>
                   </span>
@@ -273,67 +262,8 @@ function Posts({setAllPost}) {
               </div>
             </div>
           </div>
-        )}
-
-        {openFormPost && <div className={styles.OverLay} 
-        onClick={() => setOpenFromPost(false)}
-          ></div>}
-
-        {/* user */}
-        <div className={styles.userPost}>
-          <img className={styles.coverImage} src={coverImage} />
-          <Link to={`/user/${user && user.nickname}?full=true`}>
-            <div className={styles.user}>
-              <img className={styles.avatar} src={user && user.picture} />
-              <div className={styles.nameUser}>
-                <h5 className={styles.name}>{user && user.name}</h5>
-                <h6 className={styles.title}>Frontend Developer</h6>
-              </div>
-            </div>
-          </Link>
-        </div>
-        {/* follows */}
-        <div className={styles.follows}>
-          <div className={styles.followers}>
-            <h3>11K</h3>
-            <p>Followers</p>
-          </div>
-          <div className={styles.following}>
-            <h3>1.4K</h3>
-            <p>Following</p>
-          </div>
-        </div>
-
-        {/* text */}
-        <div className={styles.textareaContainer}>
-          <form onClick={() => setOpenFromPost(!openFormPost)}>
-            <InputEmoji
-              className={styles.inputPost}
-              placeholder={`What's on your mind,${user && user.name}?`}
-            />
-          </form>
-          <div className={styles.imageAndVideoAndStreaming}>
-            <span className={clsx(styles.iconInput, styles.image)}>
-              <BsFillImageFill />
-              <span className={styles.titleIcon}>Image</span>
-            </span>
-            <span className={clsx(styles.iconInput, styles.video)}>
-              <RiVideoFill />
-              <span className={styles.titleIcon}>Video</span>
-            </span>
-            <span className={clsx(styles.iconInput, styles.streaming)}>
-              <IoIosVideocam />
-              <span className={styles.titleIcon}>Streaming</span>
-            </span>
-          </div>
-        </div>
-
-        <div>
-          <Notification />
-        </div>
-      </div>
-    // </IdContext.Provider>
-  );
+        </>
+    );
 }
 
-export default Posts;
+export default PostContentHeader;
