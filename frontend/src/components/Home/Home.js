@@ -10,8 +10,9 @@ import axios from "axios";
 import { useEffect, memo, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import styles from "./home.module.css";
+import PostContentHeader from "./Posts/PostContentHeader";
 export const HomeContext = React.createContext();
-function Home({logOut}) {
+function Home({ logOut }) {
   const apiServer = "http://localhost:3000";
 
   const { user } = useAuth0();
@@ -22,9 +23,9 @@ function Home({logOut}) {
   // id from post
   const [idPost, setIdPost] = useState("");
   const [allPost, setAllPost] = useState([]);
-  const [savePage, setSavePage] = useState(1)
+  const [savePage, setSavePage] = useState(1);
   const [lengthPage, setLengthPage] = useState(1);
-  console.log("🚀 ~ file: Home.js ~ line 26 ~ Home ~ savePage", savePage)
+  console.log("🚀 ~ file: Home.js ~ line 26 ~ Home ~ savePage", savePage);
   const checkObjectIsUndefined = (obj) => {
     return Object.keys(obj).length > 0;
   };
@@ -35,8 +36,8 @@ function Home({logOut}) {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
         .then((response) => {
-          if(response.status == 500) {
-            logOut()
+          if (response.status == 500) {
+            logOut();
           }
           return response.json();
         })
@@ -67,14 +68,14 @@ function Home({logOut}) {
       .get(`${apiServer}/api/posts?page=${savePage}&all=true`, config)
       .then((response) => {
         if (checkObjectIsUndefined(response)) {
-          setAllPost(prev => [...prev, ...response.data.posts]);
-          setUserData(prev => {
-            return {...prev, ...response.data.usersData}
+          setAllPost((prev) => [...prev, ...response.data.posts]);
+          setUserData((prev) => {
+            return { ...prev, ...response.data.usersData };
           });
-          setLengthPage(response.data.pages)
+          setLengthPage(response.data.pages);
         }
       });
-  }, [user,savePage]);
+  }, [user, savePage]);
 
   return (
     <>
@@ -84,15 +85,17 @@ function Home({logOut}) {
             <Friends friends={friends} />
           </div>
 
-          <div className={styles.postContents} id='testOverlay'>
+          <div className={styles.postContents} id="testOverlay">
+            <div className={styles.PostContentHeader}>
+              <PostContentHeader setAllPost={setAllPost} />
+            </div>
             <PostContents
-              
               post={valuePost}
               allPost={allPost}
               userData={userData}
-              setSavePage ={setSavePage}
-              savePage = {savePage}
-              lengthPage = {lengthPage}
+              setSavePage={setSavePage}
+              savePage={savePage}
+              lengthPage={lengthPage}
             />
           </div>
 

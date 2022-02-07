@@ -11,7 +11,7 @@ import { TiDeleteOutline } from "react-icons/ti";
 import { RiVideoFill } from "react-icons/ri";
 import styles from "../Posts/post.module.css";
 function WritePost({ user }) {
-  console.log(user);
+  const { user: userFromAuth0 } = useAuth0();
   const apiServer = "http://localhost:3000";
   const accessToken = localStorage.getItem("accessToken");
   const [openFormPost, setOpenFromPost] = useState(false);
@@ -157,15 +157,30 @@ function WritePost({ user }) {
             {/* user admin */}
             <div className={styles.contentPost}>
               <div className={styles.userPost}>
-                <img className={styles.imageAdmin} src={checkObjectIsUndefined(user) ? user.user.avatarUrl : undefined} />
-                <h4>{checkObjectIsUndefined(user) && user.user.fullName}</h4>
+                <img
+                  className={styles.imageAdmin}
+                  src={
+                    userFromAuth0 && checkObjectIsUndefined(userFromAuth0)
+                      ? userFromAuth0.picture
+                      : null
+                  }
+                />
+                <h4>
+                  {userFromAuth0 && checkObjectIsUndefined(userFromAuth0)
+                    ? userFromAuth0.name
+                    : ""}
+                </h4>
               </div>
               <form>
                 <InputEmoji
                   ref={valueRef}
                   value={valuePost}
                   className={styles.inputPost}
-                  placeholder={`What's on your mind,${checkObjectIsUndefined(user) && user.user.fullName}?`}
+                  placeholder={`What's on your mind,${
+                    userFromAuth0 && checkObjectIsUndefined(userFromAuth0)
+                      ? userFromAuth0.name
+                      : ""
+                  }?`}
                   onChange={setValuePost}
                 />
               </form>
@@ -272,18 +287,35 @@ function WritePost({ user }) {
           </div>
         </div>
       )}
-      {openFormPost && <div className={styles.OverLay} 
-        onClick={() => setOpenFromPost(false)}
-          ></div>}
+      {openFormPost && (
+        <div
+          className={styles.OverLay}
+          onClick={() => setOpenFromPost(false)}
+        ></div>
+      )}
 
       <div className={clsx(styles.textareaContainer, styles.profilePost)}>
-        <form className={styles.profilePostContent} onClick={() => setOpenFromPost(!openFormPost)}>
+        <form
+          className={styles.profilePostContent}
+          onClick={() => setOpenFromPost(!openFormPost)}
+        >
           <div className={styles.profileRightUser}>
-            <img className={styles.profileImage} src={user && user.avatarUrl} />
+            <img
+              className={styles.profileImage}
+              src={
+                userFromAuth0 && checkObjectIsUndefined(userFromAuth0)
+                  ? userFromAuth0.picture
+                  : null
+              }
+            />
           </div>
           <InputEmoji
             className={styles.inputPost}
-            placeholder={`What's on your mind,${user && user.fullName}?`}
+            placeholder={`What's on your mind,${
+              userFromAuth0 && checkObjectIsUndefined(userFromAuth0)
+                ? userFromAuth0.name
+                : ""
+            }?`}
           />
         </form>
         <div className={styles.textareaContainer}>

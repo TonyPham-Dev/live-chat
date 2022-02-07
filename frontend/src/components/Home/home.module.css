@@ -39,6 +39,11 @@
   margin-right: 20px;
   /* height: 100vh; */
 }
+.PostContentHeader {
+  position: relative;
+  bottom: -148px;
+  display:none;
+}
 
 /* responsive tablet big */
 @media (min-width: 1024px) and (max-width: 1365px) {
@@ -59,6 +64,7 @@
     left: 0;
     transform: translateX(-0%);
   }
+ 
 }
 
 /* responsive tablet small */
@@ -80,6 +86,7 @@
     left: 0;
     transform: translateX(-0%);
   }
+ 
 }
 /* responsive mobile */
 @media (max-width: 767px){
@@ -98,5 +105,8 @@
 
     left: 0;
     transform: translateX(-0%);
+  }
+  .PostContentHeader {
+    display:block;
   }
 }

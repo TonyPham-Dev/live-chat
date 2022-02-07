@@ -18,6 +18,7 @@ import { GiEarthAsiaOceania } from "react-icons/gi";
 import { BsCodeSlash, BsFillBellSlashFill, BsCalendar3 } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
 import styles from "./postContent.module.css";
+import Posts from "../Posts/Posts";
 function Post({ post, userData, indexPost, setAllPosts }) {
   const apiServer = "http://localhost:3000";
   const dashboardRef = useRef();
@@ -148,47 +149,48 @@ function Post({ post, userData, indexPost, setAllPosts }) {
   };
   return (
     <>
+     
       {openDashboardDeletePost && (
         // <div>
-          <div
-            className="overlayBackground"
-            onClick={() => setOpenDashboardDeletePost(false)}
-          ></div>
+        <div
+          className="overlayBackground"
+          onClick={() => setOpenDashboardDeletePost(false)}
+        ></div>
       )}
-     {openDashboardDeletePost && (
-          <div className={styles.dashboardDeletePost}>
-            <div className={styles.dashboard}>
-              <div className={styles.dashboardHeader}>
-                <h3>Xóa bài viết</h3>
-                <span
-                  className={styles.iconDeletePost}
-                  onClick={() => setOpenDashboardDeletePost(false)}
-                >
-                  <TiDelete />
-                </span>
-              </div>
-              <div className={styles.dashboardContent}>
-                <h4>
-                  Xóa bài viết sẽ không thể thu hồi lại được, bạn có chắc xóa
-                  bài viết ?
-                </h4>
-              </div>
-              <div className={styles.dashboardButton}>
-                <button
-                  className={styles.ButtonClear}
-                  onClick={() => setOpenDashboardDeletePost(false)}
-                >
-                  Huỷ
-                </button>
-                <button
-                  className={styles.ButtonDelete}
-                  onClick={() => handleDeletePost(post.id, indexPost)}
-                >
-                  Xóa
-                </button>
-              </div>
+      {openDashboardDeletePost && (
+        <div className={styles.dashboardDeletePost}>
+          <div className={styles.dashboard}>
+            <div className={styles.dashboardHeader}>
+              <h3>Xóa bài viết</h3>
+              <span
+                className={styles.iconDeletePost}
+                onClick={() => setOpenDashboardDeletePost(false)}
+              >
+                <TiDelete />
+              </span>
+            </div>
+            <div className={styles.dashboardContent}>
+              <h4>
+                Xóa bài viết sẽ không thể thu hồi lại được, bạn có chắc xóa bài
+                viết ?
+              </h4>
+            </div>
+            <div className={styles.dashboardButton}>
+              <button
+                className={styles.ButtonClear}
+                onClick={() => setOpenDashboardDeletePost(false)}
+              >
+                Huỷ
+              </button>
+              <button
+                className={styles.ButtonDelete}
+                onClick={() => handleDeletePost(post.id, indexPost)}
+              >
+                Xóa
+              </button>
             </div>
           </div>
+        </div>
         // </div>
       )}
       <div className={styles.posts}>
@@ -427,14 +429,29 @@ function Post({ post, userData, indexPost, setAllPosts }) {
                     <React.Fragment key={index}>
                       <div key={index}>
                         <div className={styles.item}>
-                          <img
-                            className={styles.userComment}
-                            src={user && user.picture}
-                          />
+                          <Link
+                            to={`/user/${
+                              userData && userData[comment.author].nickname
+                            }?full=true`}
+                          >
+                            <img
+                              className={styles.userComment}
+                              src={
+                                userData && userData[comment.author].avatarUrl
+                              }
+                            />
+                          </Link>
                           <div className={styles.contentComment}>
-                            <h3 className={styles.nameUser}>
-                              {user && user.name}
-                            </h3>
+                            <Link
+                              style={{ textDecoration: "none", color: "#fff" }}
+                              to={`/user/${
+                                userData && userData[comment.author].nickname
+                              }?full=true`}
+                            >
+                              <h3 className={styles.nameUser}>
+                                {userData && userData[comment.author].fullName}
+                              </h3>
+                            </Link>
                             <h4>{comment.content}</h4>
                           </div>
                         </div>
@@ -446,7 +463,7 @@ function Post({ post, userData, indexPost, setAllPosts }) {
                             <BiComment />
                           </span>
                           <span className={styles.itemIcon}>
-                            {Moment(comment.createdAt).format("LT")}
+                            {Moment(comment.createdAt).format("lll")}
                           </span>
                         </div>
                       </div>

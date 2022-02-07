@@ -12,7 +12,6 @@ import styles from "./profile.module.css";
 import clsx from "clsx";
 import { useAuth0 } from "@auth0/auth0-react";
 function HeaderProfile({ userAdmin, user }) {
-  console.log(user);
   const [openSeeMore, setOpenSeeMore] = useState(false);
   const [openMore, setOpenMore] = useState(false);
    // check friends is null or undefined

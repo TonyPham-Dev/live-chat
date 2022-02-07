@@ -1,335 +1,349 @@
 .postContainer {
-    margin-top: 10px;
-    /* height: 100vh; */
-    max-height: calc(100vh - 130px);
-    overflow-y: auto;
+  margin-top: 10px;
+  /* height: 100vh; */
+  max-height: calc(100vh - 130px);
+  overflow-y: auto;
 }
 .postContainer::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 .coverImage {
-    width:100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 20px;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 20px;
 }
 .userPost {
-    position: relative;
+  position: relative;
 }
 .user {
-    position: absolute;
-    bottom: -25%;
-    left: 5%;
-    display:flex;
-    align-items: center;
-    cursor: pointer;
+  position: absolute;
+  bottom: -25%;
+  left: 5%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 .avatar {
-    width: 90px;
-    height: 90px;
-    object-fit: cover;
-    border-radius: 20px;
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 20px;
 }
 .nameUser {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 .name {
-    font-size: 20px;
-    color:rgb(87, 86, 86);
-    margin-bottom: 1px;
+  font-size: 20px;
+  color: rgb(87, 86, 86);
+  margin-bottom: 1px;
 }
 .title {
-    font-size: 13px;
-    color:rgb(153, 152, 152);
+  font-size: 13px;
+  color: rgb(153, 152, 152);
 }
 .follows {
-    display:flex;
-    justify-content:space-evenly;
-    margin-top: 90px;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 90px;
 }
 .followers {
-    text-align: center;
-    color:rgb(87, 86, 86);
+  text-align: center;
+  color: rgb(87, 86, 86);
 }
 .following {
-    text-align: center;
-    color:rgb(87, 86, 86);
-    
+  text-align: center;
+  color: rgb(87, 86, 86);
 }
 .textareaContainer {
-    padding:10px 20px;
-    border-radius: 20px;
-    /* margin-top: 20px; */
- 
+  padding: 10px 20px;
+  border-radius: 20px;
+  /* margin-top: 20px; */
 }
 .input {
-    width: 100%;
-    border:none;
-    outline: none;
-    border-radius: 20px;
-    padding:15px 10px;
-    cursor: pointer;
+  width: 100%;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  padding: 15px 10px;
+  cursor: pointer;
 }
 .input::-webkit-input-placeholder {
-    color: rgb(129, 130, 131);
-  }
+  color: rgb(129, 130, 131);
+}
 .imageAndVideoAndStreaming {
-    margin-top: 20px;
-    display: flex;
-    justify-content:space-evenly;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
 }
 .iconInput {
-    display: flex;
-    align-items:center;
-    font-size: 18px;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  cursor: pointer;
 }
 .image {
-    color:rgb(7, 157, 245);
-    font-size: 20px;
+  color: rgb(7, 157, 245);
+  font-size: 20px;
 }
 .video {
-    color:rgb(255, 98, 221);
-    font-size: 20px;
+  color: rgb(255, 98, 221);
+  font-size: 20px;
 }
 .streaming {
-    
-    color:rgb(248, 180, 33);
-    font-size: 20px;
+  color: rgb(248, 180, 33);
+  font-size: 20px;
 }
 .titleIcon {
-    margin-left: 9px;
-    color:rgb(97, 97, 97);
+  margin-left: 9px;
+  color: rgb(97, 97, 97);
 }
 .activityContainer {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 .activityHeader {
-    display: flex;
-    align-items: center;
-    justify-content:space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .activityContent {
-    margin-top: 10px;
-    width:100%;
-    height: 43vh;
-    overflow:scroll;
+  margin-top: 10px;
+  width: 100%;
+  height: 43vh;
+  overflow: scroll;
 }
 .activityContent::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 .activityTitle {
-    color:rgb(63, 63, 63);
-    font-size: 17px;
+  color: rgb(63, 63, 63);
+  font-size: 17px;
 }
 .activityIcon {
-    cursor: pointer;
-    color:rgb(63, 63, 63);
+  cursor: pointer;
+  color: rgb(63, 63, 63);
 }
-.activity{
-    display: flex;
-    align-items:center;
-    padding:10px;
-    background-color:rgb(189, 187, 187);
-    border-radius: 20px;
-    margin-bottom: 10px;
+.activity {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: rgb(189, 187, 187);
+  border-radius: 20px;
+  margin-bottom: 10px;
 }
 .activityAvatar {
-    width:50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 20px;
-
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 20px;
 }
 .activityName {
-    color:rgb(80, 78, 78);
-    margin-left: 10px;
+  color: rgb(80, 78, 78);
+  margin-left: 10px;
 }
 .titlePostContainer {
-
-    margin: 10px 0px;
-    border-bottom: 1px solid rgb(141, 139, 139);
-    padding-bottom: 20px;
+  margin: 10px 0px;
+  border-bottom: 1px solid rgb(141, 139, 139);
+  padding-bottom: 20px;
 }
 .titlePost {
-    font-size: 20px;
-    color:#fff;
-    text-align: center;
+  font-size: 20px;
+  color: #fff;
+  text-align: center;
 }
 .writerContainer {
-    position:fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    width:40%;
-    /* sua lai cho nay */
-    background-color:#666;
-    border-radius: 20px;
-    z-index: 9999999;
-    animation:grow 0.5s linear;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  /* sua lai cho nay */
+  background-color: #666;
+  border-radius: 20px;
+  z-index: 9999999;
+  animation: grow 0.5s linear;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+.postContentHeader {
+    position: relative;
+    width: auto;
+    background-color: #d6d6d6;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.imageAdminHeader {
+    color:rgb(53, 52, 52);
+}
+
 @keyframes grow {
-    0% {
-        opacity:0.6;
-    }
-    100% {
-        opacity:1;
-    }
+  0% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 .imageAdmin {
-    width:40px;
-    height: 40px;
-    border-radius:50px;
-    object-fit: cover;
-    margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  object-fit: cover;
+  margin-right: 10px;
 }
 .iconClosePost {
-    position:absolute;
-    top: 10px;
-    right: 20px;
-    cursor: pointer;
-    transition: 0.4s;
-    font-size: 20px;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+  transition: 0.4s;
+  font-size: 20px;
 }
 .contentPost {
-    padding:10px 20px; 
+  padding: 10px 20px;
 }
 .userPost {
-    margin-bottom: 10px;
-    color:#fff;
+  margin-bottom: 10px;
+  color: #fff;
 }
 .iconClosePost:hover {
-    color:#fff;
-    transition: 0.4s;
+  color: #fff;
+  transition: 0.4s;
 }
 .OverLay {
-    position:fixed;
-    inset: 0;
-    background-color:rgba(202, 200, 200,0.5);
-    z-index: 99999;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(202, 200, 200, 0.5);
+  z-index: 99999;
 }
 .userPost {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .inputPost {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .iconPost {
-    color:#fff;
+  color: #fff;
 }
 .buttonPost {
-    width:100%;
-    margin-top: 50px;
+  width: 100%;
+  margin-top: 50px;
 }
 .button {
-    width:100%;
-    padding:10px;
-    border:none;
-    border-radius: 20px;
-    outline: none;
-    color:#fff;
-    font-weight: 600;
-    font-size: 17px;
-    background-color:#2374e1;
-    transition: 0.4s;
-    cursor: pointer;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  color: #fff;
+  font-weight: 600;
+  font-size: 17px;
+  background-color: #2374e1;
+  transition: 0.4s;
+  cursor: pointer;
 }
 .button:hover {
-    opacity:0.7;
-    transition: 0.4s;
+  opacity: 0.7;
+  transition: 0.4s;
 }
 .inputPostImage {
-    opacity: 0;
-    position: absolute;
-    z-index: -1;
- 
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
 }
 .renderImagePost {
-    position: relative;
-    margin-right: 10px;
+  position: relative;
+  margin-right: 10px;
 }
 .fromPostImage {
-    cursor: pointer;
+  cursor: pointer;
 }
 .renderImage {
-    width: 100px;
-    height: 100px;
-    border-radius: 20px;
-    object-fit: cover;
+  width: 100px;
+  height: 100px;
+  border-radius: 20px;
+  object-fit: cover;
 }
 .removeImage {
-    position:absolute;
-    right:3px;
-    top: -83px;
-    color:#fff;
-    font-size: 20px;
-    cursor: pointer;
+  position: absolute;
+  right: 3px;
+  top: -83px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
 }
 .videoPost {
-    opacity: 0;
-    position: absolute;
-    z-index: -1;
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
 }
 .renderVideo {
-    width: 100px;
-    height: 100px;
-    margin-right: 10px;
-    border-radius: 10px;
-    object-fit: cover;
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  border-radius: 10px;
+  object-fit: cover;
 }
 .renderVideoPost {
-    position: relative;
-    margin-top: 10px;
-    top: 10px;
+  position: relative;
+  margin-top: 10px;
+  top: 10px;
 }
-.removeVideo{
-    position: absolute;
-    right:15px;
-    top: -83px;
-    color:#fff;
-    font-size: 20px;
-    cursor: pointer;
+.removeVideo {
+  position: absolute;
+  right: 15px;
+  top: -83px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
 }
 .profileImage {
-    width: 45px;
-    height: 45px;
-    border-radius:50px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50px;
 }
 
 .profilePostContent {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .profilePost {
-    padding-bottom: 20px;
-    background-color:#333333;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding-bottom: 20px;
+  background-color: #333333;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .ProfileTitlePost {
-    color:#fff;
-    font-weight: 600;
+  color: #fff;
+  font-weight: 600;
 }
 .textProfile {
-    color:#fff;
-    margin-left: 10px;
+  color: #fff;
+  margin-left: 10px;
+}
+
+.titleIconHeader {
+    color:rgb(53, 52, 52);
+    font-weight: 600;
+}
+.titlePostHeader {
+    color:rgb(53, 52, 52);
+    font-weight: 600;
+
 }
 /* responsive tablet big */
 @media (min-width: 1024px) and (max-width: 1365px) {
-    .writerContainer {
-        width:80%;
-    }
+  .writerContainer {
+    width: 80%;
+  }
 }
 /* responsive tablet small */
 @media (min-width: 768px) and (max-width: 1023px) {
-    .writerContainer {
-        width:80%;
-    }
+  .writerContainer {
+    width: 80%;
+  }
 }
 /* responsive mobile */
-@media (max-width: 767px) {
-    .writerContainer {
-        width:80%;
-    }
-}
+/* @media (max-width: 767px) {
+  .writerContainer {
+    width: 80%;
+  }
+} */

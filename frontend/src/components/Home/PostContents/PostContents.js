@@ -5,6 +5,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Post from "./Post";
 import { useAuth0 } from "@auth0/auth0-react";
 import styles from "./postContent.module.css";
+import PostContentHeader from "../Posts/PostContentHeader";
 function PostContents({ allPost, userData, setSavePage, lengthPage,savePage }) {
 
   const dashboardRef = useRef();
@@ -63,6 +64,7 @@ function PostContents({ allPost, userData, setSavePage, lengthPage,savePage }) {
             <CircularProgress color="inherit" />
           </Backdrop>}
         >
+          
           {allPosts.length > 0 &&
             allPosts.map((post, index) => {
               return (
