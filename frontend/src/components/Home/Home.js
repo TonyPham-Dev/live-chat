@@ -25,7 +25,6 @@ function Home({ logOut }) {
   const [allPost, setAllPost] = useState([]);
   const [savePage, setSavePage] = useState(1);
   const [lengthPage, setLengthPage] = useState(1);
-  console.log("🚀 ~ file: Home.js ~ line 26 ~ Home ~ savePage", savePage);
   const checkObjectIsUndefined = (obj) => {
     return Object.keys(obj).length > 0;
   };
@@ -77,6 +76,8 @@ function Home({ logOut }) {
       });
   }, [user, savePage]);
 
+  //create file image and file video 
+   
   return (
     <>
       <HomeContext.Provider value={{ IdPostHandle: setIdPost, id: idPost }}>

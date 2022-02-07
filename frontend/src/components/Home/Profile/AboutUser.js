@@ -10,7 +10,6 @@ function AboutUser({ aboutUser }) {
   const checkObjectIsUndefined = (obj) => {
     return obj && Object.keys(obj).length > 0;
   };
-  console.log(aboutUser);
   return (
     <div className={styles.aboutContainer}>
       <h3 style={{ color: "#e4e6eb" }}>Giới thiệu</h3>

@@ -196,9 +196,8 @@ function Post({ post, userData, indexPost, setAllPosts }) {
       <div className={styles.posts}>
         {/* user */}
         <div className={styles.user}>
-          {console.log(userData[post.author])}
           <Link
-            to={`/user/${userData[post.author].nickname}?full=true`}
+            to={`/user/${checkObjectIsUndefined(userData) && userData[post.author].nickname}`}
             style={{ textDecoration: "none" }}
           >
             <div className={styles.userContainer}>
@@ -432,7 +431,7 @@ function Post({ post, userData, indexPost, setAllPosts }) {
                           <Link
                             to={`/user/${
                               userData && userData[comment.author].nickname
-                            }?full=true`}
+                            }`}
                           >
                             <img
                               className={styles.userComment}
@@ -446,7 +445,7 @@ function Post({ post, userData, indexPost, setAllPosts }) {
                               style={{ textDecoration: "none", color: "#fff" }}
                               to={`/user/${
                                 userData && userData[comment.author].nickname
-                              }?full=true`}
+                              }`}
                             >
                               <h3 className={styles.nameUser}>
                                 {userData && userData[comment.author].fullName}

@@ -1,5 +1,5 @@
-import React, { useState,useEffect, memo } from "react";
-import { Link,useLocation } from "react-router-dom";
+import React, { useState, useEffect, memo } from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
   AiFillHome,
   AiFillCompass,
@@ -19,7 +19,7 @@ import imageUser from "../Header/image/imageUser.jpg";
 import styles from "./header.module.css";
 
 function Header(props) {
-  const {user} = useAuth0()
+  const { user } = useAuth0();
   const styleTheme = styles.icon;
   const styleActive = styles.active;
   const styleNotification = styles.notification;
@@ -29,25 +29,25 @@ function Header(props) {
   const [openDashboard, setDashboard] = useState(false);
   const location = useLocation();
   useEffect(() => {
-    switch(true) {
-      case location.pathname.startsWith('/home'):
-        setActive(1)
+    switch (true) {
+      case location.pathname.startsWith("/home"):
+        setActive(1);
         break;
-      case location.pathname.startsWith('/friends'):
-        setActive(3)
+      case location.pathname.startsWith("/friends"):
+        setActive(3);
         break;
-      case location.pathname.startsWith('/message'):
-        setActive(4)
+      case location.pathname.startsWith("/message"):
+        setActive(4);
         break;
     }
-  },[]);
+  }, []);
   return (
-    <div className={styles.headerContainer}> 
-    {/* header_headerContainer__esYb5 */}
+    <div className={styles.headerContainer}>
+      {/* header_headerContainer__esYb5 */}
       <div className={styles.container}>
         {/* logo */}
         <div className={styles.logoContainer}>
-          <Link to="/home" replace>
+          <Link to="/home" replace onClick={() => window.location.reload()}>
             <img src={logo} className={styles.logo} />
           </Link>
         </div>
@@ -75,7 +75,7 @@ function Header(props) {
             </span>
           </Link>
 
-          <Link to="/friends">
+          <Link to="#">
             <span
               className={
                 active === 3 ? styleTheme + " " + styleActive : styleTheme
@@ -86,7 +86,7 @@ function Header(props) {
             </span>
           </Link>
 
-          <Link to={active === 4 ? '#' : '/message'} >
+          <Link to={active === 4 ? "#" : "/message"}>
             <span
               className={
                 active === 4 ? styleTheme + " " + styleActive : styleTheme
@@ -127,7 +127,10 @@ function Header(props) {
             <span>{openNotification && <Notification />}</span>
           </div>
           <div className={styles.user}>
-            <Link to={`/user/${user.nickname}?full=true`} style={{ textDecoration: "none" }}>
+            <Link
+              to={`/user/${user.nickname}`}
+              style={{ textDecoration: "none" }}
+            >
               <div className={styles.userContainer}>
                 <img className={styles.imageUser} src={props.urlPhoto} />
                 <h2 className={styles.userName}>{props.useName}</h2>
@@ -157,7 +160,7 @@ function Header(props) {
                   <li className={styles.dashboardItem}>Dark mode</li>
                   <Link to="" style={{ textDecoration: "none" }}>
                     <li className={styles.dashboardItem}>
-                      <Logout logout = {props.removeAuthentication} />
+                      <Logout logout={props.removeAuthentication} />
                     </li>
                   </Link>
                 </ul>
@@ -168,7 +171,7 @@ function Header(props) {
       </div>
 
       <div className={clsx(styles.containerIcon, styles.iconMobile)}>
-        <Link to="/home">
+        <Link to={"/home"}>
           <span
             className={
               active === 1 ? styleTheme + " " + styleActive : styleTheme
@@ -189,7 +192,7 @@ function Header(props) {
           </span>
         </Link>
 
-        <Link to="/friends">
+        <Link to="#">
           <span
             className={
               active === 3 ? styleTheme + " " + styleActive : styleTheme
@@ -220,7 +223,6 @@ function Header(props) {
             <AiFillHeart />
           </span>
         </Link>
-       
       </div>
     </div>
   );
