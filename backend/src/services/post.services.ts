@@ -101,7 +101,9 @@ export const getAllPost: (
 
 export const getPostById: (postId: string) => Promise<any> = async (postId) => {
     try {
-        const post = await PostModel.findById(postId).populate(populateList);
+        const post = await PostModel.findById(postId)
+            .populate(populateList)
+            .sort({ createdAt: -1 });
         if (!post) {
             return {
                 success: false,
@@ -130,7 +132,9 @@ export const getPostByAuthor: (author: string) => Promise<any> = async (
     author,
 ) => {
     try {
-        const posts = await PostModel.find({ author }).populate(populateList);
+        const posts = await PostModel.find({ author })
+            .populate(populateList)
+            .sort({ createdAt: -1 });
         if (!posts) {
             return {
                 success: false,
@@ -149,11 +153,7 @@ export const getPostByAuthor: (author: string) => Promise<any> = async (
                     .flat(Infinity),
             ),
         );
-        console.log(users);
 
-        // const users = Array.from(
-        //     new Set([...posts.comment[0].commentList.map((c: any) => c.author)]),
-        // );
         const usersData = await UserModel.find({ nickname: { $in: users } });
         const usersBasicInfo: UserBasicInfo = {};
         users.forEach((user) => {
