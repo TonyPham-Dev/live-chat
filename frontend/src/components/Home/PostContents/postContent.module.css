@@ -1,479 +1,488 @@
-
 .app {
-    padding:10px 40px;
-    height: calc(100vh - 100px);
-    /* margin-top: 100px; */
-    overflow-y: auto;
+  padding: 10px 40px;
+  height: calc(100vh - 100px);
+  /* margin-top: 100px; */
+  overflow-y: auto;
 }
 .app::-webkit-scrollbar {
-    display: none;
-  }
+  display: none;
+}
 .posts {
-    padding:20px;
-    width: 100%;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    border-radius:10px;
-    border:1px solid rgb(167, 165, 165);
-    margin-bottom: 20px;
+  padding: 20px;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  border-radius: 10px;
+  border: 1px solid rgb(167, 165, 165);
+  margin-bottom: 20px;
 }
 .imageUser {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius:50px;
-    user-select: none;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50px;
+  user-select: none;
 }
 .userContainer {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .imageUser {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 .user {
-    display: flex;
-    justify-content:space-between;
-    align-items:center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .userMore {
-    cursor: pointer;
-    font-size: 20px;
+  cursor: pointer;
+  font-size: 20px;
 }
 .content {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 .imageContent {
-    width: 100%;
-    /* height: 600px; */
-    position: relative;
-    margin-top: 30px;
+  width: 100%;
+  /* height: 600px; */
+  position: relative;
+  margin-top: 30px;
 }
 .container {
-    display: flex;
-    flex-wrap: wrap;
-
+  display: flex;
+  flex-wrap: wrap;
 }
 .likes {
-    background-color:#046fe3;
-    transition: 0.4;
-    color:#fff;
+  background-color: #046fe3;
+  transition: 0.4;
+  color: #fff;
 }
 
 .postImage {
-    padding:5px;
-    border-radius:10px;
-    object-fit: cover;
-    width: 100%;
-    height: 400px;
-    min-width: 33.333333%;
-    cursor: pointer;
-    user-select: none;
+  padding: 5px;
+  border-radius: 10px;
+  object-fit: cover;
+  width: 100%;
+  height: 400px;
+  min-width: 33.333333%;
+  cursor: pointer;
+  user-select: none;
 }
 .postVideo {
-    padding:5px;
-    border-radius:10px;
-    object-fit: cover;
-    width: 100%;
-    height: 400px;
-    min-width: 50%;
-    cursor: pointer;
+  padding: 5px;
+  border-radius: 10px;
+  object-fit: cover;
+  width: 100%;
+  height: 400px;
+  min-width: 50%;
+  cursor: pointer;
 }
 .likeAndComments {
-    display: flex;
-    justify-content:space-between;
-    align-items:center;
-    /* height: 200px; */
-    padding:0px 10px;
-    margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* height: 200px; */
+  padding: 0px 10px;
+  margin-top: 30px;
 }
 .like {
-    display: flex;
-    align-items:center;
-
+  display: flex;
+  align-items: center;
 }
 .iconLike {
-    color:#046fe3;
-    cursor: pointer;
+  color: #046fe3;
+  cursor: pointer;
 }
 .countLike {
-    font-weight: 600;
-    color: rgb(92, 92, 92);
-    margin-left: 5px;
-    font-size: 16px;
+  font-weight: 600;
+  color: rgb(92, 92, 92);
+  margin-left: 5px;
+  font-size: 16px;
 }
 .comment {
-    display: flex;
-    align-items:center;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 .countComment {
-    margin-right: 5px;
-    font-weight: 600;
-    color:rgb(112, 112, 112);
+  margin-right: 5px;
+  font-weight: 600;
+  color: rgb(112, 112, 112);
 }
 .likeAndCommentContainer {
-    display: flex;
-    align-items:center;
-    width:100%;
-    border-top: 1px solid rgb(185, 184, 184);
-    border-bottom: 1px solid rgb(185, 184, 184);
-    padding:5px;
-    margin-top: 30px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-top: 1px solid rgb(185, 184, 184);
+  border-bottom: 1px solid rgb(185, 184, 184);
+  padding: 5px;
+  margin-top: 30px;
 }
 .likeContainer {
-    width: calc(100% / 3);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    /* text-align: center; */
-    cursor: pointer;
-    border-radius:10px;
-    padding:10px;
-    transition: 0.4s;
+  width: calc(100% / 3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* text-align: center; */
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 10px;
+  transition: 0.4s;
 }
 .likeContainer:hover {
-    background-color:#046fe3;
-    border-radius:10px;
-    transition: 0.4s;
-    color:#fff;
+  background-color: #046fe3;
+  border-radius: 10px;
+  transition: 0.4s;
+  color: #fff;
 }
 .iconLikes {
-    margin-right: 5px;
-    font-size: 20px;
+  margin-right: 5px;
+  font-size: 20px;
 }
 .titleLike {
-    font-weight: 600;
-    font-size: 17px;
+  font-weight: 600;
+  font-size: 17px;
 }
 .commentContainer {
-    width: calc(100% / 3);
-    display: flex;
-    /* align-items:center; */
-    justify-content: center;
-    cursor: pointer;
-    border-radius:10px;
-    padding:10px;
-    transition: 0.4s;
+  width: calc(100% / 3);
+  display: flex;
+  /* align-items:center; */
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 10px;
+  transition: 0.4s;
 }
 .commentContainer:hover {
-    background-color:rgb(151, 151, 151);
-    border-radius:10px;
-    transition: 0.4s;
-    color:#fff;
+  background-color: rgb(151, 151, 151);
+  border-radius: 10px;
+  transition: 0.4s;
+  color: #fff;
 }
 .iconComments {
-    margin-right: 5px;
-    font-size: 20px;
+  margin-right: 5px;
+  font-size: 20px;
 }
 .titleComment {
-    font-weight: 600;
-    font-size: 17px;
+  font-weight: 600;
+  font-size: 17px;
 }
 .listComments {
-    width: 100%;
-    /* height: 100px; */
-    margin-top: 30px;
+  width: 100%;
+  /* height: 100px; */
+  margin-top: 30px;
 }
 .listComment {
-    /* display: flex;
+  /* display: flex;
     align-items: center; */
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .item {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .userComment {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius:50px; 
-    cursor: pointer;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50px;
+  cursor: pointer;
 }
 .nameUser {
-    cursor: pointer;
+  cursor: pointer;
 }
 .contentComment {
-    margin-left: 9px;
-    background-color:rgb(145, 145, 145);
-    padding:10px;
-    border-radius:20px;
-    color:rgb(233, 233, 233);
+  margin-left: 9px;
+  background-color: rgb(145, 145, 145);
+  padding: 10px;
+  border-radius: 20px;
+  color: rgb(233, 233, 233);
 }
 .shareContainer {
-    display: flex;
-    align-items: center;
-    justify-content:center;
-    width: calc(100% / 3);
-    cursor: pointer;
-    border-radius:10px;
-    padding:10px;
-    transition: 0.4s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% / 3);
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 10px;
+  transition: 0.4s;
 }
 .shareContainer:hover {
-    background-color:rgb(151, 151, 151);
-    border-radius:10px;
-    transition: 0.4s;
-    color:#fff;
-
+  background-color: rgb(151, 151, 151);
+  border-radius: 10px;
+  transition: 0.4s;
+  color: #fff;
 }
 .iconShare {
-    font-size: 20px;
-    margin-right: 5px;
+  font-size: 20px;
+  margin-right: 5px;
 }
 .titleShare {
-    font-weight: 600;
-    font-size: 17px;
+  font-weight: 600;
+  font-size: 17px;
 }
 .inputCommentContainer {
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content:space-between;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .userInput {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius:50px;
-    margin-right: 5px;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50px;
+  margin-right: 5px;
 }
 .commentEmoji {
-    margin-left: 60px;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    display: flex;
-
+  margin-left: 60px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  display: flex;
 }
 .input {
-    width:95%;
+  width: 95%;
 }
 .itemIcon {
-    margin-right: 20px;
-    cursor: pointer;
-    font-size: 18px;
+  margin-right: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color:rgb(78, 78, 78);
 }
 .commentImage {
-    font-size: 22px;
-    margin-top: 3px;
-    margin-left: 10px;
-    color:#858585;
-    cursor: pointer;
+  font-size: 22px;
+  margin-top: 3px;
+  margin-left: 10px;
+  color: #858585;
+  cursor: pointer;
 }
 .imageCommentContainer {
-    position: relative;
-    
-    /* display: flex; */
+  position: relative;
+
+  /* display: flex; */
 }
 .renderImages {
-    display: flex;
+  display: flex;
 }
-.fileComment{
-    opacity: 0;
-    position: absolute;
-    z-index: -1;
+.fileComment {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
 }
 .imageComments {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius:10px;
-    margin-top:10px;
-    margin-right: 10px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
 }
 .deleteImage {
-    position:absolute;
-    right:13px;
-    top: 10px;
-    color:rgb(5, 5, 5);
-    font-size: 20px;
-    cursor: pointer;
-    z-index: 999;
+  position: absolute;
+  right: 13px;
+  top: 10px;
+  color: rgb(5, 5, 5);
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 999;
 }
 .removeAndEditPost {
-    position: relative;
+  position: relative;
 }
 .removeAndEditPostContainer {
-    position:absolute;  
-    right: 0;
-    top: 25px;
-    border-radius:20px;
-    padding:20px;
-    border:1px solid rgb(151, 150, 150);
-    width:250px;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    background-color:#3a3b3c; 
-    z-index: 999999;
+  position: absolute;
+  right: 0;
+  top: 25px;
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid rgb(151, 150, 150);
+  width: 250px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  background-color: #3a3b3c;
+  z-index: 999999;
 }
 .iconOfRemovePost {
-    margin-bottom: 20px;
-    cursor: pointer;
-    color:rgb(194, 194, 194);
-    font-weight: 600;
+  margin-bottom: 20px;
+  cursor: pointer;
+  color: rgb(194, 194, 194);
+  font-weight: 600;
 }
 .iconOfDashboard {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 .dashboardDeletePost {
-    position:fixed;
-    /* top: 0; */
-    inset:0;
-    background-color:rgba(0, 0, 0, 0.1);
-    z-index: 9999999999;
-    min-height: 100vh;
-
+  position: fixed;
+  /* top: 0; */
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 9999999999;
+  min-height: 100vh;
 }
 .dashboard {
-    width:30%;
-    background-color:rgb(245, 241, 241);
-    border-radius: 20px;
-    position:absolute;
-    top: 50%;
-    left: 50%;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    transform: translate(-50%, -50%);
-    z-index: 99999999999;
+  width: 30%;
+  background-color: rgb(245, 241, 241);
+  border-radius: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transform: translate(-50%, -50%);
+  z-index: 99999999999;
 }
 .dashboardHeader {
-    padding:10px 20px;
-    display:flex;
-    align-items:center;
-    justify-content: space-between;
-    color:rgb(88, 87, 87);
-    border-bottom: 1px solid rgb(185, 184, 184);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: rgb(88, 87, 87);
+  border-bottom: 1px solid rgb(185, 184, 184);
 }
 .iconDeletePost {
-    font-size: 25px;
-    transition:0.4s;
-    cursor: pointer;
-
+  font-size: 25px;
+  transition: 0.4s;
+  cursor: pointer;
 }
 .iconDeletePost:hover {
-    color:rgb(128, 127, 127);
-    transition:0.4s;
+  color: rgb(128, 127, 127);
+  transition: 0.4s;
 }
 .dashboardContent {
-    padding:30px 20px 100px 20px;
-    color:rgb(88, 87, 87);
+  padding: 30px 20px 100px 20px;
+  color: rgb(88, 87, 87);
 }
 .dashboardButton {
-    position: absolute;
-    right:10px;
-    bottom: 10px;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
 }
 .ButtonClear {
-    padding:10px 15px;
-    border:none;
-    outline: none;
-    border-radius: 10px;
-    background-color:transparent;
-    color:#046fe3;
-    font-weight: 600;
-    font-size: 16px;
-    cursor: pointer;
-    margin-right: 20px;
-    transition:0.4s;
+  padding: 10px 15px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  background-color: transparent;
+  color: #046fe3;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 20px;
+  transition: 0.4s;
 }
 .ButtonClear:hover {
-    background-color:#858585;
-    color:#fff;
-    transition:0.4s;
+  background-color: #858585;
+  color: #fff;
+  transition: 0.4s;
 }
 .ButtonDelete {
-    padding:10px 15px;
-    border:none;
-    outline: none;
-    border-radius: 10px;
-    color:#fff;
-    background-color:#046fe3;
-    font-weight: 600;
-    font-size: 16px;
-    cursor: pointer;
-    transition:0.4s;
+  padding: 10px 15px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  color: #fff;
+  background-color: #046fe3;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.4s;
 }
 .ButtonDelete:hover {
-    opacity: 0.7;
-    transition: 0.4;
+  opacity: 0.7;
+  transition: 0.4;
 }
 
 .postsProfile {
-    background-color:#333;
-    margin-top: 10px;
-    box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
-    border-radius: 20px;
+  background-color: #333;
+  margin-top: 10px;
+  box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+  border-radius: 20px;
 }
 .userMoreProfile {
-    color:#fff;
+  color: #fff;
 }
 .commentProfile {
-    color:#fff;
+  color: #fff;
 }
 .countCommentProfile {
-    color:#fff;
-
+  color: #fff;
 }
 .countLikeProfile {
-    color:#fff;
+  color: #fff;
 }
 .moreComments {
-    border:none;
-    outline: none;
-    background-color:transparent;
-    font-weight: 600;
-    cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-weight: 600;
+  cursor: pointer;
+}
+.moreCommentProfile {
+  color:#fff;
+}
+.titleProfile {
+  color: #fff;
+}
+.iconprofile {
+    color: #fff;
+
+}
+.itemIconProfile {
+    color:#fff;
+    
+  font-weight: 600;
 }
 /* responsive tablet big*/
-@media (min-width:1024px) and (max-width:1365px){
-    .app {
-        padding:10px 10px;
-    }
-    .dashboard {
-        width:80%;
-    }
-    .commentEmoji {
-        margin-bottom: 20px;
-    }
+@media (min-width: 1024px) and (max-width: 1365px) {
+  .app {
+    padding: 10px 10px;
+  }
+  .dashboard {
+    width: 80%;
+  }
+  .commentEmoji {
+    margin-bottom: 20px;
+  }
 }
 /* responsive tablet big*/
-@media (min-width:768px) and (max-width:1023px){
-    .app {
-        padding:10px 10px;
-    }
-    .dashboard {
-        width:80%;
-    }
-    .commentEmoji {
-        margin-bottom: 20px;
-    }
+@media (min-width: 768px) and (max-width: 1023px) {
+  .app {
+    padding: 10px 10px;
+  }
+  .dashboard {
+    width: 80%;
+  }
+  .commentEmoji {
+    margin-bottom: 20px;
+  }
 }
 /* responsive mobile*/
-@media (max-width:767px){
-    .app {
-        padding:10px 10px;
-    }
-    .dashboard {
-        width:80%;
-    }
-    .userComment {
-        width:20px;
-        height: 20px;
-    }
-    .userInput {
-        width:30px;
-        height: 30px;
-    }
-    .contentComment {
-        border-radius: 15px;
-        padding: 5px 10px;
-        font-size: 12px;
-    }
-    .commentEmoji {
-        font-size: 10px;
-        margin-left: 30px;
-        margin-bottom: 20px;
-    } 
-    .itemIcon {
-        font-size: 12px;
-        margin-right: 8px; 
-    }
+@media (max-width: 767px) {
+  .app {
+    padding: 10px 10px;
+  }
+  .dashboard {
+    width: 80%;
+  }
+  .userComment {
+    width: 20px;
+    height: 20px;
+  }
+  .userInput {
+    width: 30px;
+    height: 30px;
+  }
+  .contentComment {
+    border-radius: 15px;
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+  .commentEmoji {
+    font-size: 10px;
+    margin-left: 30px;
+    margin-bottom: 20px;
+  }
+  .itemIcon {
+    font-size: 12px;
+    margin-right: 8px;
+  }
 }

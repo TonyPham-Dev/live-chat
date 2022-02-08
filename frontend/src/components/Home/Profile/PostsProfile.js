@@ -19,7 +19,6 @@ import { BsCodeSlash, BsFillBellSlashFill, BsCalendar3 } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
 import styles from "../PostContents/postContent.module.css";
 function PostsProfile({ user, post, indexPost, setAllPost }) {
-  console.log(user);
   const { user: userFromAuth0 } = useAuth0();
   const apiServer = "http://localhost:3000";
   const dashboardRef = useRef();
@@ -28,7 +27,7 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
   const imageRef = useRef(null);
   const [saveIdPost, setSaveIdPost] = useState(null);
   const [openDashboardDeletePost, setOpenDashboardDeletePost] = useState(false);
-
+  const [numberOfElement, setNumberOfElement] = useState(3);
   //   // check is null or undefined
   const checkObjectIsUndefined = (obj) => {
     return Object.keys(obj).length > 0;
@@ -51,7 +50,6 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
     // get like of post
     await axios.get(`${apiServer}/api/like/${id}`).then((response) => {
       if (response.data.success) {
-        console.log(response.data.likes);
         setAllPost((prev) => {
           const newPosts = [...prev];
           // index
@@ -96,18 +94,19 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
     } else {
       setSaveIdPost(id);
     }
-    // setOpenDashboard(!openDashboard)
+    setOpenDashboardDeletePost(!openDashboardDeletePost)
   };
 
   // delete Post
   const handleDeletePost = async (id, index) => {
+    console.log(id);
     const config = {
       method: "DELETE",
       headers: {
         authorization: `Bearer ${accessToken}`,
       },
     };
-    await fetch(`${apiServer}/api/posts/del/${id}`, config)
+    await fetch(`${apiServer}/api/posts/${id}`, config)
       .then((response) => {
         if (response.ok) {
           setAllPost((prev) => {
@@ -122,6 +121,13 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
       .then((data) => {})
       .catch((err) => console.log(err));
     setOpenDashboardDeletePost(false);
+  };
+
+  // giới hạn comment là 3
+  const sliceData = post.comment[0].commentList.slice(0, numberOfElement);
+
+  const handleLoadMoreComment = () => {
+    setNumberOfElement(numberOfElement + numberOfElement);
   };
   return (
     <>
@@ -159,7 +165,8 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
               <button
                 className={styles.ButtonDelete}
                 onClick={() => handleDeletePost(post.id, indexPost)}
-              >
+                >
+               
                 Xóa
               </button>
             </div>
@@ -365,29 +372,35 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
               }
               onClick={() => handleCountLikePost(post.id)}
             >
-              <span className={styles.iconLikes}>
+              <span className={clsx(styles.iconLikes, styles.iconprofile)}>
                 <BiLike />
               </span>
-              <span className={styles.titleLike}>Like</span>
+              <span className={clsx(styles.titleLike, styles.titleProfile)}>
+                Like
+              </span>
             </div>
             <div className={styles.commentContainer}>
-              <span className={styles.iconComments}>
+              <span className={clsx(styles.iconComments, styles.iconprofile)}>
                 <BiComment />
               </span>
-              <span className={styles.titleComment}>Comment</span>
+              <span className={clsx(styles.titleComment, styles.titleProfile)}>
+                Comment
+              </span>
             </div>
             <div className={styles.shareContainer}>
-              <span className={styles.iconShare}>
+              <span className={clsx(styles.iconShare, styles.iconprofile)}>
                 <RiShareForwardLine />
               </span>
-              <span className={styles.titleShare}>Share</span>
+              <span className={clsx(styles.titleShare, styles.titleProfile)}>
+                Share
+              </span>
             </div>
           </div>
         </div>
         {/* input comment */}
         <div className={styles.inputCommentContainer}>
           <img
-            src={checkObjectIsUndefined(user) && user.user.avatarUrl}
+            src={userFromAuth0 && userFromAuth0.picture}
             className={styles.userInput}
           />
           <span className={styles.input}>
@@ -408,8 +421,7 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
           {/* return ( */}
           <div className={styles.listComment}>
             {checkObjectIsUndefined(post) && post.comment[0].commentList
-              ? post.comment[0].commentList.map((comment, index) => {
-                  console.log(comment);
+              ? sliceData.map((comment, index) => {
                   // console.log(user.posts.usersData[comment.author].fullName);
                   return (
                     <React.Fragment key={index}>
@@ -426,13 +438,28 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
                         </div>
                       </div>
                       <div className={styles.commentEmoji}>
-                        <span className={styles.itemIcon}>
+                        <span
+                          className={clsx(
+                            styles.itemIcon,
+                            styles.itemIconProfile
+                          )}
+                        >
                           <BiLike />
                         </span>
-                        <span className={styles.itemIcon}>
+                        <span
+                          className={clsx(
+                            styles.itemIcon,
+                            styles.itemIconProfile
+                          )}
+                        >
                           <BiComment />
                         </span>
-                        <span className={styles.itemIcon}>
+                        <span
+                          className={clsx(
+                            styles.itemIcon,
+                            styles.itemIconProfile
+                          )}
+                        >
                           {Moment(comment.createdAt).format("LT")}
                         </span>
                       </div>
@@ -440,6 +467,16 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
                   );
                 })
               : null}
+            {post.comment[0].commentList.length > 2 && (
+              <div
+                className={styles.loadMoreComments}
+                onClick={() => handleLoadMoreComment()}
+              >
+                <button className={clsx(styles.moreComments, styles.moreCommentProfile)}>
+                  Xem thêm bình luận
+                </button>
+              </div>
+            )}
           </div>
           {/* })} */}
         </div>
