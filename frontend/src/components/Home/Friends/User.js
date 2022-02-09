@@ -29,7 +29,7 @@ function User() {
   return (
     <div>
       <Link
-        to={`/user/${user && user.nickname}?full=true`}
+        to={`/user/${user && user.nickname}`}
         style={{ textDecoration: "none" }}
       >
         <span className={styles.listFriends}>

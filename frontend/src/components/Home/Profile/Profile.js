@@ -11,6 +11,9 @@ function Profile(props) {
   const { user } = useAuth0();
   const { username } = useParams();
   const [aboutUser, setAboutUser] = useState({});
+  const checkObjectIsUndefined = (obj) => {
+    return Object.keys(obj).length > 0;
+  };
   // console.log(aboutUser);
   useEffect(() => {
     username !== undefined &&
@@ -24,14 +27,18 @@ function Profile(props) {
   }, [username]);
 
   return (
-    <div className={styles.ProfileContainer}>
-      <div className={styles.profile}>
-        <HeaderProfile user={aboutUser} />
-      </div>
-      <div className={styles.profileContent}>
-        <ProfileContent user={aboutUser} />
-      </div>
-    </div>
+    <>
+      {checkObjectIsUndefined(aboutUser) && (
+        <div className={styles.ProfileContainer}>
+          <div className={styles.profile}>
+            <HeaderProfile user={aboutUser} />
+          </div>
+          <div className={styles.profileContent}>
+            <ProfileContent user={aboutUser} />
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

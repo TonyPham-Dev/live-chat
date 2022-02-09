@@ -3,6 +3,7 @@
   /* height: 100vh; */
   max-height: calc(100vh - 130px);
   overflow-y: auto;
+  border-radius: 20px;
 }
 .postContainer::-webkit-scrollbar {
   display: none;

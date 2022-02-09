@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
+import {FaTimesCircle} from 'react-icons/fa'
 import AboutUser from "./AboutUser";
 import styles from "./profile.module.css";
 
@@ -9,6 +10,10 @@ function ProFileContentLeft({ user }) {
   const apiServer = "http://localhost:3000";
   const accessToken = localStorage.getItem("accessToken");
   const [friends, setFriends] = useState([]);
+  const [countImage, setCountImage] = useState(2);
+  const [numberOfElement, setNumberOfElement] = useState(3);
+  const [srcFullImage, setSrcFullImage] = useState("");
+  const [openFullImage, setOpenFullImage] = useState(false);
   useEffect(async () => {
     const config = {
       headers: {
@@ -24,6 +29,20 @@ function ProFileContentLeft({ user }) {
   const checkObjectIsUndefined = (obj) => {
     return obj && Object.keys(obj).length > 0;
   };
+
+  const sliceImage = user.posts.post.filter((image) => {
+    if (image.imgList.length > 0) {
+      return image.imgList.slice(0, countImage);
+    }
+  });
+  // get all image when click xem them
+  const handleGetAllImage = () => {};
+
+  const handleFullImageProfile = (img, index) => {
+    setSrcFullImage(img);
+    setOpenFullImage(true);
+  };
+
   return (
     <div>
       {/* this is about user */}
@@ -35,27 +54,32 @@ function ProFileContentLeft({ user }) {
       <div className={styles.profileContentImage}>
         <div className={styles.profileImageContainer}>
           <h3 className={styles.allImagePost}>Ảnh</h3>
+          <h3 className={styles.getAllimage} onClick={handleGetAllImage}>
+            Xem tất cả ảnh
+          </h3>
         </div>
-        {/* {console.log(user.posts)} */}
-        {checkObjectIsUndefined(user) &&
-          user.posts.post.map((image, index) => {
-            return (
-              <div className={styles.profileAllImages} key={index} >
-                {image.imgList.map((img, index) => {
-                  return (
-                    <img
-                    style={{
-                      width: `calc(100% /${image.imgList.length}`,
-                    }}
-                      key={index}
-                      src={`${apiServer}/api/media/${img}`}
-                      className={styles.imageAllPost}
-                    />
-                  );
-                })}
-              </div>
-            );
-          })}
+        <div className={styles.allImages}>
+          {checkObjectIsUndefined(user) &&
+            sliceImage.map((image, index) => {
+              return (
+                <div className={styles.profileAllImages} key={index}>
+                  {image.imgList.map((img, index) => {
+                    return (
+                      <img
+                        style={{
+                          width: `calc(100% /${image.imgList.length}`,
+                        }}
+                        onClick={() => handleFullImageProfile(img, index)}
+                        key={index}
+                        src={`${apiServer}/api/media/${img}`}
+                        className={styles.imageAllPost}
+                      />
+                    );
+                  })}
+                </div>
+              );
+            })}
+        </div>
       </div>
       {/* this is friends */}
       {checkObjectIsUndefined(user) &&
@@ -98,6 +122,24 @@ function ProFileContentLeft({ user }) {
           </div>
         </div>
       ) : null}
+      {/*  full image */}
+        {openFullImage && (
+          <div
+            className={styles.overlayFullImage}
+            onClick={() => setOpenFullImage(false)}
+          ></div>
+        )}
+        {openFullImage && srcFullImage ? (
+          <div className={styles.fullImageContainer}>
+            <img
+              className={styles.fullImage}
+              src={`${apiServer}/api/media/${srcFullImage}`}
+              
+            />
+           
+            <span onClick={() => setOpenFullImage(false)} className={styles.removeFullImage}><FaTimesCircle/></span>
+          </div>
+        ) : null}
     </div>
   );
 }

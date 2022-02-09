@@ -10,7 +10,7 @@ import { FaTimesCircle } from "react-icons/fa";
 import { TiDeleteOutline } from "react-icons/ti";
 import { RiVideoFill } from "react-icons/ri";
 import styles from "../Posts/post.module.css";
-function WritePost({ user }) {
+function WritePost({ user, setAllPost }) {
   const { user: userFromAuth0 } = useAuth0();
   const apiServer = "http://localhost:3000";
   const accessToken = localStorage.getItem("accessToken");
@@ -23,28 +23,8 @@ function WritePost({ user }) {
   // state video mp4
   const [fileVideo, setFileVideo] = useState([]);
   const [saveVideo, setSaveVideo] = useState([]);
-
-  const [allPost, setAllPost] = useState([]);
-
-  const [userData, setUserData] = useState({});
-  const [idPost, setIdPost] = useState("");
   const valueRef = useRef();
-  // get all post from GET /api/posts/(?page=x&all=true | | ?page=x)
-  useEffect(async () => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    };
-    await axios
-      .get(`${apiServer}/api/posts?page=1&all=true`, config)
-      .then((response) => {
-        if (checkObjectIsUndefined(response)) {
-          setAllPost(response.data.posts);
-          setUserData(response.data.usersData);
-        }
-      });
-  }, [user]);
+
   // submit value input post
   const submitValuePost = async () => {
     // post content
@@ -67,7 +47,7 @@ function WritePost({ user }) {
     await axios
       .post(`${apiServer}/api/posts/new`, formData, config)
       .then((response) => {
-        setIdPost(response.data.post.id);
+        // setIdPost(response.data.post.id);
         setAllPost((prev) => [response.data.post, ...prev]);
       })
       .catch((error) => {
