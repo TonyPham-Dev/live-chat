@@ -9,13 +9,13 @@ import {
   BsImages,
   BsLink45Deg,
 } from "react-icons/bs";
-import {MdSend} from "react-icons/md"
+import { MdSend } from "react-icons/md";
 import { HiVideoCamera } from "react-icons/hi";
 import { IoMdInformationCircle, IoMdAddCircle } from "react-icons/io";
 import { MdMoreVert } from "react-icons/md";
 import { RiShareForwardFill } from "react-icons/ri";
 import { HiEmojiHappy } from "react-icons/hi";
-import { AiFillLike } from "react-icons/ai";
+import { AiFillLike, AiOutlineBars } from "react-icons/ai";
 import { TiDelete } from "react-icons/ti";
 import { FaTimesCircle } from "react-icons/fa";
 import { useParams } from "react-router-dom";
@@ -29,7 +29,6 @@ import InputEmoji from "react-input-emoji";
 import imageUser from "./image/imageUser.jpg";
 import styles from "./message.module.css";
 import clsx from "clsx";
-import ImageMobile from "./ImageMobile";
 
 const serverUrl = "http://localhost:3000";
 const listMessApi = "http://localhost:3000/api/chat";
@@ -187,40 +186,44 @@ function MessageRight(props) {
   };
   return (
     <div className={styles.messageRight}>
-      <div className={styles.imageMobile}>
-        <ImageMobile userData={props.userData} messages={props.messages} />
-      </div>
       {/* message header */}
       {user && (
         <div className={styles.messageRightContainer}>
-          <Link
-            to={`/user/${props.messages.users.filter(
-              (users) => users !== user.nickname
-            )}`}
-            style={{ textDecoration: "none" }}
-          >
-            <div className={styles.messageUser}>
-              <img
-                className={styles.messImage}
-                src={
-                  props.userData[
-                    props.messages.users.filter(
-                      (users) => users != user.nickname
-                    )
-                  ]
-                }
-              />
-              <div>
-                <h3 className={styles.messageRightTitle}>
-                  {props.messages.users.filter(
-                    (users) => users != user.nickname
-                  )}
-                </h3>
-
-                <span style={{ color: "#9BF66C" }}>online</span>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Link to={"/message"}>
+              <div className={styles.gobackMessage}>
+                <AiOutlineBars />
               </div>
-            </div>
-          </Link>
+            </Link>
+            <Link
+              to={`/user/${props.messages.users.filter(
+                (users) => users !== user.nickname
+              )}`}
+              style={{ textDecoration: "none" }}
+            >
+              <div className={styles.messageUser}>
+                <img
+                  className={styles.messImage}
+                  src={
+                    props.userData[
+                      props.messages.users.filter(
+                        (users) => users != user.nickname
+                      )
+                    ]
+                  }
+                />
+                <div>
+                  <h3 className={styles.messageRightTitle}>
+                    {props.messages.users.filter(
+                      (users) => users != user.nickname
+                    )}
+                  </h3>
+
+                  <span style={{ color: "#9BF66C" }}>online</span>
+                </div>
+              </div>
+            </Link>
+          </div>
 
           <div className={styles.messageRightIcon}>
             <span className={styles.icon}>
@@ -298,7 +301,10 @@ function MessageRight(props) {
                       <div className={styles.messageImagesContainer}>
                         {user && value.type === "img"
                           ? value.message.map((img, index) => (
-                              <div className={styles.userAlignImage} key={index}>
+                              <div
+                                className={styles.userAlignImage}
+                                key={index}
+                              >
                                 {user && (
                                   <img
                                     className={styles.imageUserMessage}
@@ -313,7 +319,6 @@ function MessageRight(props) {
                                 )}
                                 <img
                                   onClick={(img) => handleOpenImageMess(img)}
-                                  
                                   className={styles.messageImages}
                                   src={`http://localhost:3000/api/media/chat/${img}`}
                                 />
@@ -421,7 +426,7 @@ function MessageRight(props) {
                   }
                   onClick={handleSubmitValue}
                 >
-                  <MdSend/>
+                  <MdSend />
                 </span>
                 <span
                   onClick={handleIconLike}

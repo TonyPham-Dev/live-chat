@@ -35,6 +35,7 @@ function Message(props) {
     fetch(apiChat, { headers: { authorization: `Bearer ${accessToken}` } })
       .then((response) => response.json())
       .then((message) => {
+        console.log(message);
         setMessage(message);
         if (message.length > 0 && !chatId) {
           navigate(`/message/${message[0]._id}`);
@@ -67,21 +68,27 @@ function Message(props) {
     <>
       <div className={styles.message}>
         <div className={styles.messageContainer}>
-          <div>
-            {/* {Object.entries(userData).length > 0 && ( */}
+          {true ? (
+            <div>
+              {console.log(message)}
+              {/* {Object.entries(userData).length > 0 && ( */}
               <MessageLeft messages={message} userData={userData} />
-            {/* )} */}
-          </div>
-          <div>
-            {Object.entries(userData).length > 0 && (
-              <MessageRight
-                messages={
-                  message[message.findIndex((element) => element._id == chatId)]
-                }
-                userData={userData}
-              />
-            )}
-          </div>
+              {/* )} */}
+            </div>
+          ) : (
+            <div>
+              {Object.entries(userData).length > 0 && (
+                <MessageRight
+                  messages={
+                    message[
+                      message.findIndex((element) => element._id == chatId)
+                    ]
+                  }
+                  userData={userData}
+                />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>

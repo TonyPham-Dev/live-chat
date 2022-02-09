@@ -10,6 +10,7 @@ import imageUser from "./image/imageUser.jpg";
 import styles from "./message.module.css";
 import clsx from "clsx";
 function MessageLeft(props) {
+  console.log(props.messages);
   const { user } = useAuth0();
   const apiServer = "http://localhost:3000";
   const apiCreateMessage = "http://localhost:3000/api/chat/new";

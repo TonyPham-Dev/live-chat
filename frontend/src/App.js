@@ -8,6 +8,7 @@ import Friends from "./components/Home/Friends/Friends";
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import Message from "./components/Home/message/Message";
+import MessageLeft from "./components/Home/message/MessageLeft";
 import PostContents from "./components/Home/PostContents/PostContents";
 function App() {
   const { user, logout, isLoading } = useAuth0();
@@ -46,7 +47,7 @@ function App() {
         )}
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/message" element={<Message />} />
+          <Route path="/message" element={<MessageLeft />} />
           <Route path="/message/:chatId" element={<Message />} />
           <Route path="/friends" element={<Friends />} />
           <Route path="/friends/:username" element={<Friends />} />

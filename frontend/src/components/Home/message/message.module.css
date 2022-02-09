@@ -1,628 +1,636 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap");
 
 .message {
-    width: 100%;
-    height: calc(100vh - 100px);
-    background: #242526;
-    font-family: 'Roboto', sans-serif;
-    margin-top: 100px;
-    overflow: hidden;
+  width: 100%;
+  height: calc(100vh - 100px);
+  background: #242526;
+  font-family: "Roboto", sans-serif;
+  margin-top: 100px;
+  overflow: hidden;
 }
 .messageContainer {
-    position: relative;
-    width: 96%;
-    height: 100%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
+  position: relative;
+  width: 96%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
 }
 .messageLeft {
-    position: absolute;
-    width: 30%;
-    left: 0;
-    height: calc(100vh - 100px);
-    background-color: rgba(119, 118, 118,0.3);
-    border-right:1px solid rgb(206, 205, 205);
-    padding:20px;
-    color:#fff;
+  position: absolute;
+  width: 30%;
+  left: 0;
+  height: calc(100vh - 100px);
+  background-color: rgba(119, 118, 118, 0.3);
+  border-right: 1px solid rgb(206, 205, 205);
+  padding: 20px;
+  color: #fff;
 }
 .messageChatHeader {
-    position: relative;
-    margin-top: 15px;
-    /* display:flex; */
+  position: relative;
+  margin-top: 15px;
+  /* display:flex; */
 }
 .messageSearch {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;    
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .iconSearch {
-    position: relative;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    width:100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
 }
 .iconContainer {
-    color:#0084ff;
-    cursor: pointer;
-    position: absolute;
-    right: 10px;
+  color: #0084ff;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
 }
 .listFriendsSearch {
-    position:absolute;
-    width: 100%;
-    background-color:#242526;
-    border-radius: 20px;
-    top: 110%;
-    padding:10px;
+  position: absolute;
+  width: 100%;
+  background-color: #242526;
+  border-radius: 20px;
+  top: 110%;
+  padding: 10px;
 }
 .itemSearch {
-    padding:10px 20px;
-    list-style: none;
-    background-color:#333;
-    border-radius: 20px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    transition: 0.4s;
+  padding: 10px 20px;
+  list-style: none;
+  background-color: #333;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.4s;
 }
 .itemSearch:hover {
-    background-color: #0084ff;
-    color:#fff;
-    transition: 0.4s;
+  background-color: #0084ff;
+  color: #fff;
+  transition: 0.4s;
 }
-.imageSearch{
-    width:50px;
-    height: 50px;
-    border-radius: 50px;
-    object-fit: cover;
-    margin-right: 10px;
-    border:2px solid rgb(102, 101, 101);
+.imageSearch {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 2px solid rgb(102, 101, 101);
 }
 .messageIconSearch {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 .messageUser {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 .messImage {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius:50%;
-    margin-right:10px;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 .formMess {
-    display: flex;
+  display: flex;
 }
 .messEmojiContainer {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
 }
 .messEmoji {
-    color:#0084ff;
-    padding:5px 7px;
-    font-size: 20px;
-    cursor: pointer;
+  color: #0084ff;
+  padding: 5px 7px;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .emoji {
-    position: absolute;
-    bottom: 10%;
-    z-index: 999999;
+  position: absolute;
+  bottom: 10%;
+  z-index: 999999;
 }
 .messageFooter {
-    position: absolute;
-    left: 0;
-    background-color: #3b3c3d;
-    padding:0px 0px 20px 0px;
-    bottom: 0%;
-    width: 100%;
-    /* position:fixed; */
-    bottom: 0;
-    z-index: 9999999;
+  position: absolute;
+  left: 0;
+  background-color: #3b3c3d;
+  padding: 0px 0px 20px 0px;
+  bottom: 0%;
+  width: 100%;
+  /* position:fixed; */
+  bottom: 0;
+  z-index: 9999999;
 }
 .messageButton {
-    width: 100%;
-    padding:10px;
-    border:none;
-    border-radius: 20px;
-    color:#fff;
-    background-color:#f40;
-    cursor: pointer;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+  background-color: #f40;
+  cursor: pointer;
 }
 .messageBodyContainer {
-    overflow:scroll;
-    width:100%;
-    height: 75vh;
-    padding:20px;
+  overflow: scroll;
+  width: 100%;
+  height: 75vh;
+  padding: 20px;
 }
 .messageBodyContainer::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 .messageUserContainer {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 50px;
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    transition: 0.4s;
-    border-radius:10px;
-    padding:35px 10px;
-    margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transition: 0.4s;
+  border-radius: 10px;
+  padding: 35px 10px;
+  margin-bottom: 15px;
 }
 .messageUserContainer:hover {
-    background-color: #0084ff;
-    transition: 0.4s;
+  background-color: #0084ff;
+  transition: 0.4s;
 }
 .activeBg {
-    background-color: #0084ff;
+  background-color: #0084ff;
 }
 .messageUseContent {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 .name {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 .imageUser {
-    height: 50px;
-    width:  50px;
-    object-fit: cover;
-    border-radius: 50%;
-    list-style: none;
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  list-style: none;
 }
 .downLoadContainer {
-    border-top: 1px solid;
-    background-color: #3b3c3d;
-    /* border-bottom: 1px solid; */
-    border-color:rgb(134, 134, 134);
-    padding:10px 0px;
+  border-top: 1px solid;
+  background-color: #3b3c3d;
+  /* border-bottom: 1px solid; */
+  border-color: rgb(134, 134, 134);
+  padding: 10px 0px;
 }
 .downLoad {
-    display:flex;
-    align-items: center;
-    justify-content:center;
-    color:#fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
 }
 .inputSearch {
-    padding:8px 10px;
-    border:none;
-    border-radius: 20px;
-    outline:none;
-    width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  width: 100%;
 }
 
-
-
 .messageRight {
-    position: absolute;
-    right: 0;
-    width: 70%;
-    height: 100%;
-    background-color: rgba(119, 118, 118,0.3);
-    
+  position: absolute;
+  right: 0;
+  width: 70%;
+  height: 100%;
+  background-color: rgba(119, 118, 118, 0.3);
 }
 
 .messageRightContainer {
-    display:flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    padding:20px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #2c2d2e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 20px 25px;
+  z-index: 9999999999999999999;
 }
 .messageRightTitle {
-    color:#fff;
+  color: #fff;
 }
 .messageRightIcon {
-    display: flex;
-    
+  display: flex;
 }
 .icon {
-    color:#0084ff;
-    margin-left: 25px;
-    cursor: pointer;
-    font-size: 20px;
+  color: #0084ff;
+  margin-left: 25px;
+  cursor: pointer;
+  font-size: 20px;
 }
 .messageRightFooter {
-    position:fixed;
-    padding:0px 20px 20px 20px ;
-    width:66%;
-    z-index: 999999;
-    bottom: 0px;
-    background-color:#3d3e3f;
+  /* position: fixed; */
+  /* padding: 0px 20px 20px 20px; */
+  width: 66%;
+  z-index: 999999;
+  bottom: 0px;
+  background-color: #3d3e3f;
 }
 .messageRightInput {
-    position: absolute;
-    /* bottom: 2.5%; */
-    width: 85%;
-    margin: 0 auto;
-    border: none;
-    outline: none;
-    border-radius: 20px;
-    color: #fff;
-    cursor: pointer;
+  position: absolute;
+  /* bottom: 2.5%; */
+  width: 85%;
+  margin: 0 auto;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  color: #fff;
+  cursor: pointer;
 }
 .buttonContainer {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: -4%;
-    
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -4%;
 }
 .messageRightButton {
-    /* padding: 10px; */
-    border: none;
-    outline: none;
-    border-radius: 20px;
-    color:  #0084ff;
-    font-size: 25px;
-    /* background-color: #0084ff; */
-    cursor: pointer;
-    transition: 0.4s;
-    display: none;
+  /* padding: 10px; */
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  color: #0084ff;
+  font-size: 25px;
+  /* background-color: #0084ff; */
+  cursor: pointer;
+  transition: 0.4s;
+  display: none;
 }
 .messageRightButton.active {
-    /* padding: 10px; */
-    border: none;
-    outline: none;
-    border-radius: 20px;
-    color:  #0084ff;
-    font-size: 25px;
-    /* background-color: #0084ff; */
-    cursor: pointer;
-    display: block;
-    transition: 0.4s;
+  /* padding: 10px; */
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  color: #0084ff;
+  font-size: 25px;
+  /* background-color: #0084ff; */
+  cursor: pointer;
+  display: block;
+  transition: 0.4s;
 }
 .listItem {
-    position: relative;
+  position: relative;
 }
 .messContainer {
-    height: 70vh;
-    width: 100%;
-    /* padding:10px 10px 70px 0px; */
-    overflow: scroll;
+  /* height: calc(100vh - 100px); */
+  height: calc(100vh - 250px);
+  width: 100%;
+  /* padding:10px 10px 70px 0px; */
+  overflow: scroll;
 }
 .messContainer::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 .itemContainers {
-    max-width: 50%;
+  max-width: 50%;
 }
 
 .messItemRight {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 7px;
-    padding: 10px;
-    color:#ffffff;
-    font-size: 16px;
-    border-radius:20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 7px;
+  padding: 10px;
+  color: #ffffff;
+  font-size: 16px;
+  border-radius: 20px;
 }
 .messageImages {
-    width: 120px;
-    height: 120px;
-    border-radius: 5px;
-    object-fit: cover;
-    margin-bottom: 10px;
+  width: 120px;
+  height: 120px;
+  border-radius: 5px;
+  object-fit: cover;
+  margin-bottom: 10px;
 }
 .messageImagesContainer {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 .messItemLeft {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-bottom: 7px;
-    padding:0px 10px;
-    color:#ffffff;
-    font-size: 16px;
-    border-radius:20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 7px;
+  padding: 0px 10px;
+  color: #ffffff;
+  font-size: 16px;
+  border-radius: 20px;
 }
-.itemLeft{
-
-    padding:15px;
-    border-radius:20px;
-    background-color:#0084ff;
-    color:rgb(255, 255, 255);
-    list-style: none;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    margin-bottom: 5px;
+.itemLeft {
+  padding: 15px;
+  border-radius: 20px;
+  background-color: #0084ff;
+  color: rgb(255, 255, 255);
+  list-style: none;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin-bottom: 5px;
 }
-.itemRight{
-
-    padding:15px;
-    border-radius:20px;
-    background-color:#3e4042;
-    list-style: none;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    margin-bottom: 5px;
+.itemRight {
+  padding: 15px;
+  border-radius: 20px;
+  background-color: #3e4042;
+  list-style: none;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin-bottom: 5px;
 }
 .iconItem {
-    color:rgb(238, 230, 230);
-    margin-right: 10px;
-    transition: 0.4s;
-    font-size: 20px;
-    /* display: flex; */
-    opacity: 0;
+  color: rgb(238, 230, 230);
+  margin-right: 10px;
+  transition: 0.4s;
+  font-size: 20px;
+  /* display: flex; */
+  opacity: 0;
 }
 .iconItem:hover {
-    color:rgb(238, 157, 104);
-    transition: 0.4s;
-    cursor: pointer;
-
+  color: rgb(238, 157, 104);
+  transition: 0.4s;
+  cursor: pointer;
 }
 .messItemRight:hover .iconItem {
-    /* display: flex; */
-   opacity: 1;
+  /* display: flex; */
+  opacity: 1;
 }
 .messItemLeft:hover .iconItem {
-    /* display: flex; */
-   opacity: 1;
+  /* display: flex; */
+  opacity: 1;
 }
 .iconLike {
-    font-size: 25px;
-    color:#0084ff;
-    transition: 0.4s;
-    display: none;
+  font-size: 25px;
+  color: #0084ff;
+  transition: 0.4s;
+  display: none;
 }
 .iconLike.active {
-    font-size: 25px;
-    color:#0084ff;
-    transition: 0.4s;
-    display: block;
-}   
+  font-size: 25px;
+  color: #0084ff;
+  transition: 0.4s;
+  display: block;
+}
 .avatarContainer {
-    position: relative;
+  position: relative;
 }
 .imageFile {
-    
-    border-radius: 20px;
+  border-radius: 20px;
 }
 
 .listImageContainer {
-    position: absolute;
-    display: flex;
-    bottom: 0%;
+  position: absolute;
+  display: flex;
+  bottom: 0%;
 }
 .imageFile {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    margin-right: 15px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-right: 15px;
 }
 .deleteImage {
-    position:absolute;
-    right:13%;
-    font-size: 20px;
-    z-index: 9999999;
-    top: 8%;
-    color:#fff;
-    cursor: pointer;
+  position: absolute;
+  right: 13%;
+  font-size: 20px;
+  z-index: 9999999;
+  top: 8%;
+  color: #fff;
+  cursor: pointer;
 }
 .imageMobile {
-    position: relative;
-    width: 100%;
-    /* height: 50px; */
-    padding:5px 0px 0px 0px;
-    overflow: hidden;
-    border-bottom: 1px solid rgb(170, 169, 169);
-    display: none;
+  position: relative;
+  width: 100%;
+  /* height: 50px; */
+  padding: 5px 0px 0px 0px;
+  overflow: hidden;
+  border-bottom: 1px solid rgb(170, 169, 169);
+  display: none;
 }
 .mobileImageContainer {
-    /* display: flex; */
-    flex-direction: row;
-    /* position:absolute; */
-    padding:0px 10px;
+  /* display: flex; */
+  flex-direction: row;
+  /* position:absolute; */
+  padding: 0px 10px;
 }
 .slider {
-    line-height: 50px;
+  line-height: 50px;
 }
 .mobileImage {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
 .imageFullScreen {
-    position:fixed;
-    inset:0;
-    z-index: 9999999;
+  position: fixed;
+  inset: 0;
+  z-index: 9999999;
 }
 .imageOverlay {
-    position:fixed;
-    inset:0;
-    background-color:rgba(99, 98, 98, 0.9);
-    z-index: -1;
-    
+  position: fixed;
+  inset: 0;
+  background-color: rgba(99, 98, 98, 0.9);
+  z-index: -1;
 }
-.imageFull {    
-    position:absolute;
-    width: 50%;
-    height: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    object-fit: cover;
-    border-radius: 20px;
+.imageFull {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  border-radius: 20px;
 }
 .iconRemoveImage {
-    position:absolute;
-    right:10%;
-    top: 20%;
-    color:#fff;
-    cursor: pointer;
-    font-size: 20px;
-    z-index: 99999;
-    transition: 0.4s;
+  position: absolute;
+  right: 10%;
+  top: 20%;
+  color: #fff;
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 99999;
+  transition: 0.4s;
 }
 .iconRemoveImage:hover {
-    color:#0084ff;
-    transition: 0.4s;
+  color: #0084ff;
+  transition: 0.4s;
 }
 .addMessage {
-    
-    cursor: pointer; 
+  cursor: pointer;
 }
 .imageUserMessage {
-    width: 40px;
-    height: 40px;
-    border-radius:50px;
-    margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  margin-right: 10px;
 }
 .itemImageUser {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .userAlignImage {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+}
+.gobackMessage {
+    color:#fff;
+    font-size: 20px;
+    margin-right: 15px;
+    cursor: pointer;
+    display:none;
 }
 /* responsive */
 
 /* ipad pro */
-@media (min-width: 1024px) and (max-width:1365px) {
-    .messageLeft {
-        display:none;
-    }
-    .messageRight {
-        width:100%;
-    }
-    .messageRightInput {
-        width:80%;
-    }
-    .buttonContainer {
-        right:-7%;
-    }
-    .imageMobile {
-        display:block;
-    }
-    .imageFull {
-        width:80%;
-    }
-    .messageRightFooter {
-        width:96%;
-    }
-    .message {
-        height: 100vh;
-    }
- 
+@media (min-width: 1024px) and (max-width: 1365px) {
+  .messageLeft {
+    width: 100%;
+    margin-top: 100px;
+  }
+  .messageRight {
+    width: 100%;
+  }
+  .messageRightInput {
+    width: 80%;
+  }
+  .buttonContainer {
+    right: -7%;
+  }
+  .imageMobile {
+    display: block;
+  }
+  .imageFull {
+    width: 80%;
+  }
+  .messageRightFooter {
+    width: 96%;
+  }
+  .gobackMessage {
+      display:block;
+  }
+  /* .message {
+    height: 100vh;
+  } */
 }
 /* ipad mini */
 @media (min-width: 768px) and (max-width: 1023px) {
-    .messageLeft {
-        display:none;
-    }
-    .messageRight {
-        width:100%;
-    }
-    .messageRightInput {
-        width:75%;
-    }
-    .buttonContainer {
-        right:-8%;
-    }
-    .imageMobile {
-        display:block;
-    }
-    .messContainer {
-        height: 70vh;
-    }
-    .imageFull {
-        width:80%;
-    }
-    .messageRightFooter {
-        width:96%;
-    }
-    /* .message {
+  .messageLeft {
+    width: 100%;
+  }
+  .messageRight {
+    width: 100%;
+  }
+  .messageRightInput {
+    width: 75%;
+  }
+  .buttonContainer {
+    right: -8%;
+  }
+  .imageMobile {
+    display: block;
+  }
+  /* .messContainer {
+    height: calc(100vh - 150px);
+  } */
+  .imageFull {
+    width: 80%;
+  }
+  .messageRightFooter {
+    width: 96%;
+  }
+  .gobackMessage {
+      display:block;
+  }
+  /* .message {
         margin-top: 102px;
     } */
 }
 
 /* mobile */
-@media (max-width:767px) {
-    .messageLeft {
-        display:none;
-    }
-    .messageRight {
-        width:100%;
-    }
-    .messageRightInput {
-        width:80%;
-    }
-    .buttonContainer {
-        right:-8%;
-    }
-    .messageRightContainer {
-        padding:5px 0px;
-    }
-    .messageRightTitle {
-        font-size: 16px;
-    }
-    .item {
-        padding:10px;
-    }
-    .messageRightFooter {
-        width: 75%;
-        padding:0;
-        bottom:10px;
-    }
-    .buttonContainer {
-        right:-27px;
-    }
-    .messageRightButton.active {
-        padding:3px;
-    }
-    .messContainer {
-        height: 70vh;
-    }
-    .imageMobile {
-        display:block;
-    }
-    /* .message {
+@media (max-width: 767px) {
+  .messageLeft {
+    width: 100%;
+  }
+  .messageRight {
+    width: 100%;
+  }
+  .messageRightInput {
+    width: 65%;
+  }
+  .buttonContainer {
+    right: -8%;
+  }
+  .messageRightContainer {
+    padding: 5px 0px;
+  }
+  .messageRightTitle {
+    font-size: 16px;
+  }
+  .item {
+    padding: 10px;
+  }
+  .messageRightFooter {
+    width: 75%;
+    padding: 0;
+    bottom: 10px;
+  }
+  .buttonContainer {
+    right: -27px;
+  }
+  .messageRightButton.active {
+    padding: 3px;
+  }
+  /* .messContainer {
+    height: 70vh;
+  } */
+  .imageMobile {
+    display: block;
+  }
+  /* .message {
         margin-top: 120px;
     } */
-    .imageFull {
-        width:80%;
-    }
+  .imageFull {
+    width: 80%;
+  }
+  .gobackMessage {
+      display:block;
+  }
 }
 /* responsive ip6 */
 @media screen and (device-aspect-ratio: 375/667) {
-    .messContainer {
-        height: 65vh;
-    }
+  /* .messContainer {
+    height: 65vh;
+  } */
 }
 /* responsive ip5 */
 @media screen and (device-aspect-ratio: 40/71) {
-    .messContainer {
-        height: 47vh;
-    }
-    .messageRightInput {
-        width:55%;
-    }
-    .messageRightTitle {
-        font-size: 12px;
-    }
-    .item {
-        padding:7px;
-        font-size: 14px;
-    }
-    .imageMobile {
-        display:block;
-    }
-    .imageFull {
-        top: 60%;
-    }
-    .iconRemoveImage {
-        top: 30%;
-    }
+  /* .messContainer {
+    height: 47vh;
+  } */
+  .messageRightInput {
+    width: 55%;
+  }
+  .messageRightTitle {
+    font-size: 12px;
+  }
+  .item {
+    padding: 7px;
+    font-size: 14px;
+  }
+  .imageMobile {
+    display: block;
+  }
+  .imageFull {
+    top: 60%;
+  }
+  .iconRemoveImage {
+    top: 30%;
+  }
 }
