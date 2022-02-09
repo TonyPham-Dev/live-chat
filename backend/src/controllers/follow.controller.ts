@@ -42,13 +42,14 @@ class FollowController {
             }
             const follow = await followUser(
                 user,
-                req.headers.authorization.split(" ")[1]
+                req.headers.authorization.split(" ")[1],
             );
             if (!follow.success) {
                 return returnServerError(res, follow.message);
             }
             return res.json({
                 success: true,
+                follow: follow.follow,
                 followStatus: follow.followStatus,
             });
         } catch (err) {

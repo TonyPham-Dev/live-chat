@@ -15,6 +15,7 @@ interface GetFollow {
 interface FollowUser {
     success: boolean;
     message?: string;
+    follow?: any;
     followStatus?: boolean;
 }
 
@@ -32,7 +33,7 @@ export const getFollow: (user: string) => Promise<GetFollow> = async (user) => {
 
 export const followUser: (
     user: string,
-    token: string
+    token: string,
 ) => Promise<FollowUser> = async (user, token) => {
     try {
         const targetUser = await UserModel.findOne({ nickname: user });
@@ -45,19 +46,21 @@ export const followUser: (
             return { success: false, message: userData.message };
         }
         let followStatus: boolean;
+        let follow: any;
         if (
             targetUserFollowList.follow.followed.includes(
-                userData.userData.nickname
+                userData.userData.nickname,
             )
         ) {
-            await FollowModel.findOneAndUpdate(
+            // unfollow
+            follow = await FollowModel.findOneAndUpdate(
                 { user: user },
                 {
                     $pull: {
                         followed: userData.userData.nickname,
                     },
                 },
-                { new: true }
+                { new: true },
             );
             await FollowModel.findOneAndUpdate(
                 { user: userData.userData.nickname },
@@ -66,18 +69,19 @@ export const followUser: (
                         following: user,
                     },
                 },
-                { new: true }
+                { new: true },
             );
             followStatus = false;
         } else {
-            await FollowModel.findOneAndUpdate(
+            // follow
+            follow = await FollowModel.findOneAndUpdate(
                 { user: user },
                 {
                     $push: {
                         followed: userData.userData.nickname,
                     },
                 },
-                { new: true }
+                { new: true },
             );
             await FollowModel.findOneAndUpdate(
                 { user: userData.userData.nickname },
@@ -86,11 +90,11 @@ export const followUser: (
                         following: user,
                     },
                 },
-                { new: true }
+                { new: true },
             );
             followStatus = true;
         }
-        return { success: true, followStatus };
+        return { success: true, followStatus, follow };
     } catch (err) {
         return { success: false, message: err.message };
     }
