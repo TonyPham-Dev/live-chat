@@ -1,4 +1,5 @@
 import React, { memo, useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { CgMore } from "react-icons/cg";
 import { AiFillEye, AiFillWarning, AiTwotoneSetting } from "react-icons/ai";
@@ -11,13 +12,44 @@ import imageUser from "../PostContents/image/imageUser.jpg";
 import styles from "./profile.module.css";
 import clsx from "clsx";
 import { useAuth0 } from "@auth0/auth0-react";
-function HeaderProfile({ userAdmin, user }) {
+function HeaderProfile({ userAdmin, user, follow, setFollowUser }) {
+  console.log(
+    "🚀 ~ file: HeaderProfile.js ~ line 16 ~ HeaderProfile ~ follow",
+    follow
+  );
+  // console.log(user);
+  const apiServer = "http://localhost:3000";
+  const accessToken = localStorage.getItem("accessToken");
+  const { user: userFromAuth0 } = useAuth0();
+
   const [openSeeMore, setOpenSeeMore] = useState(false);
   const [openMore, setOpenMore] = useState(false);
-   // check friends is null or undefined
-   const checkObjectIsUndefined = (obj) => {
+  const [checkFollow, setCheckFollow] = useState(false);
+  // check friends is null or undefined
+  const checkObjectIsUndefined = (obj) => {
     return obj && Object.keys(obj).length > 0;
   };
+
+  // submit follow
+  const handleSubmitFollow = async () => {
+    const config = {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    };
+    if (checkObjectIsUndefined(user.user)) {
+      await axios
+        .get(`${apiServer}/api/follow/toggle/${user.user.nickname}`, config)
+        .then((response) => {
+          console.log(
+            "🚀 ~ file: HeaderProfile.js ~ line 40 ~ .then ~ response",
+            response
+          );
+          setFollowUser(response.data.follow);
+        });
+    }
+  };
+
   return (
     <div>
       <div className={styles.pageProfile}>
@@ -26,7 +58,12 @@ function HeaderProfile({ userAdmin, user }) {
           <div className={styles.coverImage}>
             <img className={styles.image} src={coverImage} />
             <div className={styles.avatarUser}>
-              <img className={styles.avatar} src={checkObjectIsUndefined(user) ? user.user.avatarUrl : undefined} />
+              <img
+                className={styles.avatar}
+                src={
+                  checkObjectIsUndefined(user) ? user.user.avatarUrl : undefined
+                }
+              />
             </div>
           </div>
         </div>
@@ -58,10 +95,8 @@ function HeaderProfile({ userAdmin, user }) {
             <span
               className={clsx(styles.item, styles.more)}
               onClick={() => setOpenMore(!openMore)}
-              
             >
               Xem Thêm
-             
             </span>
 
             {openMore && (
@@ -157,14 +192,51 @@ function HeaderProfile({ userAdmin, user }) {
         {/* follow user */}
 
         <div className={styles.buttonContainer}>
-          <div className={styles.buttonEdit}>
-            <button className={styles.button}>Edit Profile</button>
-          </div>
           <div className={styles.buttonLiked}>
             <button className={clsx(styles.button, styles.buttonLiked)}>
-              Liked Post
+              {`${
+                checkObjectIsUndefined(follow) && follow.following.length
+              } Đang Follow`}
             </button>
           </div>
+          <div className={styles.buttonEdit}>
+            <button className={styles.button}>{`${
+              checkObjectIsUndefined(follow) && follow.followed.length
+            } Follower`}</button>
+          </div>
+          {/* button follow */}
+          {checkObjectIsUndefined(user.user) &&
+          checkObjectIsUndefined(userFromAuth0) &&
+          user.user.nickname ===
+            userFromAuth0.nickname ? null : checkObjectIsUndefined(follow) &&
+            checkObjectIsUndefined(userFromAuth0) &&
+            follow.followed.find((user) => {
+              return user === userFromAuth0.nickname;
+            }) ? (
+            <div className={styles.buttonFollowContainer}>
+              <button
+                className={clsx(
+                  styles.button,
+                  styles.buttonLiked,
+                  styles.buttonFollow
+                )}
+                onClick={handleSubmitFollow}
+              >
+                Hủy Follow
+              </button>
+            </div>
+          ) : (
+            <button
+              className={clsx(
+                styles.button,
+                styles.buttonLiked,
+                styles.removeButtonFollow
+              )}
+              onClick={handleSubmitFollow}
+            >
+              Follow
+            </button>
+          )}
           <div className={styles.buttonMoreContainer}>
             <button
               className={clsx(styles.button, styles.buttonMore)}

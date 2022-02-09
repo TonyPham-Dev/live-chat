@@ -24,6 +24,7 @@ function WritePost({ user, setAllPost }) {
   const [fileVideo, setFileVideo] = useState([]);
   const [saveVideo, setSaveVideo] = useState([]);
   const valueRef = useRef();
+  const inputPostRef = useRef();
 
   // submit value input post
   const submitValuePost = async () => {
@@ -120,10 +121,20 @@ function WritePost({ user, setAllPost }) {
   const checkObjectIsUndefined = (obj) => {
     return Object.keys(obj).length > 0;
   };
+
+  const handleOpenPostProfile = () => {
+    setOpenFromPost(!openFormPost);
+    // valueRef.current.focus();
+  };
   return (
     <div className={styles.postContainer}>
       {openFormPost && (
-        <div className={styles.writerContainer}>
+        <div
+          className={clsx(
+            styles.writerContainer,
+            styles.writerContainerProfile
+          )}
+        >
           <div className={styles.writePost}>
             <div className={styles.titlePostContainer}>
               <h4 className={styles.titlePost}>Create Post</h4>
@@ -277,7 +288,7 @@ function WritePost({ user, setAllPost }) {
       <div className={clsx(styles.textareaContainer, styles.profilePost)}>
         <form
           className={styles.profilePostContent}
-          onClick={() => setOpenFromPost(!openFormPost)}
+          onClick={() => handleOpenPostProfile()}
         >
           <div className={styles.profileRightUser}>
             <img
@@ -289,14 +300,21 @@ function WritePost({ user, setAllPost }) {
               }
             />
           </div>
-          <InputEmoji
+          {/* <InputEmoji
+            // ref={inputPostRef}
             className={styles.inputPost}
+            disabled={true}
             placeholder={`What's on your mind,${
               userFromAuth0 && checkObjectIsUndefined(userFromAuth0)
                 ? userFromAuth0.name
                 : ""
             }?`}
-          />
+          /> */}
+          <div className={styles.inputPostContainer}>{`What's on your mind,${
+            userFromAuth0 && checkObjectIsUndefined(userFromAuth0)
+              ? userFromAuth0.name
+              : ""
+          }?`}</div>
         </form>
         <div className={styles.textareaContainer}>
           <div className={styles.imageAndVideoAndStreaming}>

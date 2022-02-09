@@ -26,6 +26,7 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
   const [text, setText] = useState("");
   const imageRef = useRef(null);
   const [saveIdPost, setSaveIdPost] = useState(null);
+  const [openDashboard, setOpenDashboard] = useState(false);
   const [openDashboardDeletePost, setOpenDashboardDeletePost] = useState(false);
   const [numberOfElement, setNumberOfElement] = useState(3);
   //   // check is null or undefined
@@ -89,12 +90,13 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
 
   // open dashboard
   const handleOpenDashboard = (id) => {
+    setOpenDashboard(true);
     if (saveIdPost) {
       setSaveIdPost("");
     } else {
       setSaveIdPost(id);
     }
-    setOpenDashboardDeletePost(!openDashboardDeletePost)
+    // setOpenDashboardDeletePost(!openDashboardDeletePost);
   };
 
   // delete Post
@@ -165,8 +167,7 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
               <button
                 className={styles.ButtonDelete}
                 onClick={() => handleDeletePost(post.id, indexPost)}
-                >
-               
+              >
                 Xóa
               </button>
             </div>
@@ -207,7 +208,7 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
               <FiMoreHorizontal />
             </span>
             {/* icons remove post */}
-            {saveIdPost == post.id && (
+            {openDashboard && saveIdPost == user.id && (
               <span
                 ref={dashboardRef}
                 className={clsx(
@@ -472,7 +473,12 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
                 className={styles.loadMoreComments}
                 onClick={() => handleLoadMoreComment()}
               >
-                <button className={clsx(styles.moreComments, styles.moreCommentProfile)}>
+                <button
+                  className={clsx(
+                    styles.moreComments,
+                    styles.moreCommentProfile
+                  )}
+                >
                   Xem thêm bình luận
                 </button>
               </div>

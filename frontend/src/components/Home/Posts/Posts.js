@@ -30,6 +30,7 @@ function Posts({ setAllPost }) {
   const [saveVideo, setSaveVideo] = useState([]);
 
   const [idPost, setIdPost] = useState("");
+  const [follow, setFollow] = useState({});
   // context
   const contextPost = useContext(HomeContext);
   const openFormPostContext = useContext(HomeContext);
@@ -132,6 +133,19 @@ function Posts({ setAllPost }) {
     setFileVideo(fileVideoRemove);
   };
 
+  // call api get follow
+  useEffect(async () => {
+    if (user !== undefined) {
+      await axios
+        .get(`${urlServer}/api/follow/${user.nickname}`)
+        .then((response) => {
+          setFollow(response.data.follow);
+        });
+    }
+  }, [user]);
+  const checkObjectIsUndefined = (obj) => {
+    return Object.keys(obj).length > 0;
+  };
   return (
     // <IdContext.Provider value={idPost}>
     <div className={styles.postContainer}>
@@ -290,23 +304,26 @@ function Posts({ setAllPost }) {
       </div>
       {/* follows */}
       <div className={styles.follows}>
-        <div className={styles.followers}>
-          <h3>11K</h3>
-          <p>Followers</p>
-        </div>
-        <div className={styles.following}>
-          <h3>1.4K</h3>
-          <p>Following</p>
-        </div>
+        {checkObjectIsUndefined(follow) && (
+          <div className={styles.following}>
+            <h3>{follow.following.length}</h3>
+            <p>Following</p>
+          </div>
+        )}
+        {checkObjectIsUndefined(follow) && (
+          <div className={styles.followers}>
+            <h3>{follow.followed.length}</h3>
+            <p>Followers</p>
+          </div>
+        )}
       </div>
 
       {/* text */}
       <div className={styles.textareaContainer}>
         <form onClick={() => setOpenFromPost(!openFormPost)}>
-          <InputEmoji
-            className={styles.inputPost}
-            placeholder={`What's on your mind,${user && user.name}?`}
-          />
+          <div className={styles.inputPostContainer}>{`What's on your mind,${
+            user && checkObjectIsUndefined(user) ? user.name : ""
+          }?`}</div>
         </form>
         <div className={styles.imageAndVideoAndStreaming}>
           <span className={clsx(styles.iconInput, styles.image)}>

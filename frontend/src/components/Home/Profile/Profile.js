@@ -9,8 +9,12 @@ import axios from "axios";
 function Profile(props) {
   const apiServer = "http://localhost:3000";
   const { user } = useAuth0();
+  const accessToken = localStorage.getItem("accessToken");
   const { username } = useParams();
   const [aboutUser, setAboutUser] = useState({});
+
+  const [followUser, setFollowUser] = useState({});
+
   const checkObjectIsUndefined = (obj) => {
     return Object.keys(obj).length > 0;
   };
@@ -22,16 +26,20 @@ function Profile(props) {
         .then((response) => {
           if (response.data.success) {
             setAboutUser(response.data);
+            setFollowUser(response.data.user.follow[0]);
           }
         });
   }, [username]);
-
   return (
     <>
       {checkObjectIsUndefined(aboutUser) && (
         <div className={styles.ProfileContainer}>
           <div className={styles.profile}>
-            <HeaderProfile user={aboutUser} />
+            <HeaderProfile
+              user={aboutUser}
+              follow={followUser}
+              setFollowUser={setFollowUser}
+            />
           </div>
           <div className={styles.profileContent}>
             <ProfileContent user={aboutUser} />

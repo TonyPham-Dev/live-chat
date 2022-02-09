@@ -166,13 +166,13 @@
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .postContentHeader {
-    position: relative;
-    width: auto;
-    background-color: #d6d6d6;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  position: relative;
+  width: auto;
+  background-color: #d6d6d6;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .imageAdminHeader {
-    color:rgb(53, 52, 52);
+  color: rgb(53, 52, 52);
 }
 
 @keyframes grow {
@@ -322,13 +322,21 @@
 }
 
 .titleIconHeader {
-    color:rgb(53, 52, 52);
-    font-weight: 600;
+  color: rgb(53, 52, 52);
+  font-weight: 600;
 }
 .titlePostHeader {
-    color:rgb(53, 52, 52);
-    font-weight: 600;
-
+  color: rgb(53, 52, 52);
+  font-weight: 600;
+}
+.inputPostContainer {
+  width: 100%;
+  background-color: #fff;
+  padding:12px 14px;
+  margin-left: 10px;
+  color:rgb(73, 72, 72);
+  font-weight: 600;
+  border-radius:25px ;
 }
 /* responsive tablet big */
 @media (min-width: 1024px) and (max-width: 1365px) {
@@ -343,8 +351,8 @@
   }
 }
 /* responsive mobile */
-/* @media (max-width: 767px) {
-  .writerContainer {
-    width: 80%;
+@media (max-width: 767px) {
+  .writerContainerProfile {
+    width: 100%;
   }
-} */
+}
