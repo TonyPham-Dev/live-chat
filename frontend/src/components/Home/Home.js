@@ -25,6 +25,14 @@ function Home({ logOut }) {
   const [allPost, setAllPost] = useState([]);
   const [savePage, setSavePage] = useState(1);
   const [lengthPage, setLengthPage] = useState(1);
+
+  // file image and file video mp4
+  const [fileImage, setFileImage] = useState([]);
+  const [saveFileImage, setSaveFileImage] = useState([]);
+  // state video mp4
+  const [fileVideo, setFileVideo] = useState([]);
+  const [saveVideo, setSaveVideo] = useState([]);
+
   const checkObjectIsUndefined = (obj) => {
     return Object.keys(obj).length > 0;
   };
@@ -76,8 +84,8 @@ function Home({ logOut }) {
       });
   }, [user, savePage]);
 
-  //create file image and file video 
-   
+  //create file image and file video
+
   return (
     <>
       <HomeContext.Provider value={{ IdPostHandle: setIdPost, id: idPost }}>
@@ -88,7 +96,17 @@ function Home({ logOut }) {
 
           <div className={styles.postContents} id="testOverlay">
             <div className={styles.PostContentHeader}>
-              <PostContentHeader setAllPost={setAllPost} />
+              <PostContentHeader
+                setAllPost={setAllPost}
+                fileImage={fileImage}
+                setFileImage={setFileImage}
+                saveFileImage={saveFileImage}
+                setSaveFileImage={setSaveFileImage}
+                fileVideo={fileVideo}
+                setFileVideo={setFileVideo}
+                saveVideo={saveVideo}
+                setSaveVideo={setSaveVideo}
+              />
             </div>
             <PostContents
               post={valuePost}
@@ -101,7 +119,17 @@ function Home({ logOut }) {
           </div>
 
           <div className={styles.posts}>
-            <Posts setAllPost={setAllPost} />
+            <Posts
+              setAllPost={setAllPost}
+              fileImage={fileImage}
+              setFileImage={setFileImage}
+              saveFileImage={saveFileImage}
+              setSaveFileImage={setSaveFileImage}
+              fileVideo={fileVideo}
+              setFileVideo={setFileVideo}
+              saveVideo={saveVideo}
+              setSaveVideo={setSaveVideo}
+            />
           </div>
         </div>
       </HomeContext.Provider>

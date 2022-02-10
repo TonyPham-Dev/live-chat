@@ -13,6 +13,7 @@
   height: 250px;
   object-fit: cover;
   border-radius: 20px;
+  user-select: none;
 }
 .userPost {
   position: relative;
@@ -24,12 +25,14 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  user-select: none;
 }
 .avatar {
   width: 90px;
   height: 90px;
   object-fit: cover;
   border-radius: 20px;
+  user-select: none;
 }
 .nameUser {
   margin-left: 10px;
@@ -137,6 +140,7 @@
   height: 50px;
   object-fit: cover;
   border-radius: 20px;
+  user-select: none;
 }
 .activityName {
   color: rgb(80, 78, 78);

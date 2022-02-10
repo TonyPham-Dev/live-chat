@@ -68,11 +68,6 @@ function Message(props) {
       });
   }, []);
 
-  console.log("message");
-  if (!chatId) {
-    console.log(message);
-  }
-
   return (
     <>
       <div className={styles.message}>

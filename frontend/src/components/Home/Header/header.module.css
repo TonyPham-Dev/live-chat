@@ -81,6 +81,7 @@
 .userContainer {
     position: relative;
     display: flex;
+    user-select: none;
 }
 .imageUser {
     height: 50px;

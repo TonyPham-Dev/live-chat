@@ -8,7 +8,17 @@ import { IoIosVideocam } from "react-icons/io";
 import { TiDeleteOutline } from "react-icons/ti";
 import clsx from "clsx";
 import styles from "../Posts/post.module.css";
-function PostContentHeader({ setAllPost }) {
+function PostContentHeader({
+  setAllPost,
+  fileImage,
+  setFileImage,
+  saveFileImage,
+  setSaveFileImage,
+  fileVideo,
+  setFileVideo,
+  saveVideo,
+  setSaveVideo,
+}) {
   const urlServer = "http://localhost:3000";
   const accessToken = localStorage.getItem("accessToken");
   const { user } = useAuth0();
@@ -16,12 +26,12 @@ function PostContentHeader({ setAllPost }) {
   const [valuePost, setValuePost] = useState("");
 
   //state image
-  const [fileImage, setFileImage] = useState([]);
+  // const [fileImage, setFileImage] = useState([]);
 
-  const [saveFileImage, setSaveFileImage] = useState([]);
-  // state video mp4
-  const [fileVideo, setFileVideo] = useState([]);
-  const [saveVideo, setSaveVideo] = useState([]);
+  // const [saveFileImage, setSaveFileImage] = useState([]);
+  // // state video mp4
+  // const [fileVideo, setFileVideo] = useState([]);
+  // const [saveVideo, setSaveVideo] = useState([]);
 
   const [idPost, setIdPost] = useState("");
   // context

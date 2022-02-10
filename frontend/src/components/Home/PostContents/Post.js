@@ -18,7 +18,13 @@ import { GiEarthAsiaOceania } from "react-icons/gi";
 import { BsCodeSlash, BsFillBellSlashFill, BsCalendar3 } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
 import styles from "./postContent.module.css";
-import Posts from "../Posts/Posts";
+
+// edit post
+import { BsFillImageFill } from "react-icons/bs";
+import { IoIosVideocam } from "react-icons/io";
+import { FaTimesCircle } from "react-icons/fa";
+import { TiDeleteOutline } from "react-icons/ti";
+import { RiVideoFill } from "react-icons/ri";
 function Post({ post, userData, indexPost, setAllPosts }) {
   const apiServer = "http://localhost:3000";
   const dashboardRef = useRef();
@@ -36,10 +42,23 @@ function Post({ post, userData, indexPost, setAllPosts }) {
   const [saveIdPost, setSaveIdPost] = useState(null);
   const [openDashboardDeletePost, setOpenDashboardDeletePost] = useState(false);
   const [numberOfElement, setNumberOfElement] = useState(3);
-  // scroll to top when restart app
-  //   useEffect(() => {
-  //     window.scrollTo({ top: 0, behavior: "smooth" });
-  //   }, []);
+
+  // handle edit post
+  const [openFormPost, setOpenFromPost] = useState(false);
+  const [valuePost, setValuePost] = useState("");
+  console.log("🚀 ~ file: Post.js ~ line 49 ~ Post ~ valuePost", valuePost);
+
+  //state image
+  const [fileImage, setFileImage] = useState([]);
+  const [saveFileImage, setSaveFileImage] = useState([]);
+  // state video mp4
+  const [fileVideo, setFileVideo] = useState([]);
+  const [saveVideo, setSaveVideo] = useState([]);
+  const [checkEditPost, setCheckEditPost] = useState(false);
+  const [editPost, setEditPost] = useState({});
+  const valueRef = useRef();
+  const inputPostRef = useRef();
+
   //   // check is null or undefined
   const checkObjectIsUndefined = (obj) => {
     return Object.keys(obj).length > 0;
@@ -147,9 +166,116 @@ function Post({ post, userData, indexPost, setAllPosts }) {
   const handleLoadMoreComment = () => {
     setNumberOfElement(numberOfElement + numberOfElement);
   };
+
+  // edit post
+
+  // clear up image when reload app
+  useEffect(() => {
+    return () => {
+      URL.revokeObjectURL(fileImage);
+    };
+  }, [fileImage]);
+
+  // clear up video when reload app
+  useEffect(() => {
+    return () => {
+      URL.revokeObjectURL(fileVideo);
+    };
+  }, [fileVideo]);
+
+  // handle input file image
+  const handelInputFileImage = (e) => {
+    Array.from(e.target.files).forEach((file) => {
+      setFileImage((prev) => [...prev, file]);
+      setSaveFileImage((prev) => [...prev, URL.createObjectURL(file)]);
+    });
+  };
+  // remove file image
+  const handleDeleteFile = (index) => {
+    const fileRemove = saveFileImage.filter(
+      (file, indexImage) => indexImage !== index
+    );
+    URL.revokeObjectURL(fileRemove);
+    URL.revokeObjectURL(fileImage);
+
+    setSaveFileImage(fileRemove);
+    setFileImage(fileRemove);
+  };
+
+  // handle input file video mp4
+  const handleVideoPostChange = (e) => {
+    Array.from(e.target.files).forEach((file) => {
+      setFileVideo((prev) => [...prev, file]);
+      setSaveVideo((prev) => [...prev, URL.createObjectURL(file)]);
+    });
+  };
+
+  // when click remove file video mp4
+  const handleDeleteVideo = (index) => {
+    const fileVideoRemove = saveVideo.filter(
+      (file, indexVideo) => indexVideo !== index
+    );
+    URL.revokeObjectURL(fileVideoRemove);
+    URL.revokeObjectURL(fileVideo);
+    setSaveVideo(fileVideoRemove);
+    setFileVideo(fileVideoRemove);
+  };
+
+  // open form edit post
+  const handleOpenPostProfile = (post, id) => {
+    setOpenFromPost(true);
+    if (post) {
+      setValuePost(post.body);
+    }
+    setSaveIdPost("");
+    // valueRef.current.focus();
+  };
+
+  // handle eidt post when click button
+  const handleEditPostHome = async (id) => {
+    // post content
+    const formData = new FormData();
+    formData.append("body", valuePost); // text
+    fileImage.forEach((image) => {
+      formData.append("images", image); // image
+    });
+
+    fileVideo.forEach((video) => {
+      formData.append("videos", video); // video
+    });
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "content-type": "multipart/form-data",
+      },
+    };
+    await axios
+      .put(`${apiServer}/api/posts/${id}`, formData, config)
+      .then((response) => {
+        // setAllPosts((prev) => [response.data.post, ...prev]);
+        console.log(response);
+        if (response.status === 200) {
+          setCheckEditPost(true);
+          setEditPost(response.data.post);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // open from post content
+    setOpenFromPost(false);
+    // clear value post
+    setValuePost("");
+    setFileImage([]);
+    setFileVideo([]);
+    setSaveFileImage([]);
+    setSaveVideo([]);
+    // valueRef.current.focus();
+  };
   return (
     <>
-     
       {openDashboardDeletePost && (
         // <div>
         <div
@@ -193,11 +319,169 @@ function Post({ post, userData, indexPost, setAllPosts }) {
         </div>
         // </div>
       )}
+
+      {/* edit post when click see more */}
+      {openFormPost && (
+        <div
+          className={styles.OverLay}
+          onClick={() => setOpenFromPost(false)}
+        ></div>
+      )}
+      {openFormPost && (
+        <div
+          className={clsx(
+            styles.writerContainer,
+            styles.writerContainerProfile
+          )}
+        >
+          <div className={styles.writePost}>
+            <div className={styles.titlePostContainer}>
+              <h4 className={styles.titlePost}>Create Post</h4>
+              <span
+                className={styles.iconClosePost}
+                onClick={() => setOpenFromPost(false)}
+              >
+                <FaTimesCircle />
+              </span>
+            </div>
+            {/* user admin */}
+            <div className={styles.contentPost}>
+              <div className={styles.userPost}>
+                <img
+                  className={styles.imageAdmin}
+                  src={
+                    user && checkObjectIsUndefined(user) ? user.picture : null
+                  }
+                />
+                <h4>{user && checkObjectIsUndefined(user) ? user.name : ""}</h4>
+              </div>
+              <form>
+                {console.log(valuePost)}
+                <InputEmoji
+                  ref={valueRef}
+                  value={valuePost}
+                  className={styles.inputPost}
+                  placeholder={`What's on your mind,${
+                    user && checkObjectIsUndefined(user) ? user.name : ""
+                  }?`}
+                  onChange={setValuePost}
+                />
+              </form>
+
+              {/* render image post */}
+              {saveFileImage && fileVideo
+                ? saveFileImage.map((image, index) => {
+                    return (
+                      <span className={styles.renderImagePost} key={index}>
+                        <img className={styles.renderImage} src={image} />
+                        <span
+                          className={styles.removeImage}
+                          onClick={() => handleDeleteFile(index)}
+                        >
+                          <TiDeleteOutline />
+                        </span>
+                      </span>
+                    );
+                  })
+                : null}
+
+              {/* render video mp4 post */}
+
+              {/* post video */}
+
+              {saveVideo &&
+                saveVideo.map((video, index) => {
+                  return (
+                    <span className={styles.renderVideoPost} key={index}>
+                      <video controls className={styles.renderVideo}>
+                        <source src={video} />
+                      </video>
+                      <span
+                        className={styles.removeVideo}
+                        onClick={() => handleDeleteVideo(index)}
+                      >
+                        <TiDeleteOutline />
+                      </span>
+                    </span>
+                  );
+                })}
+              <div className={styles.imageAndVideoAndStreaming}>
+                {/* open form post image */}
+                <span className={clsx(styles.iconInput, styles.image)}>
+                  <form className={styles.fromPostImage}>
+                    <label htmlFor="imageEdit">
+                      <BsFillImageFill />
+                    </label>
+                    <label
+                      htmlFor="imageEdit"
+                      className={clsx(styles.titleIcon, styles.iconPost)}
+                    >
+                      Image
+                    </label>
+                    <input
+                      className={styles.inputPostImage}
+                      id="imageEdit"
+                      type="file"
+                      multiple
+                      disabled={fileImage.length === 10}
+                      onChange={(e) => handelInputFileImage(e)}
+                    />
+                  </form>
+                </span>
+
+                {/* open form post video mp4 */}
+                <span className={clsx(styles.iconInput, styles.video)}>
+                  <form>
+                    <label htmlFor="videoEdit">
+                      <RiVideoFill />
+                    </label>
+                    <label
+                      htmlFor="videoEdit"
+                      className={clsx(styles.titleIcon, styles.iconPost)}
+                    >
+                      Video
+                    </label>
+                    <input
+                      className={styles.videoPost}
+                      id="videoEdit"
+                      type="file"
+                      multiple
+                      disabled={fileVideo.length >= 5}
+                      accept="video/mp4,video/x-m4v,video/*"
+                      onChange={(e) => handleVideoPostChange(e)}
+                    />
+                  </form>
+                </span>
+
+                {/* streaming */}
+                <span className={clsx(styles.iconInput, styles.streaming)}>
+                  <IoIosVideocam />
+                  <span className={clsx(styles.titleIcon, styles.iconPost)}>
+                    Streaming
+                  </span>
+                </span>
+              </div>
+
+              {/* post */}
+              <div
+                className={styles.buttonPost}
+                onClick={() => handleEditPostHome(post.id)}
+              >
+                <button className={styles.button}>Edit Post</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* post */}
       <div className={styles.posts}>
         {/* user */}
         <div className={styles.user}>
           <Link
-            to={`/user/${checkObjectIsUndefined(userData) && userData[post.author].nickname}`}
+            to={`/user/${
+              checkObjectIsUndefined(userData) && userData[post.author].nickname
+            }`}
             style={{ textDecoration: "none" }}
           >
             <div className={styles.userContainer}>
@@ -234,7 +518,10 @@ function Post({ post, userData, indexPost, setAllPosts }) {
                   styles.clickDashboard
                 )}
               >
-                <div className={styles.iconOfRemovePost}>
+                <div
+                  className={styles.iconOfRemovePost}
+                  onClick={() => handleOpenPostProfile(post, post.id)}
+                >
                   <span className={styles.iconOfDashboard}>
                     <MdModeEdit />
                   </span>
@@ -298,53 +585,85 @@ function Post({ post, userData, indexPost, setAllPosts }) {
           <div>
             <h4 className={styles.titleContent} style={{ color: "#3a3a3a" }}>
               {/* {console.log(post.body)} */}
-              {post.body}
+              {checkEditPost ? editPost.body : post.body}
             </h4>
           </div>
-
           {/* image content */}
-          {post.imgList.length > 0 && (
-            <div className={styles.imageContent}>
-              <div ref={imageRef} className={styles.container}>
-                {post.imgList.map((img, index) => {
-                  return (
-                    <img
-                      key={index}
-                      style={{
-                        width: `calc(100% /${post.imgList.length}`,
-                      }}
-                      className={styles.postImage}
-                      src={`${apiServer}/api/media/${img}`}
-                      onClick={() => handleImageFullImage(img, index)}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          )}
-          {/* video content */}
-          {post.vidList.length > 0 && (
-            <div className={styles.videoContent}>
-              <div className={styles.imageContent}>
-                <div ref={imageRef} className={styles.container}>
-                  {post.vidList.map((video, index) => {
+          {/* {post.imgList.length > 0 && ( */}
+          <div className={styles.imageContent}>
+            <div ref={imageRef} className={styles.container}>
+              {checkEditPost
+                ? checkObjectIsUndefined(editPost) &&
+                  editPost.imgList.map((img, index) => {
                     return (
-                      <video
+                      <img
                         key={index}
                         style={{
-                          width: `calc(100% /${post.vidList.length}`,
+                          width: `calc(100% /${post.imgList.length}`,
                         }}
-                        controls
-                        className={styles.postVideo}
-                        src={`${apiServer}/api/media/${video}`}
-                        // onClick={() => handleImageFullImage(img, index)}
+                        className={styles.postImage}
+                        src={`${apiServer}/api/media/${img}`}
+                        onClick={() => handleImageFullImage(img, index)}
+                      />
+                    );
+                  })
+                : checkObjectIsUndefined(post) &&
+                  post.imgList.map((img, index) => {
+                    return (
+                      <img
+                        key={index}
+                        style={{
+                          width: `calc(100% /${post.imgList.length}`,
+                        }}
+                        className={styles.postImage}
+                        src={`${apiServer}/api/media/${img}`}
+                        onClick={() => handleImageFullImage(img, index)}
                       />
                     );
                   })}
-                </div>
+            </div>
+          </div>
+          {/* )} */}
+          {/* video content */}
+          {/* {post.vidList.length > 0 && ( */}
+          <div className={styles.videoContent}>
+            <div className={styles.imageContent}>
+              <div ref={imageRef} className={styles.container}>
+                {checkEditPost
+                  ? checkObjectIsUndefined(editPost) &&
+                    editPost.vidList.map((video, index) => {
+                      return (
+                        <video
+                          key={index}
+                          style={{
+                            width: `calc(100% /${post.vidList.length}`,
+                          }}
+                          controls
+                          className={styles.postVideo}
+                          src={`${apiServer}/api/media/${video}`}
+                          // onClick={() => handleImageFullImage(img, index)}
+                        />
+                      );
+                    })
+                  : checkObjectIsUndefined(post) &&
+                    post.vidList.map((video, index) => {
+                      return (
+                        <video
+                          key={index}
+                          style={{
+                            width: `calc(100% /${post.vidList.length}`,
+                          }}
+                          controls
+                          className={styles.postVideo}
+                          src={`${apiServer}/api/media/${video}`}
+                          // onClick={() => handleImageFullImage(img, index)}
+                        />
+                      );
+                    })}
               </div>
             </div>
-          )}
+          </div>
+          {/* )} */}
           {/* count like and comment */}
           <div className={styles.likeAndComments}>
             <div className={styles.like}>
@@ -360,7 +679,7 @@ function Post({ post, userData, indexPost, setAllPosts }) {
                   } ${
                     post.like[0].likeCount - 1 == 0
                       ? ""
-                      : post.like[0].likeCount + " người khác"
+                      : post.like[0].likeCount - 1 + " người khác"
                   }`}
               </span>
             </div>

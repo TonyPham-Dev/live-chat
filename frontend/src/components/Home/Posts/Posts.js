@@ -15,7 +15,17 @@ import styles from "./post.module.css";
 import clsx from "clsx";
 import Notification from "./Notification";
 
-function Posts({ setAllPost }) {
+function Posts({
+  setAllPost,
+  fileImage,
+  setFileImage,
+  saveFileImage,
+  setSaveFileImage,
+  fileVideo,
+  setFileVideo,
+  saveVideo,
+  setSaveVideo,
+}) {
   const urlServer = "http://localhost:3000";
   const accessToken = localStorage.getItem("accessToken");
   const { user } = useAuth0();
@@ -23,11 +33,11 @@ function Posts({ setAllPost }) {
   const [valuePost, setValuePost] = useState("");
 
   //state image
-  const [fileImage, setFileImage] = useState([]);
-  const [saveFileImage, setSaveFileImage] = useState([]);
+  // const [fileImage, setFileImage] = useState([]);
+  // const [saveFileImage, setSaveFileImage] = useState([]);
   // state video mp4
-  const [fileVideo, setFileVideo] = useState([]);
-  const [saveVideo, setSaveVideo] = useState([]);
+  // const [fileVideo, setFileVideo] = useState([]);
+  // const [saveVideo, setSaveVideo] = useState([]);
 
   const [idPost, setIdPost] = useState("");
   const [follow, setFollow] = useState({});
@@ -321,7 +331,7 @@ function Posts({ setAllPost }) {
       {/* text */}
       <div className={styles.textareaContainer}>
         <form onClick={() => setOpenFromPost(!openFormPost)}>
-          <div className={styles.inputPostContainer}>{`What's on your mind,${
+          <div className={styles.inputPostContainer}>{`What's on your mind, ${
             user && checkObjectIsUndefined(user) ? user.name : ""
           }?`}</div>
         </form>

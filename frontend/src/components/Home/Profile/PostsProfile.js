@@ -342,7 +342,7 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
                   } ${
                     post.like[0].likeCount - 1 == 0
                       ? ""
-                      : post.like[0].likeCount + "người khác"
+                      : post.like[0].likeCount -1 + " người khác"
                   }`}
               </span>
             </div>
