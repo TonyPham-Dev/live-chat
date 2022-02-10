@@ -10,7 +10,6 @@ import imageUser from "./image/imageUser.jpg";
 import styles from "./message.module.css";
 import clsx from "clsx";
 function MessageLeft(props) {
-  console.log(props.messages);
   const { user } = useAuth0();
   const apiServer = "http://localhost:3000";
   const apiCreateMessage = "http://localhost:3000/api/chat/new";
@@ -24,7 +23,8 @@ function MessageLeft(props) {
   const [valueSearch, setValueSearch] = useState("");
   const [userFromApi, setUserFromApi] = useState([]);
   const [getUserFromApi, setGetUserFromApi] = useState([]);
-  const [active, setActive] = useState(0)
+  const [active, setActive] = useState(0);
+
   const navigate = useNavigate();
 
   const checkObjectIsUndefined = (obj) => {
@@ -72,9 +72,10 @@ function MessageLeft(props) {
   };
 
   // handle convert box chat
-  const handleConvertBoxChat = (message,index) => {
+  const handleConvertBoxChat = (message, index) => {
     navigate(`/message/${message._id}`);
-    setActive(index)
+    setActive(index);
+    props.setCurrentId(message._id);
   };
   return (
     <div className={styles.messageLeft}>
@@ -140,7 +141,11 @@ function MessageLeft(props) {
               return (
                 <li
                   key={index}
-                  className={active == index ? clsx(styles.messageUserContainer, styles.activeBg) : styles.messageUserContainer}
+                  className={
+                    active == index
+                      ? clsx(styles.messageUserContainer, styles.activeBg)
+                      : styles.messageUserContainer
+                  }
                   onClick={() => handleConvertBoxChat(message, index)}
                 >
                   <img
@@ -153,7 +158,14 @@ function MessageLeft(props) {
                       <span style={{ color: "#666" }}>
                         You:
                         <span style={{ color: "#fff", marginLeft: "10px" }}>
-                          {props.messages[index].messages.length > 0 && props.messages[index].messages[props.messages[index].messages.length - 1 ].type === 'text' ? props.messages[index].messages[props.messages[index].messages.length - 1 ].message[0] : 'Hình ảnh'}
+                          {props.messages[index].messages.length > 0 &&
+                          props.messages[index].messages[
+                            props.messages[index].messages.length - 1
+                          ].type === "text"
+                            ? props.messages[index].messages[
+                                props.messages[index].messages.length - 1
+                              ].message[0]
+                            : "Hình ảnh"}
                         </span>
                       </span>
                     </h5>

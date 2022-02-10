@@ -20,11 +20,11 @@ function App() {
   useEffect(() => {
     if (!user && !isLoading) {
       navigate("/");
-    } 
+    }
     user && setAuthState(true);
     user && setUseName(user.name);
     user && setUrlPhoto(user.picture);
-  }, [user,isLoading]);
+  }, [user, isLoading]);
 
   const removeAuthentication = useCallback(() => {
     localStorage.removeItem("accessToken");
@@ -38,24 +38,24 @@ function App() {
   }, [logout]);
   return (
     <div className="App">
-        {authState && (
-          <Header
-            useName={useName}
-            urlPhoto={urlPhoto}
-            removeAuthentication={removeAuthentication}
-          />
-        )}
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/message" element={<MessageLeft />} />
-          <Route path="/message/:chatId" element={<Message />} />
-          <Route path="/friends" element={<Friends />} />
-          <Route path="/friends/:username" element={<Friends />} />
-          <Route path="/home" element={<Home logOut ={removeAuthentication}/>} />
-          <Route path="/user/:username" element={<Profile />} />
-          <Route path="/posts/:id" element={<Home />} />
-          <Route path="/like/:postId" element={<PostContents />} />
-        </Routes>
+      {authState && (
+        <Header
+          useName={useName}
+          urlPhoto={urlPhoto}
+          removeAuthentication={removeAuthentication}
+        />
+      )}
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/message" element={<Message />} />
+        <Route path="/message/:chatId" element={<Message />} />
+        <Route path="/friends" element={<Friends />} />
+        <Route path="/friends/:username" element={<Friends />} />
+        <Route path="/home" element={<Home logOut={removeAuthentication} />} />
+        <Route path="/user/:username" element={<Profile />} />
+        <Route path="/posts/:id" element={<Home />} />
+        <Route path="/like/:postId" element={<PostContents />} />
+      </Routes>
     </div>
   );
 }

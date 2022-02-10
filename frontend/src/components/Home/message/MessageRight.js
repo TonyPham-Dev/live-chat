@@ -190,11 +190,14 @@ function MessageRight(props) {
       {user && (
         <div className={styles.messageRightContainer}>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <Link to={"/message"}>
-              <div className={styles.gobackMessage}>
-                <AiOutlineBars />
-              </div>
-            </Link>
+            {/* <Link to={"/message"}> */}
+            <div
+              className={styles.gobackMessage}
+              onClick={() => props.setCurrentId(null)}
+            >
+              <AiOutlineBars />
+            </div>
+            {/* </Link> */}
             <Link
               to={`/user/${props.messages.users.filter(
                 (users) => users !== user.nickname

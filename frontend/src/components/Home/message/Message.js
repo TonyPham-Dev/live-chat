@@ -4,6 +4,7 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import styles from "./message.module.css";
 import MessageLeft from "./MessageLeft";
 import MessageRight from "./MessageRight";
+import { MdStayCurrentLandscape } from "react-icons/md";
 function Message(props) {
   const userApi = `http://localhost:3000/api/user/`;
   const apiChat = "http://localhost:3000/api/chat/";
@@ -11,9 +12,12 @@ function Message(props) {
   const [message, setMessage] = useState([]);
   const [users, setUsers] = useState([]);
   const [userData, setUserData] = useState({});
+  const [isMobile, setIsMobile] = useState(false);
+  const [currentId, setCurrentId] = useState(null);
   const navigate = useNavigate();
 
   const { chatId } = useParams();
+
   useEffect(() => {
     chatId &&
       fetch(apiChat + chatId, {
@@ -64,31 +68,39 @@ function Message(props) {
       });
   }, []);
 
+  console.log("message");
+  if (!chatId) {
+    console.log(message);
+  }
+
   return (
     <>
       <div className={styles.message}>
         <div className={styles.messageContainer}>
-          {true ? (
-            <div>
-              {console.log(message)}
-              {/* {Object.entries(userData).length > 0 && ( */}
-              <MessageLeft messages={message} userData={userData} />
-              {/* )} */}
-            </div>
-          ) : (
-            <div>
-              {Object.entries(userData).length > 0 && (
-                <MessageRight
-                  messages={
-                    message[
-                      message.findIndex((element) => element._id == chatId)
-                    ]
-                  }
-                  userData={userData}
-                />
-              )}
-            </div>
-          )}
+          <div
+            className={currentId ? styles.mobileHidden : styles.mobileDisplay}
+          >
+            {/* {Object.entries(userData).length > 0 && ( */}
+            <MessageLeft
+              messages={message}
+              userData={userData}
+              setCurrentId={setCurrentId}
+            />
+            {/* )} */}
+          </div>
+          <div
+            className={currentId ? styles.mobileDisplay : styles.mobileHidden}
+          >
+            {Object.entries(userData).length > 0 && (
+              <MessageRight
+                messages={
+                  message[message.findIndex((element) => element._id == chatId)]
+                }
+                userData={userData}
+                setCurrentId={setCurrentId}
+              />
+            )}
+          </div>
         </div>
       </div>
     </>

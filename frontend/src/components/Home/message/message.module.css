@@ -488,12 +488,19 @@
 }
 /* responsive */
 
-/* ipad pro */
-@media (min-width: 1024px) and (max-width: 1365px) {
+@media (max-width: 1365px) {
+  .mobileDisplay {
+    display:block;
+  }
+  .mobileHidden {
+    display:none;
+  }
   .messageLeft {
     width: 100%;
-    margin-top: 100px;
   }
+}
+/* ipad pro */
+@media (min-width: 1024px) and (max-width: 1365px) {
   .messageRight {
     width: 100%;
   }
