@@ -308,6 +308,7 @@
   height: 120px;
   border-radius: 5px;
   object-fit: cover;
+  cursor: pointer;
   margin-bottom: 10px;
 }
 .messageImagesContainer {

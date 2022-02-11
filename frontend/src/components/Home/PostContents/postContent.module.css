@@ -608,6 +608,12 @@
   background-color: rgba(202, 200, 200, 0.5);
   z-index: 99999;
 }
+.overLayEditPost {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(202, 200, 200, 0.5);
+  z-index: 99999;
+}
 
 /* responsive tablet big*/
 @media (min-width: 1024px) and (max-width: 1365px) {
