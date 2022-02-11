@@ -4,10 +4,7 @@ import WritePost from "./WritePost";
 import PostsProfile from "./PostsProfile";
 function ProFileContentRight({ user }) {
   const [allPost, setAllPost] = useState([]);
-  // console.log(
-  //   "🚀 ~ file: ProFileContentRight.js ~ line 7 ~ ProFileContentRight ~ allPost",
-  //   allPost
-  // );
+
   const checkObjectIsUndefined = (obj) => {
     return Object.keys(obj).length > 0;
   };

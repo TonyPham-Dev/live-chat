@@ -106,7 +106,6 @@ function Posts({
 
   // handle input file image
   const handelInputFileImage = (e) => {
-    console.log(1231231);
     Array.from(e.target.files).forEach((file) => {
       setFileImage((prev) => [...prev, file]);
       setSaveFileImage((prev) => [...prev, URL.createObjectURL(file)]);

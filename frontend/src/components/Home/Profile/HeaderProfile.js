@@ -13,10 +13,7 @@ import styles from "./profile.module.css";
 import clsx from "clsx";
 import { useAuth0 } from "@auth0/auth0-react";
 function HeaderProfile({ userAdmin, user, follow, setFollowUser }) {
-  console.log(
-    "🚀 ~ file: HeaderProfile.js ~ line 16 ~ HeaderProfile ~ follow",
-    follow
-  );
+ 
   // console.log(user);
   const apiServer = "http://localhost:3000";
   const accessToken = localStorage.getItem("accessToken");
@@ -41,10 +38,7 @@ function HeaderProfile({ userAdmin, user, follow, setFollowUser }) {
       await axios
         .get(`${apiServer}/api/follow/toggle/${user.user.nickname}`, config)
         .then((response) => {
-          console.log(
-            "🚀 ~ file: HeaderProfile.js ~ line 40 ~ .then ~ response",
-            response
-          );
+          
           setFollowUser(response.data.follow);
         });
     }
@@ -74,13 +68,13 @@ function HeaderProfile({ userAdmin, user, follow, setFollowUser }) {
       {/* see more */}
       <div className={styles.seeMore}>
         <ul className={styles.listItem}>
-          <Link style={{ textDecoration: "none" }} to="/user">
+          <Link style={{ textDecoration: "none" }} to="#">
             <span className={styles.item}>Bài viết</span>
           </Link>
           <Link style={{ textDecoration: "none" }} to="#">
             <span className={styles.item}>Giới thiệu</span>
           </Link>
-          <Link style={{ textDecoration: "none" }} to="/friends">
+          <Link style={{ textDecoration: "none" }} to="#">
             <span className={styles.item}>Bạn bè</span>
           </Link>
           <Link style={{ textDecoration: "none" }} to="#">

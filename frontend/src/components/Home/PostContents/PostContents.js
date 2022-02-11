@@ -34,12 +34,6 @@ function PostContents({ allPost, userData, setSavePage, lengthPage,savePage }) {
     }
   }, [allPost]);
 
-  // const loadFunc = async (page) => {
-  //   if (page >= countPage) {
-  //     setHasMore(false);
-  //   }
-  //   console.log(page);
-  // };
   return (
     <>
       {/* <div className={styles.app}> */}

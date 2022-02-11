@@ -34,7 +34,6 @@ const serverUrl = "http://localhost:3000";
 const listMessApi = "http://localhost:3000/api/chat";
 
 function MessageRight(props) {
-  console.log(props.messages.users);
   // scroll to bottom
   const messagesEnd = useRef();
 
@@ -57,7 +56,6 @@ function MessageRight(props) {
   const itemMessRef = useRef();
   // handle button submit gửi
   const handleSubmitValue = () => {
-    console.log(valueMess);
     // play load text
     if (valueMess.trim() !== "") {
       // setSaveValueMess((prev) => [

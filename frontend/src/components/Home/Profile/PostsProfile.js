@@ -40,7 +40,6 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
   // handle edit post
   const [openFormPost, setOpenFromPost] = useState(false);
   const [valuePost, setValuePost] = useState("");
-  console.log("🚀 ~ file: Post.js ~ line 49 ~ Post ~ valuePost", valuePost);
 
   //state image
   const [fileImage, setFileImage] = useState([]);
@@ -97,9 +96,7 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
         authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({ content: text }),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    }).then((response) => response.json());
 
     // get comments
     await axios.get(`${apiServer}/api/comments/${id}`).then((response) =>
@@ -125,7 +122,6 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
 
   // delete Post
   const handleDeletePost = async (id, index) => {
-    console.log(id);
     const config = {
       method: "DELETE",
       headers: {
@@ -240,8 +236,6 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
     await axios
       .put(`${apiServer}/api/posts/${id}`, formData, config)
       .then((response) => {
-        // setAllPosts((prev) => [response.data.post, ...prev]);
-        console.log(response);
         if (response.status === 200) {
           setCheckEditPost(true);
           setEditPost(response.data.post);
@@ -573,128 +567,87 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
           {/* title content */}
           <div>
             <h4 className={styles.titleContent} style={{ color: "#fff" }}>
-              {/* {console.log(post.body)} */}
               {user && post.body}
             </h4>
           </div>
 
-          {/* image content */}
-          {/* {post.imgList.length > 0 && (
-            <div className={styles.imageContent}>
-              <div ref={imageRef} className={styles.container}>
-                {post.imgList.map((img, index) => {
-                  return (
-                    <img
-                      key={index}
-                      style={{
-                        width: `calc(100% /${post.imgList.length}`,
-                      }}
-                      className={styles.postImage}
-                      src={`${apiServer}/api/media/${img}`}
-                      // onClick={() => handleImageFullImage(img, index)}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          )} */}
-          {/* video content */}
-          {/* {post.vidList.length > 0 && (
-            <div className={styles.videoContent}>
-              <div className={styles.imageContent}>
-                <div ref={imageRef} className={styles.container}>
-                  {post.vidList.map((video, index) => {
-                    return (
-                      <video
-                        key={index}
-                        style={{
-                          width: `calc(100% /${post.vidList.length}`,
-                        }}
-                        controls
-                        className={styles.postVideo}
-                        src={`${apiServer}/api/media/${video}`}
-                        // onClick={() => handleImageFullImage(img, index)}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          )} */}
-
-          <div className={styles.imageContent}>
-            <div ref={imageRef} className={styles.container}>
-              {checkEditPost
-                ? checkObjectIsUndefined(editPost) &&
-                  editPost.imgList.map((img, index) => {
-                    return (
-                      <img
-                        key={index}
-                        style={{
-                          width: `calc(100% /${post.imgList.length}`,
-                        }}
-                        className={styles.postImage}
-                        src={`${apiServer}/api/media/${img}`}
-                        // onClick={() => handleImageFullImage(img, index)}
-                      />
-                    );
-                  })
-                : checkObjectIsUndefined(post) &&
-                  post.imgList.map((img, index) => {
-                    return (
-                      <img
-                        key={index}
-                        style={{
-                          width: `calc(100% /${post.imgList.length}`,
-                        }}
-                        className={styles.postImage}
-                        src={`${apiServer}/api/media/${img}`}
-                        // onClick={() => handleImageFullImage(img, index)}
-                      />
-                    );
-                  })}
-            </div>
-          </div>
-          {/* )} */}
-          {/* video content */}
-          {/* {post.vidList.length > 0 && ( */}
-          <div className={styles.videoContent}>
+          {post.imgList.length > 0 && (
             <div className={styles.imageContent}>
               <div ref={imageRef} className={styles.container}>
                 {checkEditPost
                   ? checkObjectIsUndefined(editPost) &&
-                    editPost.vidList.map((video, index) => {
+                    editPost.imgList.map((img, index) => {
                       return (
-                        <video
+                        <img
                           key={index}
                           style={{
-                            width: `calc(100% /${post.vidList.length}`,
+                            width: `calc(100% /${post.imgList.length}`,
                           }}
-                          controls
-                          className={styles.postVideo}
-                          src={`${apiServer}/api/media/${video}`}
+                          className={styles.postImage}
+                          src={`${apiServer}/api/media/${img}`}
                           // onClick={() => handleImageFullImage(img, index)}
                         />
                       );
                     })
                   : checkObjectIsUndefined(post) &&
-                    post.vidList.map((video, index) => {
+                    post.imgList.map((img, index) => {
                       return (
-                        <video
+                        <img
                           key={index}
                           style={{
-                            width: `calc(100% /${post.vidList.length}`,
+                            width: `calc(100% /${post.imgList.length}`,
                           }}
-                          controls
-                          className={styles.postVideo}
-                          src={`${apiServer}/api/media/${video}`}
+                          className={styles.postImage}
+                          src={`${apiServer}/api/media/${img}`}
                           // onClick={() => handleImageFullImage(img, index)}
                         />
                       );
                     })}
               </div>
             </div>
-          </div>
+          )}
+          {/* )} */}
+          {/* video content */}
+          {/* {post.vidList.length > 0 && ( */}
+          {post.vidList.length > 0 && (
+            <div className={styles.videoContent}>
+              <div className={styles.imageContent}>
+                <div ref={imageRef} className={styles.container}>
+                  {checkEditPost
+                    ? checkObjectIsUndefined(editPost) &&
+                      editPost.vidList.map((video, index) => {
+                        return (
+                          <video
+                            key={index}
+                            style={{
+                              width: `calc(100% /${post.vidList.length}`,
+                            }}
+                            controls
+                            className={styles.postVideo}
+                            src={`${apiServer}/api/media/${video}`}
+                            // onClick={() => handleImageFullImage(img, index)}
+                          />
+                        );
+                      })
+                    : checkObjectIsUndefined(post) &&
+                      post.vidList.map((video, index) => {
+                        return (
+                          <video
+                            key={index}
+                            style={{
+                              width: `calc(100% /${post.vidList.length}`,
+                            }}
+                            controls
+                            className={styles.postVideo}
+                            src={`${apiServer}/api/media/${video}`}
+                            // onClick={() => handleImageFullImage(img, index)}
+                          />
+                        );
+                      })}
+                </div>
+              </div>
+            </div>
+          )}
           {/* count like and comment */}
           <div className={styles.likeAndComments}>
             <div className={styles.like}>
@@ -791,7 +744,6 @@ function PostsProfile({ user, post, indexPost, setAllPost }) {
           <div className={styles.listComment}>
             {checkObjectIsUndefined(post) && post.comment[0].commentList
               ? sliceData.map((comment, index) => {
-                  // console.log(user.posts.usersData[comment.author].fullName);
                   return (
                     <React.Fragment key={index}>
                       <div className={styles.item}>

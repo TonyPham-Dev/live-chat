@@ -98,7 +98,6 @@ function ProFileContentLeft({ user }) {
             <div className={styles.allFriendsContainers}>
               {friends !== null && checkObjectIsUndefined(friends.contacts)
                 ? friends.contacts.connections.map((friend, index) => {
-                    // {checkObjectIsUndefined(friends) && console.log(friend.names[0].displayName)}
                     return (
                       <div className={styles.allFriendsContainer} key={index}>
                         <div className={styles.imageAlls}>

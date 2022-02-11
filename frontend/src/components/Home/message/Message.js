@@ -39,7 +39,6 @@ function Message(props) {
     fetch(apiChat, { headers: { authorization: `Bearer ${accessToken}` } })
       .then((response) => response.json())
       .then((message) => {
-        console.log(message);
         setMessage(message);
         if (message.length > 0 && !chatId) {
           navigate(`/message/${message[0]._id}`);

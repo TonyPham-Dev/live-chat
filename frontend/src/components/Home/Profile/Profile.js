@@ -18,7 +18,6 @@ function Profile(props) {
   const checkObjectIsUndefined = (obj) => {
     return Object.keys(obj).length > 0;
   };
-  // console.log(aboutUser);
   useEffect(() => {
     username !== undefined &&
       axios

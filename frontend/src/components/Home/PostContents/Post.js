@@ -46,7 +46,6 @@ function Post({ post, userData, indexPost, setAllPosts }) {
   // handle edit post
   const [openFormPost, setOpenFromPost] = useState(false);
   const [valuePost, setValuePost] = useState("");
-  console.log("🚀 ~ file: Post.js ~ line 49 ~ Post ~ valuePost", valuePost);
 
   //state image
   const [fileImage, setFileImage] = useState([]);
@@ -108,9 +107,7 @@ function Post({ post, userData, indexPost, setAllPosts }) {
         authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({ content: text }),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    }).then((response) => response.json());
 
     // get comments
     await axios.get(`${apiServer}/api/comments/${id}`).then((response) =>
@@ -135,7 +132,6 @@ function Post({ post, userData, indexPost, setAllPosts }) {
 
   // delete Post
   const handleDeletePost = async (id, index) => {
-    console.log(id);
     const config = {
       method: "DELETE",
       headers: {
@@ -145,7 +141,6 @@ function Post({ post, userData, indexPost, setAllPosts }) {
     await fetch(`${apiServer}/api/posts/${id}`, config)
       .then((response) => {
         if (response.ok) {
-          console.log(index);
           setAllPosts((prev) => {
             const newPost = [...prev];
             newPost.splice(index, 1);
@@ -253,8 +248,6 @@ function Post({ post, userData, indexPost, setAllPosts }) {
     await axios
       .put(`${apiServer}/api/posts/${id}`, formData, config)
       .then((response) => {
-        // setAllPosts((prev) => [response.data.post, ...prev]);
-        console.log(response);
         if (response.status === 200) {
           setCheckEditPost(true);
           setEditPost(response.data.post);
@@ -356,7 +349,6 @@ function Post({ post, userData, indexPost, setAllPosts }) {
                 <h4>{user && checkObjectIsUndefined(user) ? user.name : ""}</h4>
               </div>
               <form>
-                {console.log(valuePost)}
                 <InputEmoji
                   ref={valueRef}
                   value={valuePost}
@@ -584,85 +576,88 @@ function Post({ post, userData, indexPost, setAllPosts }) {
           {/* title content */}
           <div>
             <h4 className={styles.titleContent} style={{ color: "#3a3a3a" }}>
-              {/* {console.log(post.body)} */}
               {checkEditPost ? editPost.body : post.body}
             </h4>
           </div>
           {/* image content */}
           {/* {post.imgList.length > 0 && ( */}
-          <div className={styles.imageContent}>
-            <div ref={imageRef} className={styles.container}>
-              {checkEditPost
-                ? checkObjectIsUndefined(editPost) &&
-                  editPost.imgList.map((img, index) => {
-                    return (
-                      <img
-                        key={index}
-                        style={{
-                          width: `calc(100% /${post.imgList.length}`,
-                        }}
-                        className={styles.postImage}
-                        src={`${apiServer}/api/media/${img}`}
-                        onClick={() => handleImageFullImage(img, index)}
-                      />
-                    );
-                  })
-                : checkObjectIsUndefined(post) &&
-                  post.imgList.map((img, index) => {
-                    return (
-                      <img
-                        key={index}
-                        style={{
-                          width: `calc(100% /${post.imgList.length}`,
-                        }}
-                        className={styles.postImage}
-                        src={`${apiServer}/api/media/${img}`}
-                        onClick={() => handleImageFullImage(img, index)}
-                      />
-                    );
-                  })}
-            </div>
-          </div>
-          {/* )} */}
-          {/* video content */}
-          {/* {post.vidList.length > 0 && ( */}
-          <div className={styles.videoContent}>
+          {post.imgList.length > 0 && (
             <div className={styles.imageContent}>
               <div ref={imageRef} className={styles.container}>
                 {checkEditPost
                   ? checkObjectIsUndefined(editPost) &&
-                    editPost.vidList.map((video, index) => {
+                    editPost.imgList.map((img, index) => {
                       return (
-                        <video
+                        <img
                           key={index}
                           style={{
-                            width: `calc(100% /${post.vidList.length}`,
+                            width: `calc(100% /${post.imgList.length}`,
                           }}
-                          controls
-                          className={styles.postVideo}
-                          src={`${apiServer}/api/media/${video}`}
-                          // onClick={() => handleImageFullImage(img, index)}
+                          className={styles.postImage}
+                          src={`${apiServer}/api/media/${img}`}
+                          onClick={() => handleImageFullImage(img, index)}
                         />
                       );
                     })
                   : checkObjectIsUndefined(post) &&
-                    post.vidList.map((video, index) => {
+                    post.imgList.map((img, index) => {
                       return (
-                        <video
+                        <img
                           key={index}
                           style={{
-                            width: `calc(100% /${post.vidList.length}`,
+                            width: `calc(100% /${post.imgList.length}`,
                           }}
-                          controls
-                          className={styles.postVideo}
-                          src={`${apiServer}/api/media/${video}`}
-                          // onClick={() => handleImageFullImage(img, index)}
+                          className={styles.postImage}
+                          src={`${apiServer}/api/media/${img}`}
+                          onClick={() => handleImageFullImage(img, index)}
                         />
                       );
                     })}
               </div>
             </div>
-          </div>
+          )}
+          {/* )} */}
+          {/* video content */}
+          {/* {post.vidList.length > 0 && ( */}
+          {post.vidList.length > 0 && (
+            <div className={styles.videoContent}>
+              <div className={styles.imageContent}>
+                <div ref={imageRef} className={styles.container}>
+                  {checkEditPost
+                    ? checkObjectIsUndefined(editPost) &&
+                      editPost.vidList.map((video, index) => {
+                        return (
+                          <video
+                            key={index}
+                            style={{
+                              width: `calc(100% /${post.vidList.length}`,
+                            }}
+                            controls
+                            className={styles.postVideo}
+                            src={`${apiServer}/api/media/${video}`}
+                            // onClick={() => handleImageFullImage(img, index)}
+                          />
+                        );
+                      })
+                    : checkObjectIsUndefined(post) &&
+                      post.vidList.map((video, index) => {
+                        return (
+                          <video
+                            key={index}
+                            style={{
+                              width: `calc(100% /${post.vidList.length}`,
+                            }}
+                            controls
+                            className={styles.postVideo}
+                            src={`${apiServer}/api/media/${video}`}
+                            // onClick={() => handleImageFullImage(img, index)}
+                          />
+                        );
+                      })}
+                </div>
+              </div>
+            </div>
+          )}
           {/* )} */}
           {/* count like and comment */}
           <div className={styles.likeAndComments}>
