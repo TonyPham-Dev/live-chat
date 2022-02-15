@@ -1,5 +1,4 @@
-# live-chat: https://pansoss.netlify.app/home
-
+# live-chat: https://pansoss.netlify.app
 live chat app
 
 ## Server
